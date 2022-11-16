@@ -18,6 +18,7 @@
 \usepackage{fancyhdr}
 \usepackage[english]{babel}
 \usepackage{tabularx}
+\usepackage{setspace}
 \input{glyphtounicode}
 
 
@@ -76,6 +77,14 @@
     \end{tabular*}\vspace{-7pt}
 }
 
+\newcommand{\educationSubHeading}[5]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1}, #2 & #3 \\
+     \textit{\small#4} &  \textit{\small#5} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
 \newcommand{\resumeJobSubheading}[3]{
   \vspace{-2pt}\item
     \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
@@ -107,6 +116,8 @@
 \newcommand{\resumeItemListStart}{\begin{itemize}}
 \newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
 
+\setstretch{1.08}
+
 %-------------------------------------------
 %%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -125,13 +136,12 @@
 
 \section{Education}
   \resumeSubHeadingListStart
-    \resumeSubheading
-      {B.S. Computer Science}{Sep 2017 -- May 2022}
+    \educationSubHeading
+      {B.S. Computer Science}{GPA: 3.912/4.0}{Sep 2017 -- May 2022}
       {Northeastern University, Khoury College of Computer Sciences}{Boston, MA}
-     \item\small{{GPA: 3.912/4.0}}
      \vspace{-5pt}
   \resumeSubHeadingListEnd
-
+  
 %-----------PROGRAMMING SKILLS-----------
 
 \section{Skills}
@@ -153,7 +163,7 @@
             \resumeItemListStart
                 \resumeItem{Maintained full-stack internal web applications using PHP, TypeScript, Java, and React}
                 \resumeItem{Automated delivery of web marketing material using a content management system, saving engineering time spent manually updating 14-18 instances of material per month}
-                \resumeItem{Created API actions and automations for customer support tasks, enabling support engineers to process hundreds of customer tickets per day}
+                \resumeItem{Created API actions and automations enabling support engineers to process hundreds of customer tickets per day}
                 \resumeItem{Improved developer experience for a Node.js permissions service by creating useful abstractions for rule composition, streamlining testing patterns in Jest, and contributing to underlying open source rules engine}
             \resumeItemListEnd
             
