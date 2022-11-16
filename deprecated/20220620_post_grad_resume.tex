@@ -1,0 +1,215 @@
+%-------------------------
+% Resume in Latex
+% Author : Andrew Leung
+% Based off of: https://github.com/sb2nov/resume
+% License : MIT
+%------------------------
+
+\documentclass[letterpaper, 11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\input{glyphtounicode}
+
+
+%----------FONT OPTIONS----------
+% sans-serif
+% \usepackage[sfdefault]{FiraSans}
+% \usepackage[sfdefault]{roboto}
+% \usepackage[sfdefault]{noto-sans}
+% \usepackage[default]{sourcesanspro}
+
+% serif
+% \usepackage{CormorantGaramond}
+% \usepackage{charter}
+
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\normalsize
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Ensure that generate pdf is machine readable/ATS parsable
+\pdfgentounicode=1
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+     \textit{\small#3} &  \textit{\small#4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeJobSubheading}[3]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1}, \textit{\small#3} & #2 \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[3]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+     \textit{\small{#3}}
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+%-------------------------------------------
+%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%----------HEADING----------
+
+\begin{center}
+    \textbf{\Large \scshape Andrew Leung} \\ \vspace{1.5pt}
+    \small Boston, MA $|$ andrewleung104@gmail.com $|$ 978-221-8810\\
+    \small andrewjleung.me $|$ linkedin.com/in/andrewleung104 $|$ github.com/andrewjleung
+\end{center}
+\vspace{-15pt}
+
+%-----------EDUCATION-----------
+
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {B.S. Computer Science}{Sep 2017 -- May 2022}
+      {Northeastern University, Khoury College of Computer Sciences}{Boston, MA}
+     \item\small{{GPA: 3.912/4.0}}
+     \vspace{-5pt}
+  \resumeSubHeadingListEnd
+  
+%-----------PROGRAMMING SKILLS-----------
+
+\section{Skills}
+    \begin{itemize}[leftmargin=0.15in, label={}]
+        \small{\item{
+            \textbf{Programming Languages}{: TypeScript, JavaScript, Java, Python, Racket, Scala, OCaml}\\
+            \textbf{Frameworks}{: React, React Query, Redux, Express.js, Fastify, Jest}\\
+            \textbf{Databases}{: PostgreSQL, MongoDB }\\
+        }}
+\end{itemize}
+
+%-----------EXPERIENCE-----------
+
+\section{Work Experience}
+    \resumeSubHeadingListStart
+    % -----------Multiple Positions Heading-----------
+    %    \resumeSubSubheading
+    %     {Software Engineer I}{Oct 2014 - Sep 2016}
+    %     \resumeItemListStart
+    %        \resumeItem{Apache Beam}
+    %          {Apache Beam is a unified model for defining both batch and streaming data-parallel processing pipelines}
+    %     \resumeItemListEnd
+    %    \resumeSubHeadingListEnd
+    %-------------------------------------------
+
+        \resumeSubheading
+            {Poloniex}{Jan 2021 -- Aug 2021}{Software Engineer Co-op}{Remote}
+            \resumeItemListStart
+                \resumeItem{Built and maintained internal tools written in PHP, TypeScript, Java, and React used to manage accounts, funds, and markets across crypto exchange}
+                \resumeItem{Created API actions and automations integrated with internal microservices along with external services such as Zendesk and Jira Service Desk, enabling support engineers to process hundreds of customer tickets per day}
+                \resumeItem{Orchestrated cross-team (engineering, security, marketing, product) effort to migrate web marketing material to a content management system, eliminating engineering time spent updating 14-18 instances of material per month}
+                \resumeItem{Implemented key features of a Node.js permissions authentication service including JWT/JWK-based authentication, open source improvements to underlying rules engine, and streamlining of testing with Jest}
+            \resumeItemListEnd
+            
+        \resumeSubheading
+            {Sandbox}{Sep 2020 -- May 2021}{Developer for GraduateNU}{Remote}
+            \resumeItemListStart
+                \resumeItem{Built new features for course planning application with TypeScript, React, Redux, and Ruby on Rails}
+                \resumeItem{Adapted to changing university graduation requirements by iterating on user graduation plan models, updating UI, and implementing complex validations for new requirements}
+                \resumeItem{Scripted the parsing of university course transfer documentation into an ingestible JSON schema using Node.js}
+                \resumeItem{Provided technical mentoring to teammates through routine pair-programming on tasks}
+            \resumeItemListEnd
+            
+        \resumeSubheading
+            {Teikametrics}{Jan 2020 -- Aug 2020}{Software Engineer Co-op}{Boston, MA}
+            \resumeItemListStart
+                \resumeItem{Demonstrated technical growth starting with no Scala, TypeScript, or web development experience to becoming an active contributor to a functional Scala with Cats backend and a TypeScript with React/Redux frontend}
+                \resumeItem{Surfaced Scala APIs with Slick, one of which has been used to persist nearly 4 million unique entries}
+                \resumeItem{Developed and augmented CSV bulk update features used by internal analysts and external users 12 times per day}
+                \resumeItem{Built features for the Campaign Creation Wizard including a new user flow and an edit mode for generated advertising campaigns}
+            \resumeItemListEnd        
+
+  \resumeSubHeadingListEnd
+
+%-----------PROJECTS-----------
+
+\section{Projects}
+    \resumeSubHeadingListStart
+        \resumeProjectHeading
+            {\textbf{Compiler for Python-like Language} \emph{OCaml, C, x86 Assembly}}{2022}{Closed Source}
+            \resumeItemListStart
+                \resumeItem{Wrote a compiler backend in OCaml and a C runtime for a Python-like expression-oriented language}
+                \resumeItem{Fully supported strong dynamically typed values including number and Boolean primitives as well as heap-based tuples, strings, and mutually recursive first-class functions}
+                \resumeItem{Managed program memory with mark-and-sweep garbage collection and register allocation}
+            \resumeItemListEnd
+        \resumeProjectHeading
+            {\textbf{Raudi} \emph{TypeScript, Node.js, Fastify, React, React Query, TailwindCSS}}{2022}{github.com/andrewjleung/raudi}
+            \resumeItemListStart
+                \resumeItem{Created a full-stack web application to quickly demo and download random sounds fetched from the Freesound API, featuring cookie-based session management and a custom HTML5 audio player}
+            \resumeItemListEnd
+        \resumeProjectHeading
+            {\textbf{TheNeedleDrop Review Dataset} \emph{Python, Node.js, YouTube Data API, PubSubHubbub}}{2022}{github.com/andrewjleung/fantano-reviews}
+            \resumeItemListStart
+                \resumeItem{Scripted the generation of a CSV dataset with all of popular music critic TheNeedleDrop's video music reviews}
+                \resumeItem{Automated live updates to a hosted dataset by subscribing a callback server to all future review video uploads}
+            \resumeItemListEnd  
+    \resumeSubHeadingListEnd
+
+%-------------------------------------------
+\end{document}
+
