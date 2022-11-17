@@ -1,0 +1,22 @@
+{
+  "name": "resumes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewjleung/resumes.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrewjleung/resumes/issues"
+  },
+  "homepage": "https://github.com/andrewjleung/resumes#readme",
+  "dependencies": {
+    "resume-cli": "^3.0.8"
+  }
+}
