@@ -117,14 +117,6 @@
       "keywords": ["PostgreSQL", "MongoDB"]
     }
   ],
-  "languages": [
-    {
-      "language": "English",
-      "fluency": "Native speaker"
-    }
-  ],
-  "interests": [],
-  "references": [],
   "projects": [
     {
       "name": "Compiler for Python-like Language",
