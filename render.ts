@@ -4,6 +4,8 @@ import fs from 'fs';
 
 type Resume = typeof resume;
 
+const LINE_HEIGHT = 1.1;
+
 const renderMonthDate = (dateString: string): string => {
   const date = new Date(dateString);
   date.setDate(date.getDate() + 1);
@@ -89,15 +91,15 @@ const renderResume = (...sections: string[]): string => {
   \\vspace{-2pt}\\item
     \\begin{tabular*}{0.97\\textwidth}[t]{l@{\\extracolsep{\\fill}}r}
       \\textbf{#1} & #2 \\\\
-     \\textit{\\small#3} &  \\textit{\\small#4} \\\\
+     \\textit{\\small#3} & \\textit{\\small#4} \\\\
     \\end{tabular*}\\vspace{-7pt}
 }
 
 \\newcommand{\\educationSubHeading}[5]{
   \\vspace{-2pt}\\item
     \\begin{tabular*}{0.97\\textwidth}[t]{l@{\\extracolsep{\\fill}}r}
-      \\textbf{#1}, #2 & #3 \\\\
-     \\textit{\\small#4} &  \\textit{\\small#5} \\\\
+      \\textbf{#1} & #2 \\\\
+     \\textit{\\small#3}, \\small#4 & \\textit{\\small#5} \\\\
     \\end{tabular*}\\vspace{-7pt}
 }
 
@@ -132,7 +134,7 @@ const renderResume = (...sections: string[]): string => {
 \\newcommand{\\resumeItemListStart}{\\begin{itemize}}
 \\newcommand{\\resumeItemListEnd}{\\end{itemize}\\vspace{-5pt}}
 
-\\setstretch{1.08}
+\\setstretch{${LINE_HEIGHT}}
 
 %-------------------------------------------
 %%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -165,7 +167,6 @@ const renderHeading = ({
 \\begin{center}
     \\textbf{\\Large \\scshape ${name}} \\\\ \\vspace{1.5pt}
     \\small ${city}, ${region} $|$ ${email} $|$ ${phone}\\\\
-    \\small ${sites.join(' $|$ ')}
 \\end{center}
 \\vspace{-15pt}  
   `;
@@ -185,10 +186,10 @@ const renderEducation = ({
 \\section{Education}
   \\resumeSubHeadingListStart
     \\educationSubHeading
-      {${studyType} ${area}}{GPA: ${score}/4.0}{${renderMonthDate(
-    startDate,
-  )} -- ${renderMonthDate(endDate)}}
-      {${institution}}{${city}, ${region}}
+      {${institution}}{${renderMonthDate(startDate)} -- ${renderMonthDate(
+    endDate,
+  )}}
+      {${studyType} ${area}}{GPA: ${score}/4.0}{${city}, ${region}}
      \\vspace{-5pt}
   \\resumeSubHeadingListEnd  
   `;
@@ -199,7 +200,9 @@ const renderProgrammingSkills = ({ skills }: Resume): string => {
     name,
     keywords,
   }: typeof skills[number]): string => {
-    return `\\textbf{${name}}{: ${keywords.join(', ')}}\\\\`;
+    return `\\textbf{${name.replace('&', '\\&')}}{: ${keywords.join(
+      ', ',
+    )}}\\\\`;
   };
 
   // TODO: Figure out a sane way to work out proper composable indentation.

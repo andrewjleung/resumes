@@ -26,53 +26,6 @@
       }
     ]
   },
-  "work": [
-    {
-      "name": "Poloniex",
-      "location": "Remote",
-      "description": "Crypto exchange.",
-      "position": "Software Engineer Co-op",
-      "url": "https://poloniex.com/",
-      "startDate": "2021-01-06",
-      "endDate": "2021-08-13",
-      "highlights": [
-        "Maintained full-stack internal web applications using PHP, TypeScript, Java, and React",
-        "Automated delivery of web marketing material using a content management system, saving engineering time spent manually updating 14-18 instances of material per month",
-        "Created API actions and automations enabling support engineers to process hundreds of customer tickets per day",
-        "Improved developer experience for a Node.js permissions service by creating useful abstractions for rule composition, streamlining testing patterns in Jest, and contributing to underlying open source rules engine"
-      ]
-    },
-    {
-      "name": "Sandbox at Northeastern University",
-      "location": "Remote",
-      "description": "Northeastern's premier software consultancy.",
-      "position": "Software Developer",
-      "url": "https://www.sandboxnu.com/",
-      "startDate": "2020-09-01",
-      "endDate": "2021-05-01",
-      "highlights": [
-        "Developed features for a full-stack university course planning web application",
-        "Modeled course schedule data in TypeScript, wrote logic for validating course requirements, and implemented React components to display interactive course plans to users",
-        "Wrote a script to parse university course documentation into a JSON schema using Node.js",
-        "Provided technical mentoring to teammates through routine pair-programming on tasks"
-      ]
-    },
-    {
-      "name": "Teikametrics",
-      "location": "Boston, MA",
-      "description": "SaaS platform dealing in Amazon ads optimization.",
-      "position": "Software Engineer Co-op",
-      "url": "https://www.teikametrics.com/",
-      "startDate": "2020-01-06",
-      "endDate": "2020-08-21",
-      "highlights": [
-        "Demonstrated technical growth starting with no Scala, TypeScript, or web development experience to becoming an active contributor to a Scala with Cats backend and a TypeScript with React/Redux frontend",
-        "Interacted with designers to build front-end components, user flows, and interactions using React, HTML, and CSS",
-        "Surfaced API endpoints in Scala used to persist millions of rows of user data",
-        "Developed and augmented CSV bulk upload features used by internal analysts and external users 12 times per day"
-      ]
-    }
-  ],
   "education": [
     {
       "institution": "Northeastern University",
@@ -88,25 +41,59 @@
     {
       "name": "Programming Languages",
       "level": "Intermediate",
-      "keywords": ["TypeScript", "JavaScript", "Python", "Java"]
+      "keywords": ["TypeScript", "JavaScript", "Python", "Java", "SQL"]
     },
     {
-      "name": "Technologies",
+      "name": "Tools & Frameworks",
       "level": "Intermediate",
-      "keywords": [
-        "React",
-        "React Query",
-        "Redux",
-        "Express.js",
-        "Fastify",
-        "Jest",
-        "NGINX"
+      "keywords": ["Git", "React", "Redux", "Express.js", "Jest", "HTML/CSS"]
+    }
+  ],
+  "work": [
+    {
+      "name": "Poloniex",
+      "location": "Remote",
+      "description": "Crypto exchange.",
+      "position": "Software Engineer Co-op",
+      "url": "https://poloniex.com/",
+      "startDate": "2021-01-06",
+      "endDate": "2021-08-13",
+      "highlights": [
+        "Maintained full-stack internal web tools for managing crypto exchange using PHP, TypeScript, Java, and React",
+        "Automated delivery of web marketing material using a content management system, saving engineering time spent manually updating 14-18 instances of material per month",
+        "Created API actions and automations enabling support engineers to process 100s of customer tickets per day",
+        "Improved developer experience for a Node.js permissions service by creating useful abstractions for rule composition, streamlining testing patterns in Jest, and contributing to underlying open source rules engine"
       ]
     },
     {
-      "name": "Databases",
-      "level": "Intermediate",
-      "keywords": ["PostgreSQL", "MongoDB"]
+      "name": "Sandbox at Northeastern University",
+      "location": "Remote",
+      "description": "Northeastern's premier software consultancy.",
+      "position": "Software Developer",
+      "url": "https://www.sandboxnu.com/",
+      "startDate": "2020-09-01",
+      "endDate": "2021-05-01",
+      "highlights": [
+        "Developed features for a university course planning web application using Ruby on Rails, TypeScript, and React",
+        "Modeled course schedule data in TypeScript, wrote logic for validating course requirements, and implemented React components to display interactive course plans to users",
+        "Wrote a Node.js script to automatically parse university course documentation into JSON",
+        "Provided technical mentoring to teammates on tasks through routine pair-programming"
+      ]
+    },
+    {
+      "name": "Teikametrics",
+      "location": "Boston, MA",
+      "description": "SaaS platform dealing in Amazon ads optimization.",
+      "position": "Software Engineer Co-op",
+      "url": "https://www.teikametrics.com/",
+      "startDate": "2020-01-06",
+      "endDate": "2020-08-21",
+      "highlights": [
+        "Demonstrated technical growth starting with no Scala, TypeScript, or web development experience to becoming an active contributor to a Scala with Cats backend and a TypeScript with React/Redux frontend",
+        "Worked with designers to build front-end user flows and interactions with React, TypeScript, HTML, and CSS",
+        "Surfaced API endpoints in Scala used to persist millions of rows of user data",
+        "Developed and augmented CSV bulk upload features used by internal analysts and external users 12 times per day"
+      ]
     }
   ],
   "projects": [
