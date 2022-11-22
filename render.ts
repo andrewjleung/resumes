@@ -1,4 +1,6 @@
 import resume from './resume.json';
+import latex from 'node-latex';
+import fs from 'fs';
 
 type Resume = typeof resume;
 
@@ -276,12 +278,25 @@ const renderProjects = ({ projects }: Resume): string => {
   `;
 };
 
-console.log(
-  renderResume(
-    renderHeading(resume),
-    renderEducation(resume),
-    renderProgrammingSkills(resume),
-    renderExperiences(resume),
-    renderProjects(resume),
-  ),
+const renderedResume = renderResume(
+  renderHeading(resume),
+  renderEducation(resume),
+  renderProgrammingSkills(resume),
+  renderExperiences(resume),
+  renderProjects(resume),
 );
+
+// Update `main.tex`.
+fs.writeFileSync('main.tex', renderedResume, {
+  encoding: 'utf-8',
+  flag: 'w',
+});
+
+// Update PDF.
+const input = fs.createReadStream('main.tex');
+const output = fs.createWriteStream('AndrewLeung_Resume.pdf');
+const pdf = latex(input);
+
+pdf.pipe(output);
+pdf.on('error', (err) => console.error(err));
+pdf.on('finish', () => console.log('Resume updated!'));

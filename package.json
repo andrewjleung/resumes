@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "render": "npx tsx ./render.ts | pbcopy && echo \"Resume copied to clipboard!\""
+    "render": "npx tsx ./render.ts"
   },
   "repository": {
     "type": "git",
@@ -17,11 +17,12 @@
   },
   "homepage": "https://github.com/andrewjleung/resumes#readme",
   "dependencies": {
-    "resume-cli": "^3.0.8",
     "@types/node": "^18.7.18",
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.5.0",
-    "prettier": "^2.7.1"
+    "node-latex": "^3.1.0",
+    "prettier": "^2.7.1",
+    "resume-cli": "^3.0.8"
   },
   "devDependencies": {
     "tsx": "^3.12.1",
