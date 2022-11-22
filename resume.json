@@ -9,15 +9,15 @@
     "location": {
       "address": "1 Blacksmith Drive",
       "postalCode": "MA 01886",
-      "city": "Westford",
+      "city": "Boston",
       "countryCode": "US",
-      "region": "Massachusetts"
+      "region": "MA"
     },
     "profiles": [
       {
         "network": "LinkedIn",
         "username": "andrewjleung-",
-        "url": "https://www.linkedin.com/in/andrewjleung-"
+        "url": "https://linkedin.com/in/andrewjleung-"
       },
       {
         "network": "GitHub",
@@ -38,15 +38,15 @@
       "highlights": [
         "Maintained full-stack internal web applications using PHP, TypeScript, Java, and React",
         "Automated delivery of web marketing material using a content management system, saving engineering time spent manually updating 14-18 instances of material per month",
-        "Create API actions and automations enabling support engineers to process hundreds of customer tickets per day",
-        "Improved developer experience for a Node.js permissions service by creating useful abstractions for rule composition, contributing to underlying open source rules engine, and streamlining testing patterns in Jest"
+        "Created API actions and automations enabling support engineers to process hundreds of customer tickets per day",
+        "Improved developer experience for a Node.js permissions service by creating useful abstractions for rule composition, streamlining testing patterns in Jest, and contributing to underlying open source rules engine"
       ]
     },
     {
       "name": "Sandbox at Northeastern University",
       "location": "Remote",
       "description": "Northeastern's premier software consultancy.",
-      "position": "Developer for GraduateNU",
+      "position": "Software Developer",
       "url": "https://www.sandboxnu.com/",
       "startDate": "2020-09-01",
       "endDate": "2021-05-01",
@@ -78,7 +78,7 @@
       "institution": "Northeastern University",
       "url": "https://www.northeastern.edu/",
       "area": "Computer Science",
-      "studyType": "Bachelor",
+      "studyType": "B.S.",
       "startDate": "2017-09-01",
       "endDate": "2022-05-01",
       "score": "3.912"
@@ -88,15 +88,7 @@
     {
       "name": "Programming Languages",
       "level": "Intermediate",
-      "keywords": [
-        "TypeScript",
-        "JavaScript",
-        "Python",
-        "Java",
-        "Racket",
-        "Scala",
-        "OCaml"
-      ]
+      "keywords": ["TypeScript", "JavaScript", "Python", "Java"]
     },
     {
       "name": "Technologies",
@@ -121,12 +113,13 @@
     {
       "name": "Compiler for Python-like Language",
       "highlights": [
-        "Wrote a compiler backed in OCaml and a C runtime for a Python-like expression-oriented language",
+        "Wrote a compiler backend in OCaml and a C runtime for a Python-like expression-oriented language",
         "Supported dynamically-typed values including numbers, Booleans, tuples, strings, and first-class functions",
         "Managed program memory with mark-and-sweep garbage collection and register allocation",
         "Wrote over 600 unit tests and end-to-end tests to ensure correctness of compilation using OUnit"
       ],
-      "keywords": ["OCaml", "C", "x86 Assembly"]
+      "keywords": ["OCaml", "C", "x86 Assembly"],
+      "startDate": "2022"
     },
     {
       "name": "Random Audio Player",
@@ -141,21 +134,25 @@
         "React Query",
         "TailwindCSS",
         "NGINX"
-      ]
+      ],
+      "url": "https://github.com/andrewjleung/raudi",
+      "startDate": "2022"
     },
     {
       "name": "TheNeedleDrop Review Dataset",
       "highlights": [
-        "Implemented a Node.js script to parse metadata from the YouTube Data API and generate a CSV dataset containing all of popular music critic TheNeedleDrop's music reviews",
+        "Implemented a Node.js script to parse metadata from the YouTube Data API and generate a CSV dataset containing all of popular music critic TheNeedleDrop’s video music reviews",
         "Automated updates to a live hosted dataset on GitHub using Fastify and PubSubHubBub"
       ],
       "keywords": [
         "TypeScript",
         "Node.js",
         "Fastify",
-        "Youtube Data API",
+        "YouTube Data API",
         "PubSubHubBub"
-      ]
+      ],
+      "url": "https://github.com/andrewjleung/fantano-reviews",
+      "startDate": "2022"
     }
   ],
   "meta": {
