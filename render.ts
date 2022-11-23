@@ -5,6 +5,7 @@ import fs from 'fs';
 type Resume = typeof resume;
 
 const LINE_HEIGHT = 1.1;
+const SHOULD_OUTPUT_TEX = false;
 
 const renderMonthDate = (dateString: string): string => {
   const date = new Date(dateString);
@@ -290,10 +291,12 @@ const renderedResume = renderResume(
 );
 
 // Update `main.tex`.
-fs.writeFileSync('main.tex', renderedResume, {
-  encoding: 'utf-8',
-  flag: 'w',
-});
+if (SHOULD_OUTPUT_TEX) {
+  fs.writeFileSync('main.tex', renderedResume, {
+    encoding: 'utf-8',
+    flag: 'w',
+  });
+}
 
 // Update PDF.
 const input = fs.createReadStream('main.tex');
