@@ -60,9 +60,9 @@
       "endDate": "2021-08-13",
       "highlights": [
         "Maintained full-stack internal web tools for managing crypto exchange using PHP, TypeScript, Java, and React",
-        "Automated delivery of web marketing material using a content management system, saving engineering time spent manually updating 14-18 instances of material per month",
-        "Created API actions and automations enabling support engineers to process 100s of customer tickets per day",
-        "Improved developer experience for a Node.js permissions service by creating useful abstractions for rule composition, streamlining testing patterns in Jest, and contributing to underlying open source rules engine"
+        "Led effort to migrate dynamic web marketing material to a content management system, successfully eliminating engineering time spent manually updating 14-18 instances of material per month",
+        "Constructed Zendesk and Jira Service Desk API integrations to streamline customer support engineer workflows processing 100s of customer tickets per day",
+        "Improved developer experience for a Node.js permissions service by creating useful abstractions for rule composition, simplifying testing patterns in Jest, and contributing to underlying open source rules engine"
       ]
     },
     {
@@ -76,7 +76,7 @@
       "highlights": [
         "Developed features for a university course planning web application using Ruby on Rails, TypeScript, and React",
         "Modeled course schedule data in TypeScript, wrote logic for validating course requirements, and implemented React components to display interactive course plans to users",
-        "Wrote a Node.js script to automatically parse university course documentation into JSON",
+        "Wrote a Node.js script to automatically parse university course documentation into JSON for internal usage",
         "Provided technical mentoring to teammates on tasks through routine pair-programming"
       ]
     },
@@ -92,7 +92,7 @@
         "Demonstrated technical growth starting with no Scala, TypeScript, or web development experience to becoming an active contributor to a Scala with Cats backend and a TypeScript with React/Redux frontend",
         "Worked with designers to build front-end user flows and interactions with React, TypeScript, HTML, and CSS",
         "Surfaced API endpoints in Scala used to persist millions of rows of user data",
-        "Developed and augmented CSV bulk upload features used by internal analysts and external users 12 times per day"
+        "Developed CSV bulk upload features used by internal analysts and external users 12 times per day on average"
       ]
     }
   ],
@@ -118,9 +118,9 @@
         "Node.js",
         "Fastify",
         "React",
-        "React Query",
         "TailwindCSS",
-        "NGINX"
+        "NGINX",
+        "Docker"
       ],
       "url": "https://github.com/andrewjleung/raudi",
       "startDate": "2022"

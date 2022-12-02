@@ -5,7 +5,6 @@ import fs from 'fs';
 type Resume = typeof resume;
 
 const LINE_HEIGHT = 1.1;
-const SHOULD_OUTPUT_TEX = false;
 
 const renderMonthDate = (dateString: string): string => {
   const date = new Date(dateString);
@@ -63,7 +62,7 @@ const renderResume = (...sections: string[]): string => {
 \\addtolength{\\oddsidemargin}{-0.5in}
 \\addtolength{\\evensidemargin}{-0.5in}
 \\addtolength{\\textwidth}{1in}
-\\addtolength{\\topmargin}{-.5in}
+\\addtolength{\\topmargin}{-0.5in}
 \\addtolength{\\textheight}{1.0in}
 
 \\urlstyle{same}
@@ -162,14 +161,24 @@ const renderHeading = ({
   },
 }: Resume): string => {
   const profileUrls = profiles.map((profile) => profile.url);
-  const sites = [url, ...profileUrls].map((site) => site.slice(8));
+  const sites = profileUrls.map((site) => site.slice(8));
 
   return `
 \\begin{center}
-    \\textbf{\\Large \\scshape ${name}} \\\\ \\vspace{1.5pt}
-    \\small ${city}, ${region} $|$ ${email} $|$ ${phone}\\\\
+  \\begin{minipage}[b]{0.33333\\textwidth}
+  \\raggedright
+    \\small ${email} \\\\
+    \\small ${phone}
+  \\end{minipage}%
+  \\begin{minipage}[b]{0.33333\\textwidth}
+  \\centering
+    \\textbf{\\huge \\scshape ${name}} \\\\ \\vspace{1.5pt}
+  \\end{minipage}%
+  \\begin{minipage}[b]{0.33333\\textwidth}
+  \\raggedleft
+    \\small ${sites.join('\\\\')}
+  \\end{minipage}
 \\end{center}
-\\vspace{-15pt}  
   `;
 };
 
@@ -282,6 +291,8 @@ const renderProjects = ({ projects }: Resume): string => {
   `;
 };
 
+// The ordering of arguments to `renderResume` correspond to the ordering of
+// sections on the resume.
 const renderedResume = renderResume(
   renderHeading(resume),
   renderEducation(resume),
@@ -290,13 +301,11 @@ const renderedResume = renderResume(
   renderProjects(resume),
 );
 
-// Update `main.tex`.
-if (SHOULD_OUTPUT_TEX) {
-  fs.writeFileSync('main.tex', renderedResume, {
-    encoding: 'utf-8',
-    flag: 'w',
-  });
-}
+// Write to an intermediate LaTeX file before generating PDF for debugging.
+fs.writeFileSync('main.tex', renderedResume, {
+  encoding: 'utf-8',
+  flag: 'w',
+});
 
 // Update PDF.
 const input = fs.createReadStream('main.tex');
