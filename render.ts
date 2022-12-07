@@ -199,7 +199,7 @@ const renderEducation = ({
       {${institution}}{${renderMonthDate(startDate)} -- ${renderMonthDate(
     endDate,
   )}}
-      {${studyType} ${area}}{GPA: ${score}/4.0}{${city}, ${region}}
+      {${studyType} ${area}}{GPA: ${score}}{${city}, ${region}}
      \\vspace{-5pt}
   \\resumeSubHeadingListEnd  
   `;
