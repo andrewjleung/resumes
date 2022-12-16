@@ -109,7 +109,7 @@
       "name": "Random Audio Player",
       "highlights": [
         "Created a full-stack web application for demoing and downloading random sounds fetched from the Freesound API",
-        "Deployed application frontend, backend, and NGINX reverse proxy to Railway using Docker and GitHub CI/CD"
+        "Deployed application frontend, backend, and NGINX reverse proxy to Railway using Docker"
       ],
       "keywords": [
         "TypeScript",
@@ -127,7 +127,7 @@
       "name": "TheNeedleDrop Review Dataset",
       "highlights": [
         "Implemented a Node.js script to fetch and parse metadata from the YouTube Data API and generate a CSV dataset of popular music critic TheNeedleDrop's video music reviews",
-        "Automated real-time updates to a hosted dataset using a PubSubHubBub server deployed to DigitalOcean via GitHub CI/CD"
+        "Automated real-time updates to a hosted dataset using a PubSubHubBub server deployed to DigitalOcean via GitHub"
       ],
       "keywords": [
         "TypeScript",
