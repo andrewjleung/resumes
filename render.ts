@@ -39,13 +39,13 @@ const renderResume = (...sections: string[]): string => {
 \\usepackage{setspace}
 \\input{glyphtounicode}
 
-
 %----------FONT OPTIONS----------
 % sans-serif
 % \\usepackage[sfdefault]{FiraSans}
 % \\usepackage[sfdefault]{roboto}
 % \\usepackage[sfdefault]{noto-sans}
 % \\usepackage[default]{sourcesanspro}
+\\usepackage[sfdefault]{carlito}
 
 % serif
 % \\usepackage{CormorantGaramond}

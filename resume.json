@@ -46,7 +46,15 @@
     {
       "name": "Tools & Frameworks",
       "level": "Intermediate",
-      "keywords": ["Git", "React", "Redux", "Express.js", "Jest", "HTML/CSS"]
+      "keywords": [
+        "Git",
+        "React",
+        "Redux",
+        "Express.js",
+        "Jest",
+        "HTML/CSS",
+        "PostgreSQL"
+      ]
     }
   ],
   "work": [
@@ -98,20 +106,10 @@
   ],
   "projects": [
     {
-      "name": "Compiler for Python-like Language",
-      "highlights": [
-        "Wrote a compiler backend in OCaml and a C runtime for a Python-like expression-oriented language",
-        "Supported dynamically-typed values including numbers, Booleans, tuples, strings, and first-class functions",
-        "Managed program memory with mark-and-sweep garbage collection and register allocation",
-        "Wrote over 600 unit tests and end-to-end tests to ensure correctness of compilation using OUnit"
-      ],
-      "keywords": ["OCaml", "C", "x86 Assembly"],
-      "startDate": "2022"
-    },
-    {
       "name": "Random Audio Player",
       "highlights": [
-        "Created a full-stack web application to quickly demo and download random sounds fetched from the Freesound API, featuring cookie-based session management and a custom HTML5 audio player"
+        "Created a full-stack web application for demoing and downloading random sounds fetched from the Freesound API",
+        "Deployed application frontend, backend, and NGINX reverse proxy to Railway using Docker and GitHub CI/CD"
       ],
       "keywords": [
         "TypeScript",
@@ -128,8 +126,8 @@
     {
       "name": "TheNeedleDrop Review Dataset",
       "highlights": [
-        "Implemented a Node.js script to parse metadata from the YouTube Data API and generate a CSV dataset containing all of popular music critic TheNeedleDrop’s video music reviews",
-        "Automated updates to a live hosted dataset on GitHub using Fastify and PubSubHubBub"
+        "Implemented a Node.js script to fetch and parse metadata from the YouTube Data API and generate a CSV dataset of popular music critic TheNeedleDrop's video music reviews",
+        "Automated real-time updates to a hosted dataset using a PubSubHubBub server deployed to DigitalOcean via GitHub CI/CD"
       ],
       "keywords": [
         "TypeScript",
@@ -139,6 +137,17 @@
         "PubSubHubBub"
       ],
       "url": "https://github.com/andrewjleung/fantano-reviews",
+      "startDate": "2022"
+    },
+    {
+      "name": "Compiler for Python-like Language",
+      "highlights": [
+        "Wrote a compiler backend in OCaml and a C runtime for a Python-like expression-oriented language",
+        "Supported dynamically-typed values including numbers, Booleans, tuples, strings, and first-class functions",
+        "Managed program memory with mark-and-sweep garbage collection and register allocation",
+        "Wrote over 600 unit tests and end-to-end tests to ensure correctness of compilation using OUnit"
+      ],
+      "keywords": ["OCaml", "C", "x86 Assembly"],
       "startDate": "2022"
     }
   ],
