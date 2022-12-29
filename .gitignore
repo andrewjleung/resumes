@@ -1,3 +1,5 @@
+# .vscode is included here since it contains a useful ruler for approximating whether a bullet point fits on a single line.
+
 .DS_Store
 node_modules
-main.tex
+*.tex

@@ -1,4 +1,5 @@
 import resume from './resume.json';
+import anonymousResume from './resume.anonymous.json';
 import latex from 'node-latex';
 import fs from 'fs';
 
@@ -90,39 +91,39 @@ const renderResume = (...sections: string[]): string => {
 \\newcommand{\\resumeSubheading}[4]{
   \\vspace{-2pt}\\item
     \\begin{tabular*}{0.97\\textwidth}[t]{l@{\\extracolsep{\\fill}}r}
-      \\textbf{#1} & #2 \\\\
-     \\textit{\\small#3} & \\textit{\\small#4} \\\\
-    \\end{tabular*}\\vspace{-7pt}
+      \\small\\textbf{#1} & \\small#2\\vspace{-1pt}\\\\
+      \\small#3 & \\small#4\\\\
+    \\end{tabular*}\\vspace{-6pt}
 }
 
 \\newcommand{\\educationSubHeading}[5]{
   \\vspace{-2pt}\\item
     \\begin{tabular*}{0.97\\textwidth}[t]{l@{\\extracolsep{\\fill}}r}
-      \\textbf{#1} & #2 \\\\
-     \\textit{\\small#3}, \\small#4 & \\textit{\\small#5} \\\\
-    \\end{tabular*}\\vspace{-7pt}
+      \\small\\textbf{#1} & \\small#2\\\\
+      \\small#3, \\small#4 & \\small#5\\\\
+    \\end{tabular*}
 }
 
 \\newcommand{\\resumeJobSubheading}[3]{
   \\vspace{-2pt}\\item
     \\begin{tabular*}{0.97\\textwidth}[t]{l@{\\extracolsep{\\fill}}r}
-      \\textbf{#1}, \\textit{\\small#3} & #2 \\\\
-    \\end{tabular*}\\vspace{-7pt}
+      \\small\\textbf{#1}, \\small#3 & #2\\\\
+    \\end{tabular*}
 }
 
 \\newcommand{\\resumeSubSubheading}[2]{
     \\item
     \\begin{tabular*}{0.97\\textwidth}{l@{\\extracolsep{\\fill}}r}
-      \\textit{\\small#1} & \\textit{\\small #2} \\\\
-    \\end{tabular*}\\vspace{-7pt}
+      \\small#1 & \\small #2\\\\
+    \\end{tabular*}
 }
 
 \\newcommand{\\resumeProjectHeading}[3]{
     \\item
     \\begin{tabular*}{0.97\\textwidth}{l@{\\extracolsep{\\fill}}r}
-      \\small#1 & #2 \\\\
-     \\textit{\\small{#3}}
-    \\end{tabular*}\\vspace{-7pt}
+      \\small#1 & \\small#2\\vspace{-1pt}\\\\
+      \\small{#3}
+    \\end{tabular*}\\vspace{-6pt}
 }
 
 \\newcommand{\\resumeSubItem}[1]{\\resumeItem{#1}\\vspace{-4pt}}
@@ -167,7 +168,7 @@ const renderHeading = ({
 \\begin{center}
   \\begin{minipage}[b]{0.33333\\textwidth}
   \\raggedright
-    \\small ${email} \\\\
+    \\small ${email}\\\\
     \\small ${phone}
   \\end{minipage}%
   \\begin{minipage}[b]{0.33333\\textwidth}
@@ -200,8 +201,8 @@ const renderEducation = ({
     endDate,
   )}}
       {${studyType} ${area}}{GPA: ${score}}{${city}, ${region}}
-     \\vspace{-5pt}
-  \\resumeSubHeadingListEnd  
+      \\vspace{-6pt}
+  \\resumeSubHeadingListEnd
   `;
 };
 
@@ -224,7 +225,8 @@ const renderProgrammingSkills = ({ skills }: Resume): string => {
         \\small{\\item{
             ${categories}
         }}
-\\end{itemize}  
+        \\vspace{-2pt}
+    \\end{itemize}
   `;
 };
 
@@ -254,6 +256,7 @@ const renderExperiences = ({ work }: Resume): string => {
 \\section{Work Experience}
     \\resumeSubHeadingListStart    
         ${experiences}
+        \\vspace{-3pt}
     \\resumeSubHeadingListEnd
   `;
 };
@@ -291,27 +294,36 @@ const renderProjects = ({ projects }: Resume): string => {
   `;
 };
 
-// The ordering of arguments to `renderResume` correspond to the ordering of
-// sections on the resume.
-const renderedResume = renderResume(
-  renderHeading(resume),
-  renderEducation(resume),
-  renderProgrammingSkills(resume),
-  renderExperiences(resume),
-  renderProjects(resume),
-);
+const renderAndWriteResume = (
+  r: typeof resume,
+  texFileName: string,
+  pdfFileName: string,
+): void => {
+  // The ordering of arguments to `renderResume` correspond to the ordering of
+  // sections on the resume.
+  const renderedResume = renderResume(
+    renderHeading(r),
+    renderEducation(r),
+    renderProgrammingSkills(r),
+    renderExperiences(r),
+    renderProjects(r),
+  );
 
-// Write to an intermediate LaTeX file before generating PDF for debugging.
-fs.writeFileSync('main.tex', renderedResume, {
-  encoding: 'utf-8',
-  flag: 'w',
-});
+  // Write to an intermediate LaTeX file before generating PDF for debugging.
+  fs.writeFileSync(texFileName, renderedResume, {
+    encoding: 'utf-8',
+    flag: 'w',
+  });
 
-// Update PDF.
-const input = fs.createReadStream('main.tex');
-const output = fs.createWriteStream('AndrewLeung_Resume.pdf');
-const pdf = latex(input);
+  // Update PDF.
+  const input = fs.createReadStream(texFileName);
+  const output = fs.createWriteStream(pdfFileName);
+  const pdf = latex(input);
 
-pdf.pipe(output);
-pdf.on('error', (err) => console.error(err));
-pdf.on('finish', () => console.log('Resume updated!'));
+  pdf.pipe(output);
+  pdf.on('error', (err) => console.error(err));
+  pdf.on('finish', () => console.log(`${pdfFileName} updated!`));
+};
+
+renderAndWriteResume(resume, 'main.tex', 'AndrewLeung_Resume.pdf');
+renderAndWriteResume(anonymousResume, 'anonymous.tex', 'Anonymous_Resume.pdf');
