@@ -103,6 +103,45 @@
         "Surfaced API endpoints in Scala to persist millions of rows of user data in a PostgreSQL database",
         "Reduced manual effort for internal analysts and external users to modify advertising campaign targets by implementing a CSV bulk upload API and batch modification job in Scala, used 12 times per day on average"
       ]
+    },
+    {
+      "name": "Curriculum Associates",
+      "location": "Billerica, MA",
+      "description": "Educational software company.",
+      "position": "Software Engineer Co-op",
+      "url": "https://www.curriculumassociates.com/",
+      "startDate": "2019-01-14",
+      "endDate": "2019-06-20",
+      "highlights": [
+        "Updated SQL query templates in Java to retrieve language flags for student assessment data",
+        "Drafted and implemented integration tests to ensure correct functionality of query templates",
+        "Refactored database schemas with Liquibase and updated existing data for education platform privileges"
+      ]
+    },
+    {
+      "name": "Northeastern University College of Computer and Information Science",
+      "location": "Boston, MA",
+      "description": "",
+      "position": "Grader for CS2500",
+      "url": "",
+      "startDate": "2018-09-01",
+      "endDate": "2018-12-01",
+      "highlights": [
+        "Reviewed and graded roughly 30 student coding assignments per week written in Racket"
+      ]
+    },
+    {
+      "name": "Veoneer",
+      "location": "Lowell, MA",
+      "description": "Manufacturer of automotive safety systems.",
+      "position": "Technical Intern",
+      "url": "https://www.veoneer.com",
+      "startDate": "2018-05-29",
+      "endDate": "2018-08-10",
+      "highlights": [
+        "Ported over C++ implementation of target track positioner software to a new radar sensor testing suite written in C#",
+        "Outlined architecture specifications for new radar units to lay groundwork for future sensor support within testing suite"
+      ]
     }
   ],
   "projects": [
