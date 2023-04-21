@@ -25,6 +25,7 @@
     "resume-cli": "^3.0.8"
   },
   "devDependencies": {
+    "@kurone-kito/jsonresume-types": "^0.3.7",
     "tsx": "^3.12.1",
     "typescript": "^4.9.3"
   }
