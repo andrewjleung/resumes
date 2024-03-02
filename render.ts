@@ -34,7 +34,7 @@ const renderAndWriteResume = (
   const pdf = latex(input);
 
   pdf.pipe(output);
-  pdf.on('error', (err) => console.error(err));
+  pdf.on('error', (err) => console.error(`${err}\n`));
   pdf.on('finish', () => console.log(`${pdfFileName} updated!`));
 };
 

@@ -378,11 +378,33 @@ type InclusionConfig = {
   after?: Date;
 };
 
+type ArbitrarilyNested =
+  | string
+  | string[]
+  | {
+      [key: string]: ArbitrarilyNested;
+    };
+
 class Resume {
   private resume: BareResume;
 
   constructor(resume: BareResume) {
     this.resume = { ...resume };
+
+    const errors = this.precheck((text: string) => {
+      if (text.match(/[^\\]\$/)) {
+        return 'Unescaped dollar sign ($)';
+      }
+
+      return null;
+    });
+
+    // TODO: Return warnings instead of logging them.
+    if (errors.length > 0) {
+      console.warn('\nWarnings:');
+      console.warn(errors);
+      console.warn();
+    }
   }
 
   experiences({ include, exclude, after }: InclusionConfig): Resume {
@@ -431,6 +453,39 @@ class Resume {
     }
 
     return this;
+  }
+
+  check(
+    node: ArbitrarilyNested,
+    errors: [string, string][],
+    path: string[],
+    cb: (text: string) => string | null,
+  ) {
+    if (typeof node === 'string') {
+      const maybeError = cb(node);
+      if (maybeError !== null) errors.push([path.join('.'), maybeError]);
+    } else if (Array.isArray(node)) {
+      node.forEach((v, i) => {
+        path.push(i.toString());
+        this.check(v, errors, path, cb);
+        path.pop();
+      });
+    } else {
+      Object.entries(node).forEach(([key, value]) => {
+        path.push(key);
+        this.check(value, errors, path, cb);
+        path.pop();
+      });
+    }
+  }
+
+  precheck(cb: (text: string) => string | null) {
+    const errors: [string, string][] = [];
+    const path: string[] = [];
+
+    this.check(this.resume as unknown as ArbitrarilyNested, errors, path, cb);
+
+    return errors;
   }
 
   render(config: RenderConfig): string {
