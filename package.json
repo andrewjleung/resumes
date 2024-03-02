@@ -17,16 +17,16 @@
   },
   "homepage": "https://github.com/andrewjleung/resumes#readme",
   "dependencies": {
-    "@types/node": "^18.7.18",
-    "eslint": "^8.19.0",
-    "eslint-config-prettier": "^8.5.0",
+    "@types/node": "^20.11.24",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
     "node-latex": "^3.1.0",
-    "prettier": "^2.7.1",
+    "prettier": "^3.2.5",
     "resume-cli": "^3.0.8"
   },
   "devDependencies": {
-    "@kurone-kito/jsonresume-types": "^0.3.7",
-    "tsx": "^3.12.1",
-    "typescript": "^4.9.3"
+    "@kurone-kito/jsonresume-types": "^0.4.0",
+    "tsx": "^4.7.1",
+    "typescript": "^5.3.3"
   }
 }
