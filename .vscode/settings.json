@@ -14,7 +14,7 @@
     "emeraldwalk.runonsave": {
         "commands": [
             {
-                "match": "resume\\.(?:anonymous\\.)?ts",
+                "match": "resume\\.(?:anonymous\\.)|(?:Builder\\.)?ts",
                 "cmd": "npx tsx ${fileDirname}/render.ts"
             },
         ]
