@@ -231,7 +231,12 @@ const renderHeading = ({
 };
 
 const renderMonthDate = (dateString: string): string => {
+  if (dateString === 'Present') {
+    return 'Present';
+  }
+
   const date = new Date(dateString);
+
   date.setDate(date.getDate() + 1);
   const month = date.toLocaleString('default', { month: 'short' });
 
@@ -253,8 +258,8 @@ const renderEducation = ({
   \\resumeSubHeadingListStart
     \\educationSubHeading
       {${institution}}{${renderMonthDate(startDate)} -- ${renderMonthDate(
-    endDate,
-  )}}
+        endDate,
+      )}}
       {${studyType} ${area}}{GPA: ${score}}{${city}, ${region}}
       \\vspace{-6pt}
   \\resumeSubHeadingListEnd
@@ -269,7 +274,7 @@ const renderSkills = ({ skills }: { skills: ResumeSkill[] }): string => {
   const renderCategory = ({
     name,
     keywords,
-  }: typeof skills[number]): string => {
+  }: (typeof skills)[number]): string => {
     return `\\textbf{${name.replace('&', '\\&')}}{: ${keywords.join(
       ', ',
     )}}\\\\`;
@@ -301,8 +306,8 @@ const renderExperience = ({
 
   return `\\resumeSubheading
             {${name}}{${renderMonthDate(startDate)} -- ${renderMonthDate(
-    endDate,
-  )}}{${position}}{${location}}
+              endDate,
+            )}}{${position}}{${location}}
             \\resumeItemListStart
                 ${highlights.map(renderHighlight).join(indent(8))}
             \\resumeItemListEnd`;
@@ -367,6 +372,12 @@ const renderProjects = ({
   `;
 };
 
+type InclusionConfig = {
+  include?: string[];
+  exclude?: string[];
+  after?: Date;
+};
+
 class Resume {
   private resume: BareResume;
 
@@ -374,15 +385,47 @@ class Resume {
     this.resume = { ...resume };
   }
 
-  experiences({ names, after }: { names?: string[]; after?: Date }): Resume {
-    if (names !== undefined) {
+  experiences({ include, exclude, after }: InclusionConfig): Resume {
+    if (include !== undefined) {
       this.resume.work = this.resume.work?.filter(
-        ({ name }) => name !== undefined && names.some((n) => name.includes(n)),
+        ({ name }) =>
+          name !== undefined && include.some((n) => name.includes(n)),
+      );
+    }
+
+    if (exclude !== undefined) {
+      this.resume.work = this.resume.work?.filter(
+        ({ name }) =>
+          name !== undefined && !exclude.some((n) => name.includes(n)),
       );
     }
 
     if (after !== undefined) {
       this.resume.work = this.resume.work?.filter(({ startDate }) => {
+        return startDate !== undefined && after <= new Date(startDate);
+      });
+    }
+
+    return this;
+  }
+
+  projects({ include, exclude, after }: InclusionConfig): Resume {
+    if (include !== undefined) {
+      this.resume.projects = this.resume.projects?.filter(
+        ({ name }) =>
+          name !== undefined && include.some((n) => name.includes(n)),
+      );
+    }
+
+    if (exclude !== undefined) {
+      this.resume.projects = this.resume.projects?.filter(
+        ({ name }) =>
+          name !== undefined && !exclude.some((n) => name.includes(n)),
+      );
+    }
+
+    if (after !== undefined) {
+      this.resume.projects = this.resume.projects?.filter(({ startDate }) => {
         return startDate !== undefined && after <= new Date(startDate);
       });
     }
