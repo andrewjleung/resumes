@@ -1,5 +1,5 @@
-import resume from './resume.json';
-import anonymousResume from './resume.anonymous.json';
+import resume from './resume';
+import anonymousResume from './resume.anonymous';
 import latex from 'node-latex';
 import fs from 'fs';
 import { resume as r, BareResume } from './resumeBuilder';
