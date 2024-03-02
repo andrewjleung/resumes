@@ -10,5 +10,13 @@
         "editor.rulers": [
             120
         ]
-    }
+    },
+    "emeraldwalk.runonsave": {
+        "commands": [
+            {
+                "match": "resume\\.(?:anonymous\\.)?json",
+                "cmd": "npx tsx ${fileDirname}/render.ts"
+            },
+        ]
+    },
 }
