@@ -50,7 +50,7 @@ type ResumeProject = Required<
     'name' | 'keywords' | 'highlights' | 'startDate'
   >
 > &
-  Pick<NonNullable<ResumeSchema['projects']>[number], 'url'>;
+  Pick<NonNullable<ResumeSchema['projects']>[number], 'url' | 'endDate'>;
 
 export type BareResume = {
   basics: ResumeBasics;
@@ -326,6 +326,7 @@ const renderProject = ({
   keywords,
   highlights,
   startDate,
+  endDate,
   url,
 }: ResumeProject): string => {
   const renderHighlight = (highlight: string): string =>
@@ -336,8 +337,15 @@ const renderProject = ({
   const renderedUrl =
     url === undefined ? 'Closed Source' : url.slice('https://'.length);
 
+  const dateRange =
+    startDate === endDate
+      ? startDate
+      : endDate === undefined
+        ? `${startDate} -- Present`
+        : `${startDate} -- ${endDate}`;
+
   return `\\resumeProjectHeading
-            {\\textbf{${name}}}{${startDate}}{${renderedUrl}}
+            {\\textbf{${name}}}{${dateRange}}{${renderedUrl}}
             \\resumeItemListStart
                 ${renderedHighlights}
             \\resumeItemListEnd`;

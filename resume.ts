@@ -71,7 +71,7 @@ export default {
       startDate: '2023-06-12',
       endDate: 'Present',
       highlights: [
-        'IC within Braintree Post-Processing, maintaining internal Ruby on Rails application for assessing fees and funding merchants',
+        'Maintained internal Ruby on Rails application for assessing fees and funding merchants as part of Braintree division',
         'Led development and production testing of crucial funds disbursement flows used to quarantine risk-identified merchants',
         'Increased average daily revenue by \\$160,000 by correcting rate-based fee calculations to use rounding instead of truncation',
         'Prevented \\$x in incorrect money movements after identifying and addressing time-related bug for money movements',
@@ -163,6 +163,26 @@ export default {
   ],
   projects: [
     {
+      name: 'Bookmark Manager',
+      highlights: [
+        'Created a self-hostable bookmark manager using TypeScript, Next.js, and shadcn/UI components',
+        'Persisted data in a PostgreSQL database hosted by Supabase and queried via Drizzle ORM',
+      ],
+      keywords: [
+        'TypeScript',
+        'Node.js',
+        'React',
+        'Next.js',
+        'Tailwind',
+        'shadcn/ui',
+        'Supabase',
+        'Drizzle ORM',
+        'Jotai',
+      ],
+      url: 'https://github.com/andrewjleung/linkr',
+      startDate: '2023',
+    },
+    {
       name: 'Random Audio Player',
       highlights: [
         'Created a full-stack web application for demoing and downloading random sounds fetched from the Freesound API',
@@ -195,6 +215,7 @@ export default {
       ],
       url: 'https://github.com/andrewjleung/fantano-reviews',
       startDate: '2022',
+      endDate: '2022',
     },
     {
       name: 'Compiler for Python-like Language',
@@ -206,6 +227,7 @@ export default {
       ],
       keywords: ['OCaml', 'C', 'x86 Assembly'],
       startDate: '2022',
+      endDate: '2022',
     },
   ],
   meta: {
