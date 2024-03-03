@@ -4,7 +4,7 @@ export default {
   $schema:
     'https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json',
   basics: {
-    name: 'Andrew Leung',
+    name: 'Andrew Leung (WIP)',
     label: 'Software Engineer',
     email: 'andrewleung104@gmail.com',
     phone: '(978) 221-8810',
