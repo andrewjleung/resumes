@@ -166,7 +166,7 @@ const renderResume = (lineHeight: number, sections: string[]): string =>
 }
 
 \\newcommand{\\resumeProjectHeading}[3]{
-    \\item
+    \\vspace{-2pt}\\item
     \\begin{tabular*}{1\\textwidth}{l@{\\extracolsep{\\fill}}r}
       \\small#1\\space\\space\\small#3 & \\small#2\\vspace{-1pt}\\\\
     \\end{tabular*}\\vspace{-5pt}
