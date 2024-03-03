@@ -1,3 +1,6 @@
+// TODO: Get metrics for PayPal
+// TODO: Add another PayPal bullet point, EPP? discovery?
+
 import { ResumeSchema } from '@kurone-kito/jsonresume-types';
 
 export type RenderConfig = {
@@ -137,14 +140,14 @@ const renderResume = (lineHeight: number, sections: string[]): string =>
 \\newcommand{\\resumeSubheading}[4]{
   \\vspace{-2pt}\\item
     \\begin{tabular*}{1\\textwidth}[t]{l@{\\extracolsep{\\fill}}r}
-      \\small\\textbf{#1}\\space\\space\\small#2 -- \\small#3 & \\small#4\\\\
-    \\end{tabular*}
+      \\small\\textbf{#1}\\space\\space\\small#2 | \\small#3 & \\small#4\\\\
+    \\end{tabular*}\\vspace{-6pt}
 }
 
 \\newcommand{\\educationSubHeading}[5]{
   \\vspace{-2pt}\\item
     \\begin{tabular*}{1\\textwidth}[t]{l@{\\extracolsep{\\fill}}r}
-      \\small\\textbf{#1}\\space\\space\\small#3, \\small#4 -- \\small#5 & \\small#2
+      \\small\\textbf{#1}\\space\\space\\small#3, \\small#4 | \\small#5 & \\small#2
     \\end{tabular*}
 }
 
@@ -165,9 +168,8 @@ const renderResume = (lineHeight: number, sections: string[]): string =>
 \\newcommand{\\resumeProjectHeading}[3]{
     \\item
     \\begin{tabular*}{1\\textwidth}{l@{\\extracolsep{\\fill}}r}
-      \\small#1 & \\small#2\\vspace{-1pt}\\\\
-      \\small{#3}
-    \\end{tabular*}
+      \\small#1\\space\\space\\small#3 & \\small#2\\vspace{-1pt}\\\\
+    \\end{tabular*}\\vspace{-5pt}
 }
 
 \\newcommand{\\resumeSubItem}[1]{\\resumeItem{#1}\\vspace{-4pt}}
@@ -176,7 +178,7 @@ const renderResume = (lineHeight: number, sections: string[]): string =>
 
 \\newcommand{\\resumeSubHeadingListStart}{\\begin{itemize}[leftmargin=0in, label={}]}
 \\newcommand{\\resumeSubHeadingListEnd}{\\end{itemize}}
-\\newcommand{\\resumeItemListStart}{\\begin{itemize}}
+\\newcommand{\\resumeItemListStart}{\\begin{itemize}[leftmargin=1.5em]}
 \\newcommand{\\resumeItemListEnd}{\\end{itemize}\\vspace{-5pt}}
 
 \\setstretch{${lineHeight}}
@@ -213,7 +215,7 @@ const renderHeading = ({
   \\begin{minipage}[b]{0.5\\textwidth}
     \\raggedright
       \\textbf{\\Huge \\scshape ${name}} \\vspace{0pt} \\\\
-      Fort Worth, TX
+      Fort Worth, TX $\\vert$ ${email}
   \\end{minipage}%
   \\begin{minipage}[b]{0.5\\textwidth}
     \\raggedleft
