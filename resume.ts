@@ -42,7 +42,7 @@ export default {
     {
       name: 'Programming Languages',
       level: 'Intermediate',
-      keywords: ['TypeScript', 'JavaScript', 'Python', 'Java', 'SQL'],
+      keywords: ['TypeScript', 'JavaScript', 'Python', 'Ruby', 'Java', 'SQL'],
     },
     {
       name: 'Tools & Frameworks',
@@ -53,14 +53,30 @@ export default {
         'Redux',
         'Next.js',
         'Express.js',
-        'Jest',
+        'Ruby on Rails',
         'HTML/CSS',
+        'Tailwind',
         'PostgreSQL',
         'Vim',
       ],
     },
   ],
   work: [
+    {
+      name: 'PayPal',
+      location: 'Remote',
+      description: 'Braintree post-processing, treasury funding.',
+      position: 'Software Engineer 1',
+      url: 'https://paypal.com',
+      startDate: '2023-06-12',
+      endDate: 'Present',
+      highlights: [
+        'IC within Braintree Post-Processing, maintaining internal Ruby on Rails application for assessing fees and funding merchants',
+        'Led development and production testing of crucial funds disbursement flows used to quarantine risk-identified merchants',
+        'Increased average daily revenue by \\$160,000 by correcting rate-based fee calculations to use rounding instead of truncation',
+        'Prevented \\$x in incorrect money movements after identifying and addressing time-related bug for money movements',
+      ],
+    },
     {
       name: 'Poloniex',
       location: 'Remote',
@@ -70,9 +86,9 @@ export default {
       startDate: '2021-01-06',
       endDate: '2021-08-13',
       highlights: [
-        'Led effort to migrate dynamic web marketing material to a content management system, successfully eliminating engineering time spent manually updating 14-18 instances of material per month',
-        'Constructed Zendesk and Jira Service Desk API integrations and internal web tools in PHP, TypeScript, and React to streamline customer support engineer workflows that process 100s of customer tickets per day',
-        'Improved developer experience for a Node.js permissions service by creating useful abstractions for rule composition, simplifying testing patterns in Jest, and contributing to underlying open source rules engine library',
+        'Reduced engineering effort spent updating web marketing material by 100\\% by integrating a content management system',
+        'Constructed Zendesk and Jira Service Desk API integrations and internal web tools in PHP, TypeScript, and React to streamline customer support engineer workflows',
+        'Improved developer experience for a Node.js permissions service by creating abstractions for rule composition, simplifying testing patterns in Jest, and contributing to underlying open source rules engine library',
       ],
     },
     {
@@ -102,7 +118,7 @@ export default {
         'Demonstrated technical growth starting with no Scala, TypeScript, or web development experience to becoming an active contributor to a Scala with Cats backend and a TypeScript with React/Redux frontend',
         'Built front-end user flows and interactions according to designer specifications with TypeScript, React, HTML, and CSS',
         'Surfaced API endpoints in Scala to persist millions of rows of user data in a PostgreSQL database',
-        'Reduced manual effort for internal analysts and external users to modify advertising campaign targets by implementing a CSV bulk upload API and batch modification job in Scala, used 12 times per day on average',
+        'Reduced effort for users modifying ad campaign targets by implementing a React UI and Scala API for bulk CSV uploads',
       ],
     },
     {

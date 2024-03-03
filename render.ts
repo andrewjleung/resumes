@@ -18,7 +18,7 @@ const renderAndWriteResume = (
       exclude: ['Sandbox at Northeastern University'],
     })
     .projects({
-      include: ['Compiler for Python-like Language'],
+      exclude: ['Random Audio Player', 'TheNeedleDrop Review Dataset'],
     })
     .render({ lineHeight: LINE_HEIGHT });
 

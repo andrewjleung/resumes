@@ -120,7 +120,7 @@ const renderResume = (lineHeight: number, sections: string[]): string =>
 
 % Sections formatting
 \\titleformat{\\section}{
-  \\vspace{-4pt}\\scshape\\raggedright\\normalsize
+  \\vspace{-4pt}\\scshape\\raggedright\\large
 }{}{0em}{}[\\color{black}\\titlerule \\vspace{-5pt}]
 
 % Ensure that generate pdf is machine readable/ATS parsable
@@ -136,47 +136,45 @@ const renderResume = (lineHeight: number, sections: string[]): string =>
 
 \\newcommand{\\resumeSubheading}[4]{
   \\vspace{-2pt}\\item
-    \\begin{tabular*}{0.97\\textwidth}[t]{l@{\\extracolsep{\\fill}}r}
-      \\small\\textbf{#1} & \\small#2\\vspace{-1pt}\\\\
-      \\small#3 & \\small#4\\\\
-    \\end{tabular*}\\vspace{-6pt}
+    \\begin{tabular*}{1\\textwidth}[t]{l@{\\extracolsep{\\fill}}r}
+      \\small\\textbf{#1}\\space\\space\\small#2 -- \\small#3 & \\small#4\\\\
+    \\end{tabular*}
 }
 
 \\newcommand{\\educationSubHeading}[5]{
   \\vspace{-2pt}\\item
-    \\begin{tabular*}{0.97\\textwidth}[t]{l@{\\extracolsep{\\fill}}r}
-      \\small\\textbf{#1} & \\small#2\\\\
-      \\small#3, \\small#4 & \\small#5\\\\
+    \\begin{tabular*}{1\\textwidth}[t]{l@{\\extracolsep{\\fill}}r}
+      \\small\\textbf{#1}\\space\\space\\small#3, \\small#4 -- \\small#5 & \\small#2
     \\end{tabular*}
 }
 
 \\newcommand{\\resumeJobSubheading}[3]{
   \\vspace{-2pt}\\item
-    \\begin{tabular*}{0.97\\textwidth}[t]{l@{\\extracolsep{\\fill}}r}
+    \\begin{tabular*}{1\\textwidth}[t]{l@{\\extracolsep{\\fill}}r}
       \\small\\textbf{#1}, \\small#3 & #2\\\\
     \\end{tabular*}
 }
 
 \\newcommand{\\resumeSubSubheading}[2]{
     \\item
-    \\begin{tabular*}{0.97\\textwidth}{l@{\\extracolsep{\\fill}}r}
+    \\begin{tabular*}{1\\textwidth}{l@{\\extracolsep{\\fill}}r}
       \\small#1 & \\small #2\\\\
     \\end{tabular*}
 }
 
 \\newcommand{\\resumeProjectHeading}[3]{
     \\item
-    \\begin{tabular*}{0.97\\textwidth}{l@{\\extracolsep{\\fill}}r}
+    \\begin{tabular*}{1\\textwidth}{l@{\\extracolsep{\\fill}}r}
       \\small#1 & \\small#2\\vspace{-1pt}\\\\
       \\small{#3}
-    \\end{tabular*}\\vspace{-6pt}
+    \\end{tabular*}
 }
 
 \\newcommand{\\resumeSubItem}[1]{\\resumeItem{#1}\\vspace{-4pt}}
 
 \\renewcommand\\labelitemii{$\\vcenter{\\hbox{\\tiny$\\bullet$}}$}
 
-\\newcommand{\\resumeSubHeadingListStart}{\\begin{itemize}[leftmargin=0.15in, label={}]}
+\\newcommand{\\resumeSubHeadingListStart}{\\begin{itemize}[leftmargin=0in, label={}]}
 \\newcommand{\\resumeSubHeadingListEnd}{\\end{itemize}}
 \\newcommand{\\resumeItemListStart}{\\begin{itemize}}
 \\newcommand{\\resumeItemListEnd}{\\end{itemize}\\vspace{-5pt}}
@@ -212,20 +210,15 @@ const renderHeading = ({
 
   return `
 \\begin{center}
-  \\begin{minipage}[b]{0.33333\\textwidth}
-  \\raggedright
-    \\small ${email}\\\\
-    \\small ${phone}
+  \\begin{minipage}[b]{0.5\\textwidth}
+    \\raggedright
+      \\textbf{\\Huge \\scshape ${name}} \\vspace{0pt} \\\\
+      Fort Worth, TX
   \\end{minipage}%
-  \\begin{minipage}[b]{0.33333\\textwidth}
-  \\centering
-    \\textbf{\\huge \\scshape ${name}} \\\\ \\vspace{1.5pt}
-    \\small ${personalUrl}
+  \\begin{minipage}[b]{0.5\\textwidth}
+    \\raggedleft
+      \\small ${personalUrl}\\\\${sites.join('\\\\')} \\vspace{0pt}
   \\end{minipage}%
-  \\begin{minipage}[b]{0.33333\\textwidth}
-  \\raggedleft
-    \\small ${sites.join('\\\\')}
-  \\end{minipage}
 \\end{center}
   `;
 };
@@ -260,8 +253,7 @@ const renderEducation = ({
       {${institution}}{${renderMonthDate(startDate)} -- ${renderMonthDate(
         endDate,
       )}}
-      {${studyType} ${area}}{GPA: ${score}}{${city}, ${region}}
-      \\vspace{-6pt}
+      {${studyType} ${area}}{${score} GPA}{${city}, ${region}}
   \\resumeSubHeadingListEnd
   `;
 };
@@ -285,11 +277,10 @@ const renderSkills = ({ skills }: { skills: ResumeSkill[] }): string => {
 
   return `
 \\section{Skills}
-    \\begin{itemize}[leftmargin=0.15in, label={}]
+    \\begin{itemize}[leftmargin=0in, label={}]
         \\small{\\item{
             ${categories}
         }}
-        \\vspace{-2pt}
     \\end{itemize}
   `;
 };
@@ -304,10 +295,7 @@ const renderExperience = ({
 }: ResumeExperience): string => {
   const renderHighlight = (highlight: string) => `\\resumeItem{${highlight}}`;
 
-  return `\\resumeSubheading
-            {${name}}{${renderMonthDate(startDate)} -- ${renderMonthDate(
-              endDate,
-            )}}{${position}}{${location}}
+  return `\\resumeSubheading{${name}}{${position}}{${location}}{${renderMonthDate(startDate)} -- ${renderMonthDate(endDate)}} 
             \\resumeItemListStart
                 ${highlights.map(renderHighlight).join(indent(8))}
             \\resumeItemListEnd`;
@@ -327,7 +315,6 @@ const renderExperiences = ({ work }: { work: ResumeExperience[] }): string => {
 \\section{Work Experience}
     \\resumeSubHeadingListStart    
         ${experiences}
-        \\vspace{-3pt}
     \\resumeSubHeadingListEnd
   `;
 };
@@ -342,14 +329,13 @@ const renderProject = ({
   const renderHighlight = (highlight: string): string =>
     `\\resumeItem{${highlight}}`;
 
-  const renderedKeywords = keywords.join(', ');
   const renderedHighlights = highlights.map(renderHighlight).join(indent(8));
 
   const renderedUrl =
     url === undefined ? 'Closed Source' : url.slice('https://'.length);
 
   return `\\resumeProjectHeading
-            {\\textbf{${name}} \\emph{${renderedKeywords}}}{${startDate}}{${renderedUrl}}
+            {\\textbf{${name}}}{${startDate}}{${renderedUrl}}
             \\resumeItemListStart
                 ${renderedHighlights}
             \\resumeItemListEnd`;
@@ -387,27 +373,24 @@ type ArbitrarilyNested =
 
 class Resume {
   private resume: BareResume;
+  private doPrecheck: boolean = false;
+  private experiencesConfig?: InclusionConfig;
+  private projectsConfig?: InclusionConfig;
 
   constructor(resume: BareResume) {
     this.resume = { ...resume };
-
-    const errors = this.precheck((text: string) => {
-      if (text.match(/[^\\]\$/)) {
-        return 'Unescaped dollar sign ($)';
-      }
-
-      return null;
-    });
-
-    // TODO: Return warnings instead of logging them.
-    if (errors.length > 0) {
-      console.warn('\nWarnings:');
-      console.warn(errors);
-      console.warn();
-    }
   }
 
-  experiences({ include, exclude, after }: InclusionConfig): Resume {
+  experiences(ic: InclusionConfig): Resume {
+    this.experiencesConfig = ic;
+    return this;
+  }
+
+  private applyExperiencesFilters() {
+    if (this.experiencesConfig === undefined) return;
+
+    const { include, exclude, after } = this.experiencesConfig;
+
     if (include !== undefined) {
       this.resume.work = this.resume.work?.filter(
         ({ name }) =>
@@ -427,11 +410,18 @@ class Resume {
         return startDate !== undefined && after <= new Date(startDate);
       });
     }
+  }
 
+  projects(ic: InclusionConfig): Resume {
+    this.projectsConfig = ic;
     return this;
   }
 
-  projects({ include, exclude, after }: InclusionConfig): Resume {
+  private applyProjectsFilters() {
+    if (this.projectsConfig === undefined) return;
+
+    const { include, exclude, after } = this.projectsConfig;
+
     if (include !== undefined) {
       this.resume.projects = this.resume.projects?.filter(
         ({ name }) =>
@@ -451,11 +441,9 @@ class Resume {
         return startDate !== undefined && after <= new Date(startDate);
       });
     }
-
-    return this;
   }
 
-  check(
+  private check(
     node: ArbitrarilyNested,
     errors: [string, string][],
     path: string[],
@@ -479,7 +467,7 @@ class Resume {
     }
   }
 
-  precheck(cb: (text: string) => string | null) {
+  private precheck(cb: (text: string) => string | null) {
     const errors: [string, string][] = [];
     const path: string[] = [];
 
@@ -488,13 +476,38 @@ class Resume {
     return errors;
   }
 
+  withPrecheck() {
+    this.doPrecheck = true;
+    return this;
+  }
+
   render(config: RenderConfig): string {
+    if (this.doPrecheck) {
+      const errors = this.precheck((text: string) => {
+        if (text.match(/[^\\][\$\%]/)) {
+          return 'Unescaped dollar sign ($)';
+        }
+
+        return null;
+      });
+
+      // TODO: Return warnings instead of logging them.
+      if (errors.length > 0) {
+        console.warn('\nWarnings:');
+        console.warn(errors);
+        console.warn();
+      }
+    }
+
+    this.applyExperiencesFilters();
+    this.applyProjectsFilters();
+
     return renderResume(config.lineHeight, [
       renderHeading(this.resume),
-      renderEducation(this.resume),
-      renderSkills(this.resume),
       renderExperiences(this.resume),
       renderProjects(this.resume),
+      renderEducation(this.resume),
+      renderSkills(this.resume),
     ]);
   }
 }
