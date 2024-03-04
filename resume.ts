@@ -74,7 +74,7 @@ export default {
         'Maintained internal Ruby on Rails application for assessing fees and funding merchants as part of Braintree division',
         'Led development and production testing of crucial funds disbursement flows used to quarantine risk-identified merchants',
         'Increased average daily revenue by \\$160,000 by correcting rate-based fee calculations to use rounding instead of truncation',
-        'Prevented \\$x in incorrect money movements after identifying and addressing time-related bug for money movements',
+        'Prevented over \\$150,000 in misallocated funds after identifying and addressing time-based bug in funds sweeping logic',
       ],
     },
     {
