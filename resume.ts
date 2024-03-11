@@ -75,7 +75,7 @@ export default {
       endDate: 'Present',
       highlights: [
         "Maintained Kafka consumers, Rake tasks, and Qless jobs comprising Braintree's internal Ruby on Rails application for assessing fees on acquired transactions, paying out transaction funds to merchants, and generating statements and reports",
-        'Led development and orchestrated live testing across engineering, product, and account teams for crucial funds disbursement flows used to pause payouts and hold funds for high-risk merchants resulting in a 100\\% success rate across live testing cases',
+        'Led development and orchestrated live testing across engineering, product, and accounting teams for crucial funds disbursement flows used to pause payouts and hold funds for high-risk merchants resulting in a 100\\% success rate across live testing cases',
         'Increased revenue by \\$160,000 a day by correcting percentage-based fee calculations indiscriminantly truncating the decimal of fractional cent amounts to instead round to the nearest cent',
         'Prevented over \\$150,000 in misallocated funds by identifying and fixing an edge case in the timing of  customer transactions ingested via Kafka, movement of funds between internal bank accounts, and regularly-scheduled payouts to merchants',
       ],
