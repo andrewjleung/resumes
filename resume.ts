@@ -1,10 +1,13 @@
 import { ResumeSchema } from '@kurone-kito/jsonresume-types';
 
+// TODO: touch up projects...
+// TODO: make work bullet points more technical, say what i actually did to achieve the impact, what technologies did i leverage
+
 export default {
   $schema:
     'https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json',
   basics: {
-    name: 'Andrew Leung (WIP)',
+    name: 'Andrew Leung',
     label: 'Software Engineer',
     email: 'andrewleung104@gmail.com',
     phone: '(978) 221-8810',
@@ -71,10 +74,10 @@ export default {
       startDate: '2023-06-12',
       endDate: 'Present',
       highlights: [
-        'Maintained internal Ruby on Rails application for assessing fees and funding merchants as part of Braintree division',
-        'Led development and production testing of crucial funds disbursement flows used to quarantine risk-identified merchants',
-        'Increased average daily revenue by \\$160,000 by correcting rate-based fee calculations to use rounding instead of truncation',
-        'Prevented over \\$150,000 in misallocated funds after identifying and addressing time-based bug in funds sweeping logic',
+        "Maintained Braintree's internal Ruby on Rails application for assessing transaction fees, funding merchants, and generating statements and reports",
+        'Led development and orchestrated live testing across engineering, product, and account teams for crucial funds disbursement flows used to pause payouts and hold funds for high-risk merchants resulting in a 100\\% success rate in live production testing',
+        'Increased revenue by \\$160,000 a day by correcting percentage-based fee calculations indiscriminantly truncating the decimal of fractional cent amounts to instead round to the nearest cent',
+        'Prevented over \\$150,000 in misallocated funds by identifying and fixing an edge case in the timing of  customer transactions ingested via Kafka, movement of funds between internal bank accounts, and regularly-scheduled payouts to merchants',
       ],
     },
     {
@@ -86,9 +89,11 @@ export default {
       startDate: '2021-01-06',
       endDate: '2021-08-13',
       highlights: [
-        'Reduced engineering effort spent updating web marketing material by 100\\% by integrating a content management system',
+        'Reduced engineering effort spent updating web marketing material by 100\\% by migrating content to DatoCMS content management system and using GraphQL to retrieve and serve content dynamically from a Node.js backend',
+        'Broadened the expressiveness of JSON-based rule definitions used to govern user permissions of actions in internal support tools by contributing support for logical negation to open source rules engine used by a Node.js permission verification service',
+        // 'maintenance mode toggles? don't really remember...',
         'Constructed Zendesk and Jira Service Desk API integrations and internal web tools in PHP, TypeScript, and React to streamline customer support engineer workflows',
-        'Improved developer experience for a Node.js permissions service by creating abstractions for rule composition, simplifying testing patterns in Jest, and contributing to underlying open source rules engine library',
+        // 'Improved developer experience for a Node.js permissions service by creating abstractions for rule composition, simplifying testing patterns in Jest, and contributing to underlying open source rules engine library',
       ],
     },
     {
@@ -117,7 +122,7 @@ export default {
       highlights: [
         'Demonstrated technical growth starting with no Scala, TypeScript, or web development experience to becoming an active contributor to a Scala with Cats backend and a TypeScript with React/Redux frontend',
         'Built front-end user flows and interactions according to designer specifications with TypeScript, React, HTML, and CSS',
-        'Surfaced API endpoints in Scala to persist millions of rows of user data in a PostgreSQL database',
+        // 'Surfaced API endpoints in Scala to persist millions of rows of user data in a PostgreSQL database',
         'Reduced effort for users modifying ad campaign targets by implementing a React UI and Scala API for bulk CSV uploads',
       ],
     },
@@ -165,7 +170,8 @@ export default {
     {
       name: 'Bookmark Manager',
       highlights: [
-        'Created a self-hostable bookmark manager using TypeScript, Next.js, and shadcn/UI components',
+        'Created a self-hostable bookmark URL manager using TypeScript, Next.js, and shadcn/ui components',
+        'Built an API for migrating bookmarks from web browsers or other bookmark managers',
         'Persisted data in a PostgreSQL database hosted by Supabase and queried via Drizzle ORM',
       ],
       keywords: [

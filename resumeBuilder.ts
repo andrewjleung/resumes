@@ -1,6 +1,3 @@
-// TODO: Get metrics for PayPal
-// TODO: Add another PayPal bullet point, EPP? discovery?
-
 import { ResumeSchema } from '@kurone-kito/jsonresume-types';
 
 export type RenderConfig = {
@@ -215,7 +212,7 @@ const renderHeading = ({
   \\begin{minipage}[b]{0.5\\textwidth}
     \\raggedright
       \\textbf{\\Huge \\scshape ${name}} \\vspace{0pt} \\\\
-      Fort Worth, TX $\\vert$ ${email}
+      ${email}
   \\end{minipage}%
   \\begin{minipage}[b]{0.5\\textwidth}
     \\raggedleft
@@ -516,8 +513,8 @@ class Resume {
       renderHeading(this.resume),
       renderExperiences(this.resume),
       renderProjects(this.resume),
-      renderEducation(this.resume),
       renderSkills(this.resume),
+      renderEducation(this.resume),
     ]);
   }
 }
