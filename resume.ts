@@ -74,10 +74,11 @@ export default {
       startDate: '2023-06-12',
       endDate: 'Present',
       highlights: [
-        "Maintained Kafka consumers, Rake tasks, and Qless jobs comprising Braintree's internal Ruby on Rails application for assessing fees on acquired transactions, paying out transaction funds to merchants, and generating statements and reports",
-        'Led development and orchestrated live testing across engineering, product, and accounting teams for crucial funds disbursement flows used to pause payouts and hold funds for high-risk merchants resulting in a 100\\% success rate across live testing cases',
-        'Increased revenue by \\$160,000 a day by correcting percentage-based fee calculations indiscriminantly truncating the decimal of fractional cent amounts to instead round to the nearest cent',
-        'Prevented over \\$150,000 in misallocated funds by identifying and fixing an edge case in the timing of  customer transactions ingested via Kafka, movement of funds between internal bank accounts, and regularly-scheduled payouts to merchants',
+        "Maintained Braintree's internal Ruby on Rails application for assessing fees on acquired transactions, creating payouts to merchants, and generating statements and reports",
+        'Increased revenue by \\$160,000 a day by correcting fee calculations to round fractional cent amounts instead of truncating them',
+        // TODO: 'Led the migration of held merchant funds totalling over \\$230,000,000 out of a soon-to-be deprecated bank account by designing and implementing a recurring Rake task to find and transfer held funds for merchants transitioning to new acquirers',
+        'Prevented over \\$150,000 in misallocated funds by identifying and resolving an edge case in the timing of transactions ingested via Kafka, transfers between internal bank accounts, and daily Qless jobs responsible for payouts to merchants',
+        'Led development and coordinated live testing of crucial funds disbursement flows used to pause payouts and hold funds for high-risk merchants resulting in a 100\\% success rate across live testing cases',
       ],
     },
     {
@@ -90,7 +91,7 @@ export default {
       endDate: '2021-08-13',
       highlights: [
         'Reduced engineering effort spent updating web marketing material by 100\\% by migrating content to DatoCMS content management system and using GraphQL to retrieve and serve content dynamically from a Node.js backend',
-        'Broadened the expressiveness of JSON-based rule definitions used to govern user permissions of actions in internal support tools by contributing support for logical negation to open source rules engine used by a Node.js permission verification service',
+        'Broadened the expressiveness of JSON-based rule definitions used to govern user permissions in internal support tools by contributing support for logical negation to open source rules engine used by a Node.js permission verification service',
         // 'maintenance mode toggles? don't really remember...',
         'Constructed Zendesk and Jira Service Desk API integrations and internal web tools in PHP, TypeScript, and React to streamline customer support engineer workflows',
         // 'Improved developer experience for a Node.js permissions service by creating abstractions for rule composition, simplifying testing patterns in Jest, and contributing to underlying open source rules engine library',
