@@ -45,7 +45,7 @@ export default {
     {
       name: 'Programming Languages',
       level: 'Intermediate',
-      keywords: ['TypeScript', 'JavaScript', 'Python', 'Ruby', 'Java', 'SQL'],
+      keywords: ['TypeScript', 'JavaScript', 'Python', 'Ruby', 'SQL'],
     },
     {
       name: 'Tools & Frameworks',
