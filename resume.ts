@@ -75,10 +75,10 @@ export default {
       endDate: 'Present',
       highlights: [
         "Maintained Braintree's internal Ruby on Rails application for assessing fees on acquired transactions, creating payouts to merchants, and generating statements and reports",
-        'Increased revenue by \\$160,000 a day by correcting fee calculations to round fractional cent amounts instead of truncating them',
-        // TODO: 'Led the migration of held merchant funds totalling over \\$230,000,000 out of a soon-to-be deprecated bank account by designing and implementing a recurring Rake task to find and transfer held funds for merchants transitioning to new acquirers',
-        'Prevented over \\$150,000 in misallocated funds by identifying and resolving an edge case in the timing of transactions ingested via Kafka, transfers between internal bank accounts, and daily Qless jobs responsible for payouts to merchants',
-        'Led development and coordinated live testing of crucial funds disbursement flows used to pause payouts and hold funds for high-risk merchants resulting in a 100\\% success rate across live testing cases',
+        'Created a solution to migrate over \\$230 million in held transaction funds out of a deprecated bank account by designing and implementing a recurring Rake task to find merchants with lingering funds and transfer them to a new bank account',
+        'Increased daily revenue by \\$25,000 by correcting logic to round fee calculations to the nearest cent instead of truncating them',
+        'Prevented over \\$150,000 in misallocated funds by identifying and resolving an edge case in the timing of transaction ingestion, transfers between internal bank accounts, and transitioning of merchants onto new disbursement flows',
+        'Led development and orchestrated live testing of funds disbursement flows used to pause payouts and hold funds for high-risk merchants resulting in a 100\\% success rate across live testing cases',
       ],
     },
     {
