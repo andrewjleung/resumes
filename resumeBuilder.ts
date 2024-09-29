@@ -365,6 +365,20 @@ const renderProjects = ({
   `;
 };
 
+const renderSection = (section: ResumeSection, resume: BareResume): string => {
+  if (section === 'education') {
+    return renderEducation(resume);
+  } else if (section === 'experiences') {
+    return renderExperiences(resume);
+  } else if (section === 'projects') {
+    return renderProjects(resume);
+  } else if (section === 'skills') {
+    return renderSkills(resume);
+  } else {
+    return '';
+  }
+};
+
 type InclusionConfig = {
   include?: string[];
   exclude?: string[];
@@ -377,6 +391,8 @@ type ArbitrarilyNested =
   | {
       [key: string]: ArbitrarilyNested;
     };
+
+type ResumeSection = 'skills' | 'experiences' | 'projects' | 'education';
 
 class Resume {
   private resume: BareResume;
@@ -488,7 +504,7 @@ class Resume {
     return this;
   }
 
-  render(config: RenderConfig): string {
+  render(config: RenderConfig, sections: ResumeSection[]): string {
     if (this.doPrecheck) {
       const errors = this.precheck((text: string) => {
         if (text.match(/[^\\][\$\%]/)) {
@@ -509,12 +525,12 @@ class Resume {
     this.applyExperiencesFilters();
     this.applyProjectsFilters();
 
+    const body =
+      sections.map((section) => renderSection(section, this.resume)) || [];
+
     return renderResume(config.lineHeight, [
       renderHeading(this.resume),
-      renderExperiences(this.resume),
-      renderProjects(this.resume),
-      renderSkills(this.resume),
-      renderEducation(this.resume),
+      ...body,
     ]);
   }
 }

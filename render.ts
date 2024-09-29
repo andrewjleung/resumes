@@ -20,7 +20,12 @@ const renderAndWriteResume = (
     .projects({
       exclude: ['TheNeedleDrop Review Dataset', 'Random Audio Player'],
     })
-    .render({ lineHeight: LINE_HEIGHT });
+    .render({ lineHeight: LINE_HEIGHT }, [
+      'skills',
+      'experiences',
+      'projects',
+      'education',
+    ]);
 
   // Write to an intermediate LaTeX file before generating PDF for debugging.
   fs.writeFileSync(texFileName, renderedResume, {
