@@ -10,11 +10,11 @@ export default [
     startDate: '2023-06-12',
     endDate: 'Present',
     highlights: [
-      "Maintained Braintree's Ruby on Rails application for assessing fees on acquired transactions, disbursing funds to merchants, and generating statements and reports",
-      'Led development and live testing of a feature used to pause disbursements and hold funds for high-risk or delinquent merchants resulting in a 100\\% success rate across live testing cases and processing of \\$x in held funds per month', // Add more metrics for this now that it's been rolled out, i.e. how much in funds have been moved through reserves? how many merchant accounts in this state? what transaction volume of accounts? how much margin is this generating?
+      "Maintained Braintree's Ruby on Rails application for assessing fees, disbursing merchant funds, and generating reports",
+      'Led development and live testing of feature used to pause disbursements and hold funds for high-risk or delinquent merchants resulting in a 100\\% success rate across live testing cases and processing of \\$x in held funds per month', // Add more metrics for this now that it's been rolled out, i.e. how much in funds have been moved through reserves? how many merchant accounts in this state? what transaction volume of accounts? how much margin is this generating?
       'Migrated over \\$54,000,000 in held merchant funds out of a deprecated internal bank account and into new interest-generating accounts by designing and building a recurring job to find and transfer lingering funds',
-      'Increased monthly revenue by \\$450,000 by correcting logic to round fee calculations to the nearest cent instead of truncating',
-      'Prevented over \\$175,000 in misallocated funds by identifying and resolving an edge case in the timing of transaction ingestion, transfers between internal bank accounts, and transitioning of merchants onto new disbursement flows',
+      'Increased monthly revenue by \\$450,000 by correcting fee calculations to round to the nearest cent instead of truncating',
+      'Prevented movement of over \\$175,000 into the wrong internal bank account by resolving an edge case in the timing of transaction ingestion, transfers between internal bank accounts, and transitioning of merchants onto new disbursement flows',
     ],
   },
   {
@@ -26,11 +26,10 @@ export default [
     startDate: '2021-01-06',
     endDate: '2021-08-13',
     highlights: [
-      'Reduced engineering effort spent updating web marketing material by 100\\% by migrating content to DatoCMS content management system and using GraphQL to retrieve and serve content dynamically from a Node.js backend',
-      'Broadened the expressiveness of JSON-based rule definitions used to govern user permissions in internal support tools by contributing support for logical negation to open source rules engine used by a Node.js permission verification service',
+      'Reduced engineering effort spent updating web marketing material by 100\\% by migrating content to DatoCMS and using GraphQL to retrieve and serve content dynamically from a Node.js backend',
+      'Broadened the expressiveness of JSON-based rule definitions used by a Node.js permissions service to govern user permissions across internal applications by contributing support for logical negation of rules to underlying open source rules engine',
       // 'maintenance mode toggles? don't really remember...',
       'Constructed Zendesk and Jira Service Desk API integrations and internal web tools in PHP, TypeScript, and React to streamline customer support engineer workflows',
-      // 'Improved developer experience for a Node.js permissions service by creating abstractions for rule composition, simplifying testing patterns in Jest, and contributing to underlying open source rules engine library',
     ],
   },
   {
@@ -44,7 +43,7 @@ export default [
     highlights: [
       'Developed features for a university course planning web application using Ruby on Rails, TypeScript, and React',
       'Modeled course schedule data in TypeScript, wrote logic for validating course requirements, and implemented React components to display interactive course plans to users',
-      'Wrote a Node.js script to automatically parse university course documentation into JSON for internal usage',
+      'Wrote a Node.js parser to translate university course documentation PDFs into JSON for internal usage',
       'Provided technical mentoring to teammates on tasks through routine pair-programming',
     ],
   },
@@ -57,9 +56,7 @@ export default [
     startDate: '2020-01-06',
     endDate: '2020-08-21',
     highlights: [
-      'Demonstrated technical growth starting with no Scala, TypeScript, or web development experience to becoming an active contributor to a Scala with Cats backend and a TypeScript with React/Redux frontend',
-      'Built front-end user flows and interactions according to designer specifications with TypeScript, React, HTML, and CSS',
-      // 'Surfaced API endpoints in Scala to persist millions of rows of user data in a PostgreSQL database',
+      'Demonstrated technical growth starting with no Scala, TypeScript, or web development experience to becoming an active contributor to a Scala with Cats backend and a frontend built with TypeScript, React, and Redux',
       'Reduced effort for users modifying ad campaign targets by implementing a React UI and Scala API for bulk CSV uploads',
     ],
   },

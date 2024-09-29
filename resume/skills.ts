@@ -4,7 +4,15 @@ export default [
   {
     name: 'Programming Languages',
     level: 'Intermediate',
-    keywords: ['TypeScript', 'JavaScript', 'Python', 'Ruby', 'SQL'],
+    keywords: [
+      'TypeScript',
+      'JavaScript',
+      'Python',
+      'Ruby',
+      'SQL',
+      'HTML',
+      'CSS',
+    ],
   },
   {
     name: 'Tools & Frameworks',
@@ -14,9 +22,9 @@ export default [
       'React',
       'Next.js',
       'Ruby on Rails',
-      'HTML/CSS',
       'Tailwind',
       'PostgreSQL',
+      'BigQuery',
       'Vim',
     ],
   },

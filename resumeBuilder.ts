@@ -176,7 +176,7 @@ const renderResume = (lineHeight: number, sections: string[]): string =>
 \\newcommand{\\resumeSubHeadingListStart}{\\begin{itemize}[leftmargin=0in, label={}]}
 \\newcommand{\\resumeSubHeadingListEnd}{\\end{itemize}}
 \\newcommand{\\resumeItemListStart}{\\begin{itemize}[leftmargin=1.5em]}
-\\newcommand{\\resumeItemListEnd}{\\end{itemize}\\vspace{-5pt}}
+\\newcommand{\\resumeItemListEnd}{\\end{itemize}\\vspace{-8pt}}
 
 \\setstretch{${lineHeight}}
 
@@ -280,7 +280,7 @@ const renderSkills = ({ skills }: { skills: ResumeSkill[] }): string => {
         \\small{\\item{
             ${categories}
         }}
-    \\end{itemize}
+    \\end{itemize}\\vspace{-16pt}
   `;
 };
 
@@ -308,7 +308,7 @@ const renderExperiences = ({ work }: { work: ResumeExperience[] }): string => {
   const experiences = work
     .sort((a, b) => Date.parse(b.startDate) - Date.parse(a.startDate))
     .map(renderExperience)
-    .join('\n        ');
+    .join(`\n${indent(4)}`);
 
   return `
 \\section{Work Experience}

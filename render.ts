@@ -41,7 +41,6 @@ const renderAndWriteResume = (
   const renderedResume = r(resume)
     .experiences({
       after: new Date(SECOND_COOP_START_DATE),
-      exclude: ['Sandbox at Northeastern University'],
     })
     .projects({
       exclude: ['TheNeedleDrop Review Dataset', 'Random Audio Player'],
