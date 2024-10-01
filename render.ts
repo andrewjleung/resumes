@@ -1,7 +1,8 @@
 import resume from './resume';
 import latex from 'node-latex';
 import fs from 'fs';
-import { resume as r, BareResume } from './resumeRenderer';
+import { resume as r } from './resumeRenderer';
+import { BareResume } from './types';
 
 const LINE_HEIGHT = 1.1;
 const SECOND_COOP_START_DATE = new Date('2020-01-06');
