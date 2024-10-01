@@ -1,63 +1,16 @@
-import { ResumeSchema } from '@kurone-kito/jsonresume-types';
+import { match } from 'ts-pattern';
+import {
+  BareResume,
+  ResumeBasics,
+  ResumeEducation,
+  ResumeExperience,
+  ResumeProject,
+  ResumeSkill,
+} from './types';
 
-export type RenderConfig = {
+type RenderConfig = {
   lineHeight: number;
 };
-
-type ResumeBasics = Required<
-  Pick<NonNullable<ResumeSchema['basics']>, 'name' | 'email' | 'phone' | 'url'>
-> & {
-  location: Required<
-    Pick<
-      NonNullable<NonNullable<ResumeSchema['basics']>['location']>,
-      'city' | 'region'
-    >
-  >;
-  profiles: Required<
-    Pick<
-      NonNullable<
-        NonNullable<NonNullable<ResumeSchema['basics']>['profiles']>
-      >[number],
-      'url'
-    >
-  >[];
-};
-
-type ResumeEducation = Required<
-  Pick<
-    NonNullable<ResumeSchema['education']>[number],
-    'institution' | 'area' | 'studyType' | 'startDate' | 'endDate' | 'score'
-  >
->;
-
-type ResumeSkill = Required<
-  Pick<NonNullable<ResumeSchema['skills']>[number], 'name' | 'keywords'>
->;
-
-type ResumeExperience = Required<
-  Pick<
-    NonNullable<ResumeSchema['work']>[number],
-    'name' | 'location' | 'position' | 'startDate' | 'endDate' | 'highlights'
-  >
->;
-
-type ResumeProject = Required<
-  Pick<
-    NonNullable<ResumeSchema['projects']>[number],
-    'name' | 'keywords' | 'highlights' | 'startDate'
-  >
-> &
-  Pick<NonNullable<ResumeSchema['projects']>[number], 'url' | 'endDate'>;
-
-export type BareResume = {
-  basics: ResumeBasics;
-  education: ResumeEducation[];
-  skills: ResumeSkill[];
-  work: ResumeExperience[];
-  projects: ResumeProject[];
-};
-
-type _BareResumeCheck = BareResume extends ResumeSchema ? BareResume : never;
 
 const indent = (num: number): string => `\n${'  '.repeat(num)}`;
 
@@ -224,11 +177,10 @@ const renderHeading = ({
 
 const renderMonthDate = (dateString: string): string => {
   if (dateString === 'Present') {
-    return 'Present';
+    return dateString;
   }
 
   const date = new Date(dateString);
-
   date.setDate(date.getDate() + 1);
   const month = date.toLocaleString('default', { month: 'short' });
 
@@ -241,6 +193,10 @@ const renderEducation = ({
     location: { city, region },
   },
 }: { education: ResumeEducation[] } & { basics: ResumeBasics }): string => {
+  if (education.length === 0) {
+    return '';
+  }
+
   const { institution, area, studyType, startDate, endDate, score } =
     education[0];
 
@@ -365,21 +321,16 @@ const renderProjects = ({
   `;
 };
 
-const renderSection = (section: ResumeSection, resume: BareResume): string => {
-  if (section === 'education') {
-    return renderEducation(resume);
-  } else if (section === 'experiences') {
-    return renderExperiences(resume);
-  } else if (section === 'projects') {
-    return renderProjects(resume);
-  } else if (section === 'skills') {
-    return renderSkills(resume);
-  } else {
-    return '';
-  }
-};
+const renderSection = (section: ResumeSection, resume: BareResume): string =>
+  match(section)
+    .returnType<string>()
+    .with('education', () => renderEducation(resume))
+    .with('experiences', () => renderExperiences(resume))
+    .with('projects', () => renderProjects(resume))
+    .with('skills', () => renderSkills(resume))
+    .exhaustive();
 
-type InclusionConfig = {
+type Filters = {
   include?: string[];
   exclude?: string[];
   after?: Date;
@@ -393,146 +344,129 @@ type ArbitrarilyNested =
     };
 
 type ResumeSection = 'skills' | 'experiences' | 'projects' | 'education';
+type Filterable = { name: string; startDate: string };
+type CheckError = { path: string; error: string };
 
-class Resume {
+class ResumeRenderer {
   private resume: BareResume;
-  private doPrecheck: boolean = false;
-  private experiencesConfig?: InclusionConfig;
-  private projectsConfig?: InclusionConfig;
+  private shouldRunChecks: boolean = false;
+  private experiencesConfig?: Filters;
+  private projectsConfig?: Filters;
 
   constructor(resume: BareResume) {
     this.resume = { ...resume };
   }
 
-  experiences(ic: InclusionConfig): Resume {
-    this.experiencesConfig = ic;
-    return this;
-  }
-
-  private applyExperiencesFilters() {
-    if (this.experiencesConfig === undefined) return;
-
-    const { include, exclude, after } = this.experiencesConfig;
-
-    if (include !== undefined) {
-      this.resume.work = this.resume.work?.filter(
-        ({ name }) =>
-          name !== undefined && include.some((n) => name.includes(n)),
-      );
-    }
-
-    if (exclude !== undefined) {
-      this.resume.work = this.resume.work?.filter(
-        ({ name }) =>
-          name !== undefined && !exclude.some((n) => name.includes(n)),
-      );
-    }
-
-    if (after !== undefined) {
-      this.resume.work = this.resume.work?.filter(({ startDate }) => {
-        return startDate !== undefined && after <= new Date(startDate);
-      });
-    }
-  }
-
-  projects(ic: InclusionConfig): Resume {
-    this.projectsConfig = ic;
-    return this;
-  }
-
-  private applyProjectsFilters() {
-    if (this.projectsConfig === undefined) return;
-
-    const { include, exclude, after } = this.projectsConfig;
-
-    if (include !== undefined) {
-      this.resume.projects = this.resume.projects?.filter(
-        ({ name }) =>
-          name !== undefined && include.some((n) => name.includes(n)),
-      );
-    }
-
-    if (exclude !== undefined) {
-      this.resume.projects = this.resume.projects?.filter(
-        ({ name }) =>
-          name !== undefined && !exclude.some((n) => name.includes(n)),
-      );
-    }
-
-    if (after !== undefined) {
-      this.resume.projects = this.resume.projects?.filter(({ startDate }) => {
-        return startDate !== undefined && after <= new Date(startDate);
-      });
-    }
-  }
-
-  private check(
-    node: ArbitrarilyNested,
-    errors: [string, string][],
-    path: string[],
-    cb: (text: string) => string | null,
-  ) {
-    if (typeof node === 'string') {
-      const maybeError = cb(node);
-      if (maybeError !== null) errors.push([path.join('.'), maybeError]);
-    } else if (Array.isArray(node)) {
-      node.forEach((v, i) => {
-        path.push(i.toString());
-        this.check(v, errors, path, cb);
-        path.pop();
-      });
-    } else {
-      Object.entries(node).forEach(([key, value]) => {
-        path.push(key);
-        this.check(value, errors, path, cb);
-        path.pop();
-      });
-    }
-  }
-
-  private precheck(cb: (text: string) => string | null) {
-    const errors: [string, string][] = [];
-    const path: string[] = [];
-
-    this.check(this.resume as unknown as ArbitrarilyNested, errors, path, cb);
-
-    return errors;
-  }
-
-  withPrecheck() {
-    this.doPrecheck = true;
-    return this;
-  }
-
   render(config: RenderConfig, sections: ResumeSection[]): string {
-    if (this.doPrecheck) {
-      const errors = this.precheck((text: string) => {
-        if (text.match(/[^\\][\$\%]/)) {
-          return 'Unescaped dollar sign ($)';
-        }
+    if (this.shouldRunChecks) this.runChecks();
+    this.applyFilters();
 
-        return null;
-      });
-
-      // TODO: Return warnings instead of logging them.
-      if (errors.length > 0) {
-        console.warn('\nWarnings:');
-        console.warn(errors);
-        console.warn();
-      }
-    }
-
-    this.applyExperiencesFilters();
-    this.applyProjectsFilters();
-
-    const body =
-      sections.map((section) => renderSection(section, this.resume)) || [];
+    const body = sections.map((section) => renderSection(section, this.resume));
 
     return renderResume(config.lineHeight, [
       renderHeading(this.resume),
       ...body,
     ]);
   }
+
+  experiences(ic: Filters): ResumeRenderer {
+    this.experiencesConfig = ic;
+    return this;
+  }
+
+  projects(ic: Filters): ResumeRenderer {
+    this.projectsConfig = ic;
+    return this;
+  }
+
+  withChecks() {
+    this.shouldRunChecks = true;
+    return this;
+  }
+
+  private findErrors(
+    node: ArbitrarilyNested,
+    errors: CheckError[],
+    path: string[],
+    cb: (text: string) => string | null,
+  ) {
+    if (typeof node === 'string') {
+      const maybeError = cb(node);
+      if (maybeError !== null)
+        errors.push({ path: path.join('.'), error: maybeError });
+    } else if (Array.isArray(node)) {
+      node.forEach((v, i) => {
+        path.push(i.toString());
+        this.findErrors(v, errors, path, cb);
+        path.pop();
+      });
+    } else {
+      Object.entries(node).forEach(([key, value]) => {
+        path.push(key);
+        this.findErrors(value, errors, path, cb);
+        path.pop();
+      });
+    }
+  }
+
+  private check(cb: (text: string) => string | null) {
+    const errors: CheckError[] = [];
+    const path: string[] = [];
+
+    this.findErrors(
+      this.resume as unknown as ArbitrarilyNested,
+      errors,
+      path,
+      cb,
+    );
+
+    return errors;
+  }
+
+  private filter<T extends Filterable>(
+    filterables: T[],
+    filters: Filters,
+  ): T[] {
+    const { include, exclude, after } = filters;
+
+    return filterables.filter(
+      ({ name, startDate }) =>
+        (include === undefined || include.some((n) => name.includes(n))) &&
+        (exclude === undefined || !exclude.some((n) => name.includes(n))) &&
+        (after === undefined ||
+          (startDate !== undefined && after <= new Date(startDate))),
+    );
+  }
+
+  private applyFilters() {
+    if (this.resume.projects && this.projectsConfig) {
+      this.resume.projects = this.filter(
+        this.resume.projects,
+        this.projectsConfig,
+      );
+    }
+
+    if (this.resume.work && this.experiencesConfig) {
+      this.resume.work = this.filter(this.resume.work, this.experiencesConfig);
+    }
+  }
+
+  private runChecks() {
+    const errors = this.check((text: string) => {
+      if (text.match(/[^\\][\$\%]/)) {
+        return 'Unescaped dollar sign ($)';
+      }
+
+      return null;
+    });
+
+    // TODO: Return warnings instead of logging them.
+    if (errors.length > 0) {
+      console.warn('\nWarnings:');
+      console.warn(errors);
+      console.warn();
+    }
+  }
 }
 
-export const resume = (resume: BareResume) => new Resume(resume);
+export const resume = (resume: BareResume) => new ResumeRenderer(resume);

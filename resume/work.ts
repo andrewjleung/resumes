@@ -42,7 +42,7 @@ export default [
     endDate: '2021-05-01',
     highlights: [
       'Developed features for a university course planning web application using Ruby on Rails, TypeScript, and React',
-      'Modeled course schedule data in TypeScript, wrote logic for validating course requirements, and implemented React components to display interactive course plans to users',
+      // 'Modeled course schedule data in TypeScript, wrote logic for validating course requirements, and implemented React components to display interactive course plans to users',
       'Wrote a Node.js parser to translate university course documentation PDFs into JSON for internal usage',
       'Provided technical mentoring to teammates on tasks through routine pair-programming',
     ],
