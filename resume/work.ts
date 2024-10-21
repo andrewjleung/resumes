@@ -11,10 +11,10 @@ export default [
     endDate: 'Present',
     highlights: [
       "Maintained Braintree's Ruby on Rails application for assessing fees, disbursing merchant funds, and generating reports",
-      'Led development and live testing of feature used to pause disbursements and hold funds for high-risk or delinquent merchants resulting in a 100\\% success rate across live testing cases and processing of \\$420,000 in held funds per day', // Add more metrics for this now that it's been rolled out, i.e. how much in funds have been moved through reserves? how many merchant accounts in this state? what transaction volume of accounts? how much margin is this generating?
-      'Migrated over \\$54,000,000 in held merchant funds out of a deprecated internal bank account and into new interest-generating accounts by designing and building a recurring job to find and transfer lingering funds',
+      'Led development and live testing of feature used to pause disbursements and hold funds for high-risk or delinquent merchants resulting in a 100\\% success rate across live testing cases and processing of \\$2,000,000 in held funds per day', // Add more metrics for this now that it's been rolled out, i.e. how much in funds have been moved through reserves? how many merchant accounts in this state? what transaction volume of accounts? how much margin is this generating?
+      'Migrated over \\$55,000,000 in held merchant funds out of a deprecated internal bank account and into new interest-generating accounts by designing and building a recurring job to find and transfer lingering funds',
       'Increased monthly revenue by \\$450,000 by correcting fee calculations to round to the nearest cent instead of truncating',
-      'Prevented movement of \\$200,000 into the wrong internal bank account by resolving an edge case in the timing of transaction ingestion, transfers between internal bank accounts, and transitioning of merchants onto new disbursement flows',
+      'Prevented movement of \\$500,000 into the wrong internal bank account by resolving an edge case in the timing of transaction ingestion, transfers between internal bank accounts, and transitioning of merchants onto new disbursement flows',
     ],
   },
   {
