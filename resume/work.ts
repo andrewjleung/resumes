@@ -10,11 +10,11 @@ export default [
     startDate: '2023-06-12',
     endDate: 'Present',
     highlights: [
-      "Maintained Braintree's internal Ruby on Rails application used to assess fees, generate statements and reports, and disburse over \\$1.5 billion dollars a day across tens of thousands of merchants",
-      'Led development and live testing of a feature used to pause disbursements and hold funds for high-risk or delinquent merchants, achieving a 100\\% success rate during live testing and facilitating the processing of \\$2,000,000 in held funds daily',
-      'Automated the migration of \\$55,000,000 in held merchant funds into new interest-generating bank accounts using a Ruby Rake task scheduled with a Kubernetes CronJob',
+      "Maintained Braintree's internal Ruby on Rails application used to assess fees, generate statements and reports, and disburse over \\$1.5B daily across tens of thousands of merchants",
+      'Led development and live testing of a feature used to pause disbursements and hold funds for high-risk or delinquent merchants, achieving a 100\\% success rate during live testing and facilitating the processing of \\$2M in held funds daily',
+      'Automated the migration of \\$55M in held merchant funds into new interest-generating bank accounts using a Ruby Rake task scheduled with a Kubernetes CronJob',
       'Increased monthly revenue by \\$450,000 by correcting fee calculations to round to the nearest cent instead of truncating',
-      'Prevented potential misallocation of \\$500,000 by resolving an edge case in the timing of transaction ingestion, transfers between internal bank accounts, and transitioning of merchants onto new disbursement flows',
+      'Prevented the potential misallocation of \\$500,000 by resolving an edge case in the timing of transaction ingestion, transfers between internal bank accounts, and transitioning merchants onto new disbursement flows',
     ],
   },
   {
@@ -26,8 +26,8 @@ export default [
     startDate: '2021-01-06',
     endDate: '2021-08-13',
     highlights: [
-      'Eliminated engineering effort spent manually updating web marketing material by migrating content to DatoCMS, fetching content with GraphQL, and serving content from a Node.js backend, enabling fully dynamic content management',
-      'Broadened the expressiveness of JSON-based rule definitions used by a Node.js permissions service to govern user permissions across internal applications by contributing support for logical negation of rules to underlying open source rules engine',
+      'Eliminated manual engineering effort spent updating web marketing material by migrating content to DatoCMS, fetching it with GraphQL, and serving it from a Node.js backend, enabling fully dynamic content management',
+      'Expanded the expressiveness of JSON-based rule definitions in a Node.js permissions service used to govern user permissions across internal applications by adding support for logical negation of rules to its open source rules engine',
       // 'maintenance mode toggles? don't really remember...',
       'Constructed Zendesk and Jira Service Desk API integrations and internal web tools using PHP, TypeScript, and React to streamline customer support engineer workflows',
     ],
@@ -56,7 +56,7 @@ export default [
     startDate: '2020-01-06',
     endDate: '2020-08-21',
     highlights: [
-      'Quickly ramped onto new technologies, starting with no Scala, TypeScript, or web development experience to becoming an active contributor to a Scala with Cats backend and a frontend built with TypeScript, React, and Redux',
+      'Quickly ramped up onto new technologies, progressing from no Scala, TypeScript, or web development experience to becoming an active contributor to a Scala with Cats backend and TypeScript, React, and Redux frontend',
       'Reduced effort for users modifying ad campaign targets by implementing a React UI and Scala API for bulk CSV uploads',
     ],
   },
