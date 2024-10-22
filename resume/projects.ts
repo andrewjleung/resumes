@@ -4,10 +4,10 @@ export default [
   {
     name: 'Bookmark Manager',
     highlights: [
-      'Created a self-hostable bookmark URL manager using TypeScript, React, Next.js, and shadcn/ui components',
-      'Built a tool for importing and re-categorizing bookmarks from Raindrop.io',
+      'Created a self-hostable bookmark URL manager for personal use using TypeScript, React, Next.js, and shadcn/ui components',
       'Persisted data in a PostgreSQL database hosted by Supabase and queried via Drizzle ORM',
-      'Implemented exclusive GitHub OAuth login for a predefined user using Supabase Auth',
+      'Restricted sign-in to a predefined user via GitHub OAuth using Supabase Auth',
+      'Built a tool for importing and re-categorizing bookmarks from Raindrop.io',
     ],
     keywords: [
       'TypeScript',
