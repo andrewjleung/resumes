@@ -11,10 +11,10 @@ export default [
     endDate: 'Present',
     highlights: [
       "Maintained Braintree's internal Ruby on Rails application used to assess fees, generate statements and reports, and disburse over \\$1.5B daily across tens of thousands of merchants",
-      'Led development and live testing of a feature used to pause disbursements and hold funds for high-risk or delinquent merchants, achieving a 100\\% success rate during live testing and facilitating the processing of \\$1.4M in held funds daily',
-      'Automated the migration of \\$55M in held merchant funds into new interest-generating bank accounts using a Ruby Rake task scheduled with a Kubernetes CronJob',
-      'Prevented the potential misallocation of \\$4.2M by resolving an edge case in the timing of transaction ingestion, transfers between internal bank accounts, and transitioning merchants onto new disbursement flows',
+      'Led development and live testing of a feature used to pause disbursements and hold funds for high-risk or delinquent merchants, processing \\$1.9M in held funds daily',
+      'Automated the migration of \\$57M in held merchant funds out of a closing bank account and into new interest-generating bank accounts using a Ruby Rake task scheduled with a Kubernetes CronJob',
       'Increased monthly revenue by \\$500,000 by correcting fee calculations to round to the nearest cent instead of truncating',
+      'Prevented the misallocation of \\$6M by identifying and fixing an edge case in the timing of internal routing of funds to different bank accounts',
     ],
   },
   {
@@ -26,7 +26,7 @@ export default [
     startDate: '2021-01-06',
     endDate: '2021-08-13',
     highlights: [
-      'Eliminated manual engineering effort spent updating web marketing material by migrating content to DatoCMS, fetching it with GraphQL, and serving it from a Node.js backend, enabling fully dynamic content management',
+      'Eliminated engineering involvement in updating dynamic web marketing content by integrating a content management system, fetching content with GraphQL and serving it to the UI from a Node.js backend',
       'Expanded the expressiveness of JSON-based rule definitions in a Node.js permissions service used to govern user permissions across internal applications by adding support for logical negation of rules to its open source rules engine',
       // 'maintenance mode toggles? don't really remember...',
       'Constructed Zendesk and Jira Service Desk API integrations and internal web tools using PHP, TypeScript, and React to streamline customer support engineer workflows',
