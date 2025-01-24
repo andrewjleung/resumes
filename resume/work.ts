@@ -11,9 +11,9 @@ export default [
     endDate: 'Present',
     highlights: [
       "Maintained Braintree's internal Ruby on Rails application used to assess fees, generate statements and reports, and disburse over \\$1.5B daily across tens of thousands of merchants",
-      'Led development and live testing of a feature used to pause disbursements and hold funds for high-risk or delinquent merchants, processing \\$1.9M in held funds daily',
+      'Led development and live testing of a feature used to pause disbursements and hold funds for high-risk or delinquent merchants, processing \\$2.2M in held funds daily',
       'Automated the migration of \\$57M in held merchant funds out of a closing bank account and into new interest-generating bank accounts using a Ruby Rake task scheduled with a Kubernetes CronJob',
-      'Increased monthly revenue by \\$500,000 by correcting fee calculations to round to the nearest cent instead of truncating',
+      'Increased monthly revenue by \\$670,000 by correcting fee calculations to round to the nearest cent instead of truncating',
       'Prevented the misallocation of \\$6M by identifying and fixing an edge case in the timing of internal routing of funds to different bank accounts',
     ],
   },
