@@ -5,7 +5,7 @@ export default [
     name: 'PayPal',
     location: 'Remote',
     description: 'Braintree post-processing, treasury funding.',
-    position: 'Software Engineer 1',
+    position: 'Software Engineer 2',
     url: 'https://paypal.com',
     startDate: '2023-06-12',
     endDate: 'Present',
