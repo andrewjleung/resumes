@@ -46,7 +46,7 @@ const renderAndWriteResume = (
     .projects({
       exclude: ['TheNeedleDrop Review Dataset', 'Random Audio Player'],
     })
-    .render({ lineHeight: LINE_HEIGHT }, [
+    .render({ lineHeight: LINE_HEIGHT, margin: 0.5 }, [
       'skills',
       'experiences',
       'projects',

@@ -10,12 +10,24 @@ import {
 
 type RenderConfig = {
   lineHeight: number;
+  margin: number;
 };
 
 const indent = (num: number): string => `\n${'  '.repeat(num)}`;
 
-const renderResume = (lineHeight: number, sections: string[]): string =>
-  `\
+const renderResume = (
+  config: Partial<RenderConfig>,
+  sections: string[],
+): string => {
+  const defaultConfig: RenderConfig = {
+    lineHeight: 1,
+    margin: 1,
+  };
+
+  const configWithDefaults: RenderConfig = { ...defaultConfig, ...config };
+  const marginDifference = configWithDefaults.margin - 1;
+
+  return `\
 %-------------------------
 % Resume<T> in Latex
 % Author : Andrew Leung
@@ -59,10 +71,10 @@ const renderResume = (lineHeight: number, sections: string[]): string =>
 \\renewcommand{\\footrulewidth}{0pt}
 
 % Adjust margins
-\\addtolength{\\oddsidemargin}{-0.5in}
-\\addtolength{\\evensidemargin}{-0.5in}
-\\addtolength{\\textwidth}{1in}
-\\addtolength{\\topmargin}{-0.5in}
+\\addtolength{\\oddsidemargin}{${marginDifference}in}
+\\addtolength{\\evensidemargin}{${marginDifference}in}
+\\addtolength{\\textwidth}{${-2 * marginDifference}in}
+\\addtolength{\\topmargin}{${marginDifference}in}
 \\addtolength{\\textheight}{1.0in}
 
 \\urlstyle{same}
@@ -131,7 +143,7 @@ const renderResume = (lineHeight: number, sections: string[]): string =>
 \\newcommand{\\resumeItemListStart}{\\begin{itemize}[leftmargin=1.5em]}
 \\newcommand{\\resumeItemListEnd}{\\end{itemize}\\vspace{-8pt}}
 
-\\setstretch{${lineHeight}}
+\\setstretch{${configWithDefaults.lineHeight}}
 
 %-------------------------------------------
 %%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -143,6 +155,7 @@ ${sections.join('')}
 %-------------------------------------------
 \\end{document}  
   `;
+};
 
 const renderHeading = ({
   basics: {
@@ -357,16 +370,13 @@ class ResumeRenderer {
     this.resume = { ...resume };
   }
 
-  render(config: RenderConfig, sections: ResumeSection[]): string {
+  render(config: Partial<RenderConfig>, sections: ResumeSection[]): string {
     if (this.shouldRunChecks) this.runChecks();
     this.applyFilters();
 
     const body = sections.map((section) => renderSection(section, this.resume));
 
-    return renderResume(config.lineHeight, [
-      renderHeading(this.resume),
-      ...body,
-    ]);
+    return renderResume(config, [renderHeading(this.resume), ...body]);
   }
 
   experiences(ic: Filters): ResumeRenderer {
