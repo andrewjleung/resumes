@@ -4,7 +4,6 @@ import fs from 'fs';
 import { resume as r } from './resumeRenderer';
 import { BareResume } from './types';
 
-const LINE_HEIGHT = 1.1;
 const SECOND_COOP_START_DATE = new Date('2020-01-06');
 
 const ARTIFACTS_PATH = './artifacts';
@@ -42,11 +41,12 @@ const renderAndWriteResume = (
   const renderedResume = r(resume)
     .experiences({
       after: new Date(SECOND_COOP_START_DATE),
+      exclude: ['Sandbox at Northeastern University'],
     })
     .projects({
-      exclude: ['TheNeedleDrop Review Dataset', 'Random Audio Player'],
+      include: ['Bookmark Manager', 'Compiler for Python-like Language'],
     })
-    .render({ lineHeight: LINE_HEIGHT, margin: 0.5 }, [
+    .render({ lineHeight: 1.2, margin: 0.75 }, [
       'skills',
       'experiences',
       'projects',

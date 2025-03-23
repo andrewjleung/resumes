@@ -9,8 +9,17 @@ import {
 } from './types';
 
 type RenderConfig = {
+  font: string;
+  fontSize: number;
   lineHeight: number;
   margin: number;
+};
+
+const DEFAULT_RENDER_CONFIG: RenderConfig = {
+  font: 'carlito',
+  fontSize: 11,
+  margin: 1,
+  lineHeight: 1,
 };
 
 const indent = (num: number): string => `\n${'  '.repeat(num)}`;
@@ -19,12 +28,10 @@ const renderResume = (
   config: Partial<RenderConfig>,
   sections: string[],
 ): string => {
-  const defaultConfig: RenderConfig = {
-    lineHeight: 1,
-    margin: 1,
+  const configWithDefaults: RenderConfig = {
+    ...DEFAULT_RENDER_CONFIG,
+    ...config,
   };
-
-  const configWithDefaults: RenderConfig = { ...defaultConfig, ...config };
   const marginDifference = configWithDefaults.margin - 1;
 
   return `\
@@ -35,7 +42,7 @@ const renderResume = (
 % License : MIT
 %------------------------
 
-\\documentclass[letterpaper, 11pt]{article}
+\\documentclass[letterpaper, ${configWithDefaults.fontSize}pt]{article}
 
 \\usepackage{latexsym}
 \\usepackage[empty]{fullpage}
@@ -52,17 +59,7 @@ const renderResume = (
 \\input{glyphtounicode}
 
 %----------FONT OPTIONS----------
-% sans-serif
-% \\usepackage[sfdefault]{FiraSans}
-% \\usepackage[sfdefault]{roboto}
-% \\usepackage[sfdefault]{noto-sans}
-% \\usepackage[default]{sourcesanspro}
-\\usepackage[sfdefault]{carlito}
-
-% serif
-% \\usepackage{CormorantGaramond}
-% \\usepackage{charter}
-
+\\usepackage[sfdefault]{${configWithDefaults.font}}
 
 \\pagestyle{fancy}
 \\fancyhf{} % clear all header and footer fields
@@ -75,7 +72,7 @@ const renderResume = (
 \\addtolength{\\evensidemargin}{${marginDifference}in}
 \\addtolength{\\textwidth}{${-2 * marginDifference}in}
 \\addtolength{\\topmargin}{${marginDifference}in}
-\\addtolength{\\textheight}{1.0in}
+\\addtolength{\\textheight}{${-2 * marginDifference}in}
 
 \\urlstyle{same}
 
@@ -170,19 +167,18 @@ const renderHeading = ({
   basics: ResumeBasics;
 }): string => {
   const profileUrls = profiles.map((profile) => profile.url);
-  const sites = profileUrls.map((site) => site.slice('https://'.length));
-  const personalUrl = url.slice('https://'.length);
 
   return `
 \\begin{center}
   \\begin{minipage}[b]{0.5\\textwidth}
     \\raggedright
       \\textbf{\\Huge \\scshape ${name}} \\vspace{0pt} \\\\
-      ${email}
+      \\href{mailto:${email}}{${email}}
   \\end{minipage}%
   \\begin{minipage}[b]{0.5\\textwidth}
     \\raggedleft
-      \\small ${personalUrl}\\\\${sites.join('\\\\')} \\vspace{0pt}
+      \\small \\href{${url}}{${url.slice('https://'.length)}}\\\\
+      ${profileUrls.map((profileUrl) => `\\href{${profileUrl}}{${profileUrl.slice('https://'.length)}}`).join('\\\\')} \\vspace{0pt}
   \\end{minipage}%
 \\end{center}
   `;

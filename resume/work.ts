@@ -10,13 +10,17 @@ export default [
     startDate: '2023-06-12',
     endDate: 'Present',
     highlights: [
-      "Maintained Braintree's internal Ruby on Rails application used to assess fees, generate statements and reports, and disburse over \\$1.5B daily across tens of thousands of merchants",
-      'Led development and live testing of a feature used to pause disbursements and hold funds for high-risk or delinquent merchants, processing \\$2.2M in held funds daily',
-      'Automated the migration of \\$57M in held merchant funds out of a closing bank account and into new interest-generating bank accounts using a Ruby Rake task scheduled with a Kubernetes CronJob',
+      "Maintained Braintree's internal Ruby on Rails app used to fund over \\$1.5B a day across tens of thousands of merchants",
+      'Led development and testing of feature used to withhold \\$2.2M a day from high-risk or delinquent merchants',
+      'Automated the migration of \\$57M in held merchant funds into new bank accounts for merchants onboarding to new acquiring banks using a Ruby Rake task scheduled with a Kubernetes CronJob',
       'Increased monthly revenue by \\$670,000 by correcting fee calculations to round to the nearest cent instead of truncating',
       'Prevented the misallocation of \\$6M by identifying and fixing an edge case in the timing of internal routing of funds to different bank accounts',
+      // escheatments
+      // accounting help
+      // sweeps issue from rails 7 upgrade
     ],
   },
+
   {
     name: 'Poloniex',
     location: 'Remote',
@@ -26,12 +30,12 @@ export default [
     startDate: '2021-01-06',
     endDate: '2021-08-13',
     highlights: [
-      'Eliminated engineering involvement in updating dynamic web marketing content by integrating a content management system, fetching content with GraphQL and serving it to the UI from a Node.js backend',
-      'Expanded the expressiveness of JSON-based rule definitions in a Node.js permissions service used to govern user permissions across internal applications by adding support for logical negation of rules to its open source rules engine',
-      // 'maintenance mode toggles? don't really remember...',
-      'Constructed Zendesk and Jira Service Desk API integrations and internal web tools using PHP, TypeScript, and React to streamline customer support engineer workflows',
+      'Eliminated engineering involvement in updating web marketing content by integrating a content management system, fetching content with GraphQL and serving it to the UI from a Node.js backend',
+      'Simplified JSON-based rule definitions in a Node.js service used to govern user permissions by adding support for logical negation of rules to its open source rules engine',
+      'Integrated internal tools with Zendesk and Jira Service Desk APIs to streamline customer support workflows using PHP, TypeScript, and React',
     ],
   },
+
   {
     name: 'Sandbox at Northeastern University',
     location: 'Remote',
@@ -47,6 +51,7 @@ export default [
       'Provided technical mentoring to teammates on tasks through routine pair-programming',
     ],
   },
+
   {
     name: 'Teikametrics',
     location: 'Boston, MA',
@@ -56,10 +61,12 @@ export default [
     startDate: '2020-01-06',
     endDate: '2020-08-21',
     highlights: [
-      'Quickly ramped up onto new technologies, progressing from no Scala, TypeScript, or web development experience to becoming an active contributor to a Scala with Cats backend and TypeScript, React, and Redux frontend',
-      'Reduced effort for users modifying ad campaign targets by implementing a React UI and Scala API for bulk CSV uploads',
+      'Rapidly ramped up onto new technologies, progressing from no Scala, TypeScript, or web development experience to becoming an active contributor to a Scala with Cats backend and a TypeScript, React, and Redux frontend',
+      'Spun up APIs in Scala to handle bulk CSV uploads of ad campaign data and expose campaign performance metrics',
+      'Implemented interactive React components to guide users through creating ad campaigns and display campaign metrics',
     ],
   },
+
   {
     name: 'Curriculum Associates',
     location: 'Billerica, MA',
@@ -74,6 +81,7 @@ export default [
       'Refactored database schemas with Liquibase and updated existing data for education platform privileges',
     ],
   },
+
   {
     name: 'Northeastern University College of Computer and Information Science',
     location: 'Boston, MA',
@@ -86,6 +94,7 @@ export default [
       'Reviewed and graded roughly 30 student coding assignments per week written in Racket',
     ],
   },
+
   {
     name: 'Veoneer',
     location: 'Lowell, MA',
