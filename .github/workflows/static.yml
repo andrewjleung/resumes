@@ -32,15 +32,15 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Generate artifact
-        run: npx tsx ${{ github.workspace }}/render.ts -t -d ${{ github.workspace }}
+        run: npx tsx ${{ github.workspace }}/render.ts -t -d ${{ github.workspace }} -f AndrewLeung_Resume
       - uses: xu-cheng/latex-action@v3
         with:
-          root_file: ${{ github.workspace }}/main.tex
+          root_file: ${{ github.workspace }}/AndrewLeung_Resume.tex
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: resume
-          path: ${{ github.workspace }}/main.pdf
+          path: ${{ github.workspace }}/AndrewLeung_Resume.pdf
 
   # Single deploy job since we're just deploying
   deploy:

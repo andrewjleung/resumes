@@ -42,6 +42,7 @@ const writeResume = (
 
 program.option('-t, --tex-only', 'only create a .tex file');
 program.option('-d, --dir <path>', 'output directory');
+program.option('-f, --filename <name>', 'output filename, sans extension');
 program.parse(process.argv);
 
 const options = program.opts();
@@ -61,13 +62,19 @@ const renderedResume = r(resume)
   ]);
 
 const outputDir = options.dir || ARTIFACTS_PATH;
+const outputTexFilename = options.filename
+  ? `${options.filename}.tex`
+  : RESUME_TEX;
+const outputPdfFilename = options.filename
+  ? `${options.filename}.pdf`
+  : RESUME_PDF;
 
 if (options.texOnly) {
-  writeResumeTex(renderedResume, `${outputDir}/${RESUME_TEX}`);
+  writeResumeTex(renderedResume, `${outputDir}/${outputTexFilename}`);
 } else {
   writeResume(
     renderedResume,
-    `${outputDir}/${RESUME_TEX}`,
-    `${outputDir}/${RESUME_PDF}`,
+    `${outputDir}/${outputTexFilename}`,
+    `${outputDir}/${outputPdfFilename}`,
   );
 }
