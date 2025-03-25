@@ -3,6 +3,7 @@ import latex from 'node-latex';
 import fs from 'fs';
 import { resume as r } from './resumeRenderer';
 import { program } from 'commander';
+import path from 'path';
 
 const SECOND_COOP_START_DATE = new Date('2020-01-06');
 
@@ -10,11 +11,9 @@ const ARTIFACTS_PATH = './artifacts';
 const RESUME_TEX = 'main.tex';
 const RESUME_PDF = 'AndrewLeung_Resume.pdf';
 
-const artifact = (filename: string): string => `${ARTIFACTS_PATH}/${filename}`;
-
 const writeResumeTex = (renderedResume: string, texFileName: string) => {
-  if (!fs.existsSync(ARTIFACTS_PATH)) {
-    fs.mkdirSync(ARTIFACTS_PATH);
+  if (!fs.existsSync(path.dirname(texFileName))) {
+    fs.mkdirSync(path.dirname(texFileName), { recursive: true });
   }
 
   fs.writeFileSync(texFileName, renderedResume, {
@@ -41,7 +40,8 @@ const writeResume = (
   pdf.on('finish', () => console.log(`${pdfFileName} updated!`));
 };
 
-program.option('-t, --tex', 'only create a .tex file');
+program.option('-t, --tex-only', 'only create a .tex file');
+program.option('-d, --dir <path>', 'output directory');
 program.parse(process.argv);
 
 const options = program.opts();
@@ -60,8 +60,14 @@ const renderedResume = r(resume)
     'education',
   ]);
 
+const outputDir = options.dir || ARTIFACTS_PATH;
+
 if (options.tex) {
-  writeResumeTex(renderedResume, artifact(RESUME_TEX));
+  writeResumeTex(renderedResume, `${outputDir}/${RESUME_TEX}`);
 } else {
-  writeResume(renderedResume, artifact(RESUME_TEX), artifact(RESUME_PDF));
+  writeResume(
+    renderedResume,
+    `${outputDir}/${RESUME_TEX}`,
+    `${outputDir}/${RESUME_PDF}`,
+  );
 }
