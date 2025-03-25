@@ -56,8 +56,6 @@ const renderedResume = r(resume)
     'education',
   ]);
 
-console.log(options);
-
 if (options.tex) {
   writeResumeTex(renderedResume, artifact(RESUME_TEX));
 } else {
