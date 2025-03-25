@@ -1,5 +1,7 @@
 # resumes
 
+View my latest resume [here](https://andrewjleung.github.io/resumes/AndrewLeung_Resume.pdf)!
+
 This repository acts as a VC and source of truth for my resume using the [JSON Resume standard](https://jsonresume.org/).
 
 It also contains a script `render.ts` for generating a PDF of my resume from JSON by rendering it in LaTeX, then converting it to PDF via `node-latex` (pdflatex under the hood).
