@@ -62,7 +62,7 @@ const renderedResume = r(resume)
 
 const outputDir = options.dir || ARTIFACTS_PATH;
 
-if (options.tex) {
+if (options.texOnly) {
   writeResumeTex(renderedResume, `${outputDir}/${RESUME_TEX}`);
 } else {
   writeResume(
