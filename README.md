@@ -12,6 +12,6 @@ In order to run this script, you'll first need to have LaTeX installed. You can 
 
 If you use VS Code, this project makes use of the [Run on Save extension by @emeraldwalk](https://marketplace.visualstudio.com/items?itemName=emeraldwalk.RunOnSave) to enable automatic rerendering of resume PDFs upon saving changes to any of the `.ts` files in the project and quick iteration.
 
-## GitHub Actions
+## Resume Publishing
 
-This repository uses GitHub Actions and GitHub Pages to automatically rebuild and publish my resume on new commits to `main`.
+Commits to `main` will trigger a [GitHub Actions workflow](./.github/workflows/static.yml) to render the resume as a PDF artifact and deploy it to GitHub Pages.
