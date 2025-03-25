@@ -13,6 +13,10 @@ const RESUME_PDF = 'AndrewLeung_Resume.pdf';
 const artifact = (filename: string): string => `${ARTIFACTS_PATH}/${filename}`;
 
 const writeResumeTex = (renderedResume: string, texFileName: string) => {
+  if (!fs.existsSync(ARTIFACTS_PATH)) {
+    fs.mkdirSync(ARTIFACTS_PATH);
+  }
+
   fs.writeFileSync(texFileName, renderedResume, {
     encoding: 'utf-8',
     flag: 'w',
