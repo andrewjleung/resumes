@@ -22,6 +22,7 @@ export default [
       'Next.js',
       'Tailwind',
       'Ruby on Rails',
+      'RSpec',
       'PostgreSQL',
       'BigQuery',
       'Git',

@@ -10,14 +10,14 @@ export default [
     startDate: '2023-06-12',
     endDate: 'Present',
     highlights: [
-      "Maintained Braintree's internal Ruby on Rails app used to fund over \\$1.5B a day across tens of thousands of merchants",
-      'Led development and testing of feature used to withhold \\$2.2M a day from high-risk or delinquent merchants',
+      "Maintained Braintree's internal Ruby on Rails app used to disburse over \\$1.5B a day across 15,000 active merchants",
+      'Led development, oversaw live testing, and served as a subject matter expert for a feature used to withhold \\$1.7M a day from high-risk or delinquent merchants',
       'Automated the migration of \\$57M in held merchant funds into new bank accounts for merchants onboarding to new acquiring banks using a Ruby Rake task scheduled with a Kubernetes CronJob',
-      'Increased monthly revenue by \\$670,000 by correcting fee calculations to round to the nearest cent instead of truncating',
-      'Prevented the misallocation of \\$6M by identifying and fixing an edge case in the timing of internal routing of funds to different bank accounts',
+      'Increased monthly revenue by \\$650,000 by correcting fee calculations to round to the nearest cent instead of truncating',
+      // 'Prevented the misallocation of \\$6M by identifying and fixing an edge case in the timing of internal routing of funds to different bank accounts',
       // escheatments
       // accounting help
-      // sweeps issue from rails 7 upgrade
+      'Identified and resolved an incident which caused the misallocation of \\$80M due to a regression from a Rails upgrade',
     ],
   },
 
