@@ -54,7 +54,7 @@ const renderedResume = r(resume)
   .projects({
     include: ['Bookmark Manager', 'Compiler for Python-like Language'],
   })
-  .render({ lineHeight: 1.2, margin: 0.75 }, [
+  .render({ lineHeight: 1.25, margin: 0.75 }, [
     'skills',
     'experiences',
     'projects',

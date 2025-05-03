@@ -10,14 +10,14 @@ export default [
     startDate: '2023-06-12',
     endDate: 'Present',
     highlights: [
-      "Maintained Braintree's internal Ruby on Rails app used to disburse over \\$1.5B a day across 15,000 active merchants",
-      'Led development, oversaw live testing, and served as a subject matter expert for a feature used to withhold \\$1.7M a day from high-risk or delinquent merchants',
-      'Automated the migration of \\$57M in held merchant funds into new bank accounts for merchants onboarding to new acquiring banks using a Ruby Rake task scheduled with a Kubernetes CronJob',
+      "Maintained Braintree's internal Ruby on Rails application used to disburse \\$1.5B a day across 15,000 active merchants",
+      'Led development and testing of a feature used to withhold \\$1.7M a day from high-risk or delinquent merchants',
+      'Automated the migration of \\$57M in held merchant funds from a closing bank account using a Kubernetes CronJob',
       'Increased monthly revenue by \\$650,000 by correcting fee calculations to round to the nearest cent instead of truncating',
+      'Improved reconciliation of disbursed funds by 99.4\\% by designing queries in Google BigQuery to automatically reconcile disbursement edge cases and adding detail to disbursement records consumed by accounting teams',
+      'Identified and corrected the misallocation of \\$80M caused by a regression from a Ruby on Rails upgrade',
       // 'Prevented the misallocation of \\$6M by identifying and fixing an edge case in the timing of internal routing of funds to different bank accounts',
       // escheatments
-      // accounting help
-      'Identified and resolved an incident which caused the misallocation of \\$80M due to a regression from a Rails upgrade',
     ],
   },
 
@@ -62,7 +62,7 @@ export default [
     endDate: '2020-08-21',
     highlights: [
       'Rapidly ramped up onto new technologies, progressing from no Scala, TypeScript, or web development experience to becoming an active contributor to a Scala with Cats backend and a TypeScript, React, and Redux frontend',
-      'Spun up APIs in Scala to handle bulk CSV uploads of ad campaign data and expose campaign performance metrics',
+      'Spun up backend APIs in Scala to handle bulk CSV uploads of ad campaign data and expose campaign performance metrics',
       'Implemented interactive React components to guide users through creating ad campaigns and display campaign metrics',
     ],
   },

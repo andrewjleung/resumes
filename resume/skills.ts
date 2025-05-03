@@ -24,7 +24,7 @@ export default [
       'Ruby on Rails',
       'RSpec',
       'PostgreSQL',
-      'BigQuery',
+      'Google BigQuery',
       'Git',
       'Vim',
     ],
