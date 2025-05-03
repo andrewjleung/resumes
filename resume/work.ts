@@ -13,8 +13,8 @@ export default [
       "Maintained Braintree's internal Ruby on Rails application used to disburse \\$1.5B a day across 15,000 active merchants",
       'Led development and testing of a feature used to withhold \\$1.7M a day from high-risk or delinquent merchants',
       'Automated the migration of \\$57M in held merchant funds from a closing bank account using a Kubernetes CronJob',
+      'Reduced unreconciled funds by 99.4\\% by exposing bank return data for accounting teams and designing queries to automatically reconcile disbursement edge cases',
       'Increased monthly revenue by \\$650,000 by correcting fee calculations to round to the nearest cent instead of truncating',
-      'Improved reconciliation of disbursed funds by 99.4\\% by designing queries in Google BigQuery to automatically reconcile disbursement edge cases and adding detail to disbursement records consumed by accounting teams',
       'Identified and corrected the misallocation of \\$80M caused by a regression from a Ruby on Rails upgrade',
       // 'Prevented the misallocation of \\$6M by identifying and fixing an edge case in the timing of internal routing of funds to different bank accounts',
       // escheatments
