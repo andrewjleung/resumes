@@ -10,14 +10,14 @@ export default [
     startDate: '2023-06-12',
     endDate: 'Present',
     highlights: [
-      "Maintained Braintree's internal Ruby on Rails application used to disburse \\$1.5B a day across 15,000 active merchants",
-      'Led development and testing of a feature used to withhold \\$1.7M a day from high-risk or delinquent merchants',
-      'Automated the migration of \\$57M in held merchant funds from a closing bank account using a Kubernetes CronJob',
-      'Reduced unreconciled funds by 99.4\\% by exposing bank return data for accounting teams and designing queries to automatically reconcile disbursement edge cases',
-      'Increased monthly revenue by \\$650,000 by correcting fee calculations to round to the nearest cent instead of truncating',
+      "Maintained Braintree's Ruby on Rails application used to disburse \\$1.5B a day across 15,000 active merchants",
+      'Led development, coordinated live testing, and served as a subject matter expert for a feature used to withhold \\$1.5M a day from high-risk or delinquent merchants',
+      'Automated the migration of \\$57M out of a closing account for merchants onboarding to new banking partners',
+      'Enhanced disbursement reconciliation processes by improving data quality and designing queries in Google BigQuery, reducing unreconciled funds by 88\\% and increasing reconciliation accuracy to 99.7\\%',
+      'Increased monthly revenue by \\$650,000 by correcting fee calculations to use rounding instead of truncation',
       'Identified and corrected the misallocation of \\$80M caused by a regression from a Ruby on Rails upgrade',
+      'Interviewed intern candidates and onboarded engineers with code walkthroughs and pair programming',
       // 'Prevented the misallocation of \\$6M by identifying and fixing an edge case in the timing of internal routing of funds to different bank accounts',
-      // escheatments
     ],
   },
 
@@ -30,9 +30,9 @@ export default [
     startDate: '2021-01-06',
     endDate: '2021-08-13',
     highlights: [
-      'Eliminated engineering involvement in updating web marketing content by integrating a content management system, fetching content with GraphQL and serving it to the UI from a Node.js backend',
-      'Simplified JSON-based rule definitions in a Node.js service used to govern user permissions by adding support for logical negation of rules to its open source rules engine',
-      'Integrated internal tools with Zendesk and Jira Service Desk APIs to streamline customer support workflows using PHP, TypeScript, and React',
+      'Developed internal tools for managing users, markets, and customer support tickets using TypeScript and React',
+      'Integrated web application with a content management system using GraphQL and Node.js, enabling marketing teams to update web content without engineering support',
+      'Contributed support for rule negation to an open source rules engine powering a Node.js permissions service',
     ],
   },
 
@@ -61,9 +61,8 @@ export default [
     startDate: '2020-01-06',
     endDate: '2020-08-21',
     highlights: [
-      'Rapidly ramped up onto new technologies, progressing from no Scala, TypeScript, or web development experience to becoming an active contributor to a Scala with Cats backend and a TypeScript, React, and Redux frontend',
-      'Spun up backend APIs in Scala to handle bulk CSV uploads of ad campaign data and expose campaign performance metrics',
-      'Implemented interactive React components to guide users through creating ad campaigns and display campaign metrics',
+      // 'Rapidly ramped up onto new technologies, progressing from no Scala, TypeScript, or web development experience to becoming an active contributor to a Scala with Cats backend and a TypeScript, React, and Redux frontend',
+      'Wrote backend APIs in Scala and implemented UIs with TypeScript, React, and Redux to support Amazon ad campaign creation and display campaign performance metrics to users',
     ],
   },
 

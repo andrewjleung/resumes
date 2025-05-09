@@ -23,6 +23,7 @@ export default [
     url: 'https://github.com/andrewjleung/linkr',
     startDate: '2023',
   },
+
   {
     name: 'Random Audio Player',
     highlights: [
@@ -41,6 +42,7 @@ export default [
     url: 'https://github.com/andrewjleung/raudi',
     startDate: '2022',
   },
+
   {
     name: 'TheNeedleDrop Review Dataset',
     highlights: [
@@ -58,6 +60,7 @@ export default [
     startDate: '2022',
     endDate: '2022',
   },
+
   {
     name: 'Compiler for Python-like Language',
     highlights: [

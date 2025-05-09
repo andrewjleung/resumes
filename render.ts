@@ -52,9 +52,9 @@ const renderedResume = r(resume)
     exclude: ['Sandbox at Northeastern University'],
   })
   .projects({
-    include: ['Bookmark Manager', 'Compiler for Python-like Language'],
+    include: ['Compiler for Python-like Language'],
   })
-  .render({ lineHeight: 1.25, margin: 0.75 }, [
+  .render({ lineHeight: 1.25, margin: 1 }, [
     'skills',
     'experiences',
     'projects',

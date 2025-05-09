@@ -26,7 +26,7 @@ export default [
       'PostgreSQL',
       'Google BigQuery',
       'Git',
-      'Vim',
+      'Neovim',
     ],
   },
 ] satisfies ResumeSchema['skills'];
