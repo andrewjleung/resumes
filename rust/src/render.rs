@@ -1,9 +1,9 @@
-use anyhow::{Error, Result};
-use bon::Builder;
-use chrono::NaiveDate;
-use json_resume::Resume;
+use std::fs::File;
 
-use crate::{render::renderer_builder::State, resume::ResumeCopy};
+use anyhow::{Context, Error, Result, anyhow};
+use bon::Builder;
+
+use crate::{render::render_builder::State, resume::RenderResumeSlice, resume::ResumeSlice};
 
 pub const DEFAULT_FONT: &str = "carlito";
 pub const DEFAULT_FONT_SIZE: u32 = 11;
@@ -11,7 +11,7 @@ pub const DEFAULT_LINE_HEIGHT: f32 = 1.0;
 pub const DEFAULT_MARGIN: f32 = 1.0;
 
 #[derive(Builder)]
-pub struct Renderer {
+pub struct Render {
     #[builder(default = DEFAULT_FONT.to_owned())]
     pub font: String,
 
@@ -25,8 +25,10 @@ pub struct Renderer {
     pub margin: f32,
 }
 
-impl Renderer {
-    pub fn render(&self, copy: &ResumeCopy) -> Result<String> {
-        Err(Error::msg("Unimplemented!"))
+impl RenderResumeSlice for Render {
+    fn render_resume_slice(
+        resume: &json_resume::Resume,
+        resume_slice: &ResumeSlice,
+    ) -> Result<File> {
     }
 }
