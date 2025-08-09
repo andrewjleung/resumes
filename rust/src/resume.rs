@@ -1,13 +1,12 @@
-use anyhow::{Error, Result};
-use bon::Builder;
-use chrono::NaiveDate;
-use json_resume::Resume;
+use std::{fs::File, str::FromStr};
 
-use crate::resume::resume_copy_builder::State;
+use anyhow::{Error, Result};
+use chrono::NaiveDate;
+use json_resume::{Project, Resume, Work};
 
 pub enum ResumeFilterPredicate {
-    Include(String),
     Exclude(String),
+    Include(String),
     After(NaiveDate),
 }
 
@@ -16,35 +15,57 @@ pub enum ResumeFilter {
     WorkFilter(ResumeFilterPredicate),
 }
 
-pub enum ResumeSection {
-    Skills,
-    Experiences,
-    Projects,
-    Education,
-}
-
-#[derive(Builder)]
-pub struct ResumeCopy {
-    #[builder(field)]
+pub struct ResumeSlice {
     pub filters: Vec<ResumeFilter>,
-
-    #[builder(into)]
-    pub sections: Vec<ResumeSection>,
-
     pub resume: Resume,
 }
 
-impl<S: State> ResumeCopyBuilder<S> {
-    pub fn filter(mut self, filter: ResumeFilter) -> Self {
-        self.filters.push(filter);
-        self
+impl From<Resume> for ResumeSlice {
+    fn from(resume: Resume) -> Self {
+        ResumeSlice::new(resume)
+    }
+}
+
+pub trait Headline {
+    fn apply(&self, predicate: &ResumeFilterPredicate) -> bool {
+        match predicate {
+            ResumeFilterPredicate::After(date) => {
+                self.start_date().unwrap_or(NaiveDate::MIN) > *date
+            }
+            ResumeFilterPredicate::Exclude(value) => self.name().is_some_and(|name| name != *value),
+            ResumeFilterPredicate::Include(value) => self.name().is_some_and(|name| name == *value),
+        }
     }
 
-    pub fn filters(mut self, filters: impl IntoIterator<Item = ResumeFilter>) -> Self {
-        self.filters.extend(filters);
-        self
+    fn name(&self) -> Option<String>;
+    fn start_date(&self) -> Option<NaiveDate>;
+}
+
+impl Headline for Work {
+    fn name(&self) -> Option<String> {
+        self.name.to_owned()
     }
 
+    fn start_date(&self) -> Option<NaiveDate> {
+        self.start_date
+            .to_owned()
+            .and_then(|s| NaiveDate::from_str(&s).ok())
+    }
+}
+
+impl Headline for Project {
+    fn name(&self) -> Option<String> {
+        self.name.to_owned()
+    }
+
+    fn start_date(&self) -> Option<NaiveDate> {
+        self.start_date
+            .to_owned()
+            .and_then(|s| NaiveDate::from_str(&s).ok())
+    }
+}
+
+impl ResumeSlice {
     pub fn projects(mut self, predicates: impl IntoIterator<Item = ResumeFilterPredicate>) -> Self {
         self.filters
             .extend(predicates.into_iter().map(ResumeFilter::ProjectsFilter));
@@ -55,5 +76,16 @@ impl<S: State> ResumeCopyBuilder<S> {
         self.filters
             .extend(predicates.into_iter().map(ResumeFilter::WorkFilter));
         self
+    }
+
+    pub fn new(resume: Resume) -> ResumeSlice {
+        ResumeSlice {
+            filters: Vec::new(),
+            resume,
+        }
+    }
+
+    pub fn render_document(self) -> Result<String> {
+        Err(Error::msg("Unimplemented!"))
     }
 }

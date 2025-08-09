@@ -1,4 +1,9 @@
-use std::process::exit;
+use std::{
+    fs::File,
+    io::{Read, Write},
+    path::{Path, PathBuf},
+    process::Command,
+};
 
 use anyhow::{Error, Result};
 use chrono::NaiveDate;
@@ -7,46 +12,44 @@ use json_resume::Resume;
 mod render;
 mod resume;
 
-use render::Renderer;
+use resume::{ResumeFilterPredicate::*, ResumeSlice};
 
-use resume::ResumeCopy;
-use resume::ResumeFilterPredicate::*;
-use resume::ResumeSection::*;
-
-const fn const_unwrap<T: Copy>(x: Option<T>) -> T {
-    if let Some(x) = x { x } else { panic!("") }
-}
-
-const SECOND_COOP_START_DATE: NaiveDate = const_unwrap(NaiveDate::from_ymd_opt(2020, 1, 6));
+static SECOND_COOP_START_DATE: NaiveDate = NaiveDate::from_ymd_opt(2020, 1, 6).unwrap();
 
 fn read_resume() -> Result<Resume> {
     Err(Error::msg("Unimplemented!"))
 }
 
 fn main() {
-    let resume_data = read_resume().expect("failed to access resume");
-    let resume_copy = ResumeCopy::builder()
-        .resume(resume_data)
+    let document = ResumeSlice::from(read_resume().expect("failed to read resume data"))
         .work([
             After(SECOND_COOP_START_DATE),
             Exclude("Sandbox at Northeastern University".to_owned()),
         ])
         .projects([Include("Compiler for Python-like Language".to_owned())])
-        .sections([Skills, Experiences, Projects, Education])
-        .build();
+        .render_document()
+        .expect("failed to render typst document");
 
-    let rendered = Renderer::builder()
-        .line_height(1.25)
-        .build()
-        .render(&resume_copy);
+    let mut child = Command::new("typst")
+        .args(["compile", "-f pdf", "-", "-"])
+        .spawn()
+        .expect("failed to spawn typst process");
 
-    match rendered {
-        Ok(rendering) => {
-            println!("{rendering}");
-        }
-        Err(e) => {
-            eprintln!("{e:?}");
-            exit(1);
-        }
-    };
+    let mut stdin = child.stdin.take().expect("failed to take ");
+    let stdout = child.stdout.take().expect("failed to take ");
+
+    stdin.write(document.as_bytes());
+
+    // File::create(path)
+    // stdout.bytes();
+
+    // match rendered {
+    //     Ok(_) => {
+    //         println!("rendered!")
+    //     }
+    //     Err(e) => {
+    //         eprintln!("{e:?}");
+    //         exit(1);
+    //     }
+    // };
 }
