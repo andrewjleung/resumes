@@ -130,7 +130,7 @@
       .education
       .map(e => headline(
         e.institution,
-        [#e.studyType, #e.score/4.0 GPA],
+        [#e.studyType, #e.score GPA],
         location: e.area,
         parse(e.endDate).display("[year repr:full]"),
       ))
