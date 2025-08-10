@@ -1,19 +1,20 @@
-use std::{path::Path, process::Command};
-
 use crate::{
-    render::{Artifact, ArtifactKind, Render, Rendering},
+    render::{Artifact, ArtifactKind, Render, RenderConfig, Rendering},
     resume::ResumeSlice,
 };
 use anyhow::{Context, Error, Result};
+use camino::Utf8Path as Path;
 use regex::Regex;
 use repo_path_lib::repo_dir;
+use std::{fs::read, process::Command};
 
+// TODO: Make this an input instead of relying on location relative to repo
 const TEMPLATE_FILE_NAME: &str = "template.typ";
 
 pub struct Typst;
 
 impl Render for Typst {
-    fn render(resume: ResumeSlice) -> Result<Rendering> {
+    fn render_artifacts(&self, resume: ResumeSlice, config: &RenderConfig) -> Result<Rendering> {
         let resume_json_content = serde_json::to_string(&resume.apply_slice())
             .context("failed to serialize resume data")?;
 
@@ -29,17 +30,39 @@ impl Render for Typst {
             .into_owned();
 
         let resume_json_artifact = Artifact {
+            title: format!("{}.slice", config.title),
             kind: ArtifactKind::Json,
             content: resume_json_content.into_bytes(),
         };
 
         resume_json_artifact
-            .write(Path::new("./artifacts"), "resume_slice")
+            .write(&config.output_dir)
             .context("failed to write resume slice")?;
 
+        let template_file_path = Path::from_path(&repo_dir())
+            .ok_or(Error::msg("failed to create path from repo directory"))?
+            .join("rust") // TODO: once this implementation replaces the existing, remove
+            .join(TEMPLATE_FILE_NAME);
+
+        let template_file_artifact = Artifact {
+            title: config.title.clone(),
+            kind: ArtifactKind::Typst,
+            content: read(&template_file_path).context("failed to read typst template")?,
+        };
+
+        template_file_artifact.write(&config.output_dir)?;
+
         let output = Command::new("typst")
-            .current_dir(repo_dir().join("rust"))
-            .args(["compile", "-f", "pdf", TEMPLATE_FILE_NAME, "-"])
+            .current_dir(&config.output_dir)
+            .args([
+                "compile",
+                "-f",
+                "pdf",
+                "--input",
+                &format!("data_path={}", resume_json_artifact.file_name()),
+                &template_file_artifact.file_name(),
+                "-",
+            ])
             .output()
             .context("failed to get compilation output from typst child process")?;
 
@@ -59,8 +82,9 @@ impl Render for Typst {
         }
 
         Ok(Rendering {
-            intermediates: vec![resume_json_artifact],
+            intermediates: vec![resume_json_artifact, template_file_artifact],
             final_render: Artifact {
+                title: config.title.clone(),
                 kind: ArtifactKind::Pdf,
                 content: output.stdout,
             },

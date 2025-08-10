@@ -138,4 +138,4 @@
   )
 ]
 
-#template(json("./artifacts/resume_slice.json"))
+#template(json(sys.inputs.data_path))
