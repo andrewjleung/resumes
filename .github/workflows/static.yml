@@ -36,7 +36,7 @@ jobs:
                   sudo mkdir googlefonts
                   cd googlefonts
                   sudo wget -O Carlito.zip https://fonts.google.com/download?family=Carlito
-                  sudo unzip -d . Carlito.zip
+                  sudo unzip -d . ./Carlito.zip
                   sudo chmod -R --reference=/usr/share/fonts/opentype /usr/share/fonts/googlefonts
                   sudo fc-cache -fv
 
