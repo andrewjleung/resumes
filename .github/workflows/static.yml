@@ -1,10 +1,8 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+name: Deploy resume to GitHub Pages
 
 on:
-  # Runs on pushes targeting the default branch
   push:
-    branches: ['main']
+    branches: ["main"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -18,7 +16,7 @@ permissions:
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
-  group: 'pages'
+  group: "pages"
   cancel-in-progress: false
 
 jobs:
@@ -26,23 +24,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22.12.0'
-      - name: Install dependencies
-        run: npm install
-      - name: Generate artifact
-        run: npx tsx ${{ github.workspace }}/render.ts -t -d ${{ github.workspace }} -f AndrewLeung_Resume
-      - uses: xu-cheng/latex-action@v3
-        with:
-          root_file: ${{ github.workspace }}/AndrewLeung_Resume.tex
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: typst-community/setup-typst@v4
+
+      - name: Create artifact
+        run: cargo run -- -c -o ${{ github.workspace }}/artifacts -t $TITLE
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: resume
-          path: ${{ github.workspace }}/AndrewLeung_Resume.pdf
+          path: ${{ github.workspace }}/artifacts/${{ env.TITLE }}.pdf
 
-  # Single deploy job since we're just deploying
   deploy:
     environment:
       name: github-pages
@@ -55,13 +48,13 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: resume
-          path: ${{ github.workspace }}/AndrewLeung_Resume.pdf
+          path: ${{ github.workspace }}/${{ env.TITLE }}.pdf
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ${{ github.workspace }}/AndrewLeung_Resume.pdf
+          path: ${{ github.workspace }}/${{ env.TITLE }}.pdf
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

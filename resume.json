@@ -1,0 +1,267 @@
+{
+    "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
+
+    "basics": {
+        "name": "Andrew Leung",
+        "label": "Software Engineer",
+        "email": "andrewleung104@gmail.com",
+        "phone": "(978) 221-8810",
+        "url": "https://andrewjleung.me",
+        "profiles": [
+            {
+                "network": "LinkedIn",
+                "username": "andrewjleung-",
+                "url": "https://linkedin.com/in/andrewjleung-"
+            },
+            {
+                "network": "GitHub",
+                "username": "andrewjleung",
+                "url": "https://github.com/andrewjleung"
+            }
+        ]
+    },
+
+    "education": [
+        {
+            "institution": "Northeastern University",
+            "url": "https://www.northeastern.edu/",
+            "area": "Computer Science",
+            "studyType": "B.S.",
+            "startDate": "2017-09-01",
+            "endDate": "2022-05-01",
+            "score": "3.9/4.0"
+        }
+    ],
+
+    "skills": [
+        {
+            "name": "Programming Languages",
+            "level": "Intermediate",
+            "keywords": [
+                "TypeScript",
+                "JavaScript",
+                "Python",
+                "Ruby",
+                "SQL",
+                "HTML",
+                "CSS"
+            ]
+        },
+        {
+            "name": "Tools & Frameworks",
+            "level": "Intermediate",
+            "keywords": [
+                "React",
+                "Next.js",
+                "Tailwind",
+                "Ruby on Rails",
+                "RSpec",
+                "PostgreSQL",
+                "Google BigQuery",
+                "Git",
+                "Neovim"
+            ]
+        }
+    ],
+
+    "work": [
+        {
+            "name": "PayPal",
+            "location": "Remote",
+            "description": "Braintree post-processing, treasury funding.",
+            "position": "Software Engineer",
+            "url": "https://paypal.com",
+            "startDate": "2023-06-12",
+            "highlights": [
+                "Maintained Braintree's Ruby on Rails application used to disburse $1.5B a day across 15,000 active merchants",
+                "Led development, coordinated live testing, and served as a subject matter expert for a feature used to withhold $1.5M a day from high-risk or delinquent merchants",
+                "Automated the migration of $57M out of a closing account for merchants onboarding to new banking partners",
+                "Enhanced disbursement reconciliation processes by improving data quality and designing queries in Google BigQuery, reducing unreconciled funds by 88% and increasing reconciliation accuracy to 99.7%",
+                "Increased monthly revenue by $650,000 by correcting fee calculations to use rounding instead of truncation",
+                "Identified and corrected the misallocation of $80M caused by a regression from a Ruby on Rails upgrade",
+                "Interviewed intern candidates and onboarded engineers with code walkthroughs and pair programming"
+            ],
+            "_highlights": [
+                "Prevented the misallocation of $6M by identifying and fixing an edge case in the timing of internal routing of funds to different bank accounts"
+            ]
+        },
+
+        {
+            "name": "Poloniex",
+            "location": "Remote",
+            "description": "Crypto exchange.",
+            "position": "Software Engineer Co-op",
+            "url": "https://poloniex.com/",
+            "startDate": "2021-01-06",
+            "endDate": "2021-08-13",
+            "highlights": [
+                "Developed internal tools for managing users, markets, and customer support tickets using TypeScript and React",
+                "Integrated web application with a content management system using GraphQL and Node.js, enabling marketing teams to update web content without engineering support",
+                "Contributed support for rule negation to an open source rules engine powering a Node.js permissions service"
+            ]
+        },
+
+        {
+            "name": "Sandbox at Northeastern University",
+            "location": "Remote",
+            "description": "Northeastern's premier software consultancy.",
+            "position": "Software Developer",
+            "url": "https://www.sandboxnu.com/",
+            "startDate": "2020-09-01",
+            "endDate": "2021-05-01",
+            "highlights": [
+                "Developed features for a university course planning web application using Ruby on Rails, TypeScript, and React",
+                "Wrote a Node.js parser to translate university course documentation PDFs into JSON for internal usage",
+                "Provided technical mentoring to teammates on tasks through routine pair-programming"
+            ],
+            "_highlights": [
+                "Modeled course schedule data in TypeScript, wrote logic for validating course requirements, and implemented React components to display interactive course plans to users"
+            ]
+        },
+
+        {
+            "name": "Teikametrics",
+            "location": "Boston, MA",
+            "description": "SaaS platform dealing in Amazon ads optimization.",
+            "position": "Software Engineer Co-op",
+            "url": "https://www.teikametrics.com/",
+            "startDate": "2020-01-06",
+            "endDate": "2020-08-21",
+            "highlights": [
+                "Wrote backend APIs in Scala and implemented UIs with TypeScript, React, and Redux to support Amazon ad campaign creation and display campaign performance metrics to users"
+            ],
+            "_highlights": [
+                "Rapidly ramped up onto new technologies, progressing from no Scala, TypeScript, or web development experience to becoming an active contributor to a Scala with Cats backend and a TypeScript, React, and Redux frontend"
+            ]
+        },
+
+        {
+            "name": "Curriculum Associates",
+            "location": "Billerica, MA",
+            "description": "Educational software company.",
+            "position": "Software Engineer Co-op",
+            "url": "https://www.curriculumassociates.com/",
+            "startDate": "2019-01-14",
+            "endDate": "2019-06-20",
+            "highlights": [
+                "Updated SQL query templates in Java to retrieve language flags for student assessment data",
+                "Drafted and implemented integration tests to ensure correct functionality of query templates",
+                "Refactored database schemas with Liquibase and updated existing data for education platform privileges"
+            ]
+        },
+
+        {
+            "name": "Northeastern University College of Computer and Information Science",
+            "location": "Boston, MA",
+            "description": "",
+            "position": "Grader for CS2500",
+            "startDate": "2018-09-01",
+            "endDate": "2018-12-01",
+            "highlights": [
+                "Reviewed and graded roughly 30 student coding assignments per week written in Racket"
+            ]
+        },
+
+        {
+            "name": "Veoneer",
+            "location": "Lowell, MA",
+            "description": "Manufacturer of automotive safety systems.",
+            "position": "Technical Intern",
+            "url": "https://www.veoneer.com",
+            "startDate": "2018-05-29",
+            "endDate": "2018-08-10",
+            "highlights": [
+                "Ported over C++ implementation of target track positioner software to a new radar sensor testing suite written in C#",
+                "Outlined architecture specifications for new radar units to lay groundwork for future sensor support within testing suite"
+            ]
+        }
+    ],
+
+    "projects": [
+        {
+            "name": "Bookmark Manager",
+            "roles": [],
+            "highlights": [
+                "Created a self-hosted bookmark manager for personal use using TypeScript, React, Next.js, and shadcn/ui components",
+                "Persisted bookmark data in a PostgreSQL database hosted by Supabase and queried with Drizzle ORM",
+                "Restricted sign-in to a predefined user with GitHub OAuth and Supabase Auth",
+                "Built a tool for importing and re-categorizing bookmarks from Raindrop.io"
+            ],
+            "keywords": [
+                "TypeScript",
+                "Node.js",
+                "React",
+                "Next.js",
+                "Tailwind",
+                "shadcn/ui",
+                "Supabase",
+                "Drizzle ORM",
+                "Jotai"
+            ],
+            "url": "https://github.com/andrewjleung/linkr",
+            "startDate": "2023"
+        },
+
+        {
+            "name": "Random Audio Player",
+            "roles": [],
+            "highlights": [
+                "Created a full-stack web application for demoing and downloading random sounds fetched from the Freesound API",
+                "Deployed application frontend, backend, and NGINX reverse proxy to Railway using Docker"
+            ],
+            "keywords": [
+                "TypeScript",
+                "Node.js",
+                "Fastify",
+                "React",
+                "TailwindCSS",
+                "NGINX",
+                "Docker"
+            ],
+            "url": "https://github.com/andrewjleung/raudi",
+            "startDate": "2022"
+        },
+
+        {
+            "name": "TheNeedleDrop Review Dataset",
+            "roles": [],
+            "highlights": [
+                "Implemented a Node.js script to fetch and parse metadata from the YouTube Data API in order to generate a CSV dataset of a popular music critic's video music reviews for use in data analysis",
+                "Automated real-time updates to a hosted dataset using a PubSubHubBub server deployed to DigitalOcean via GitHub"
+            ],
+            "keywords": [
+                "TypeScript",
+                "Node.js",
+                "Fastify",
+                "YouTube Data API",
+                "PubSubHubBub"
+            ],
+            "url": "https://github.com/andrewjleung/fantano-reviews",
+            "startDate": "2022",
+            "endDate": "2022"
+        },
+
+        {
+            "name": "Compiler for Python-like Language",
+            "roles": [],
+            "highlights": [
+                "Wrote a compiler backend in OCaml and a C runtime for a Python-like expression-oriented language",
+                "Supported dynamically-typed values including numbers, Booleans, tuples, strings, and first-class functions",
+                "Managed program memory with mark-and-sweep garbage collection and register allocation",
+                "Wrote over 600 unit tests and end-to-end tests to ensure correctness of compilation using OUnit"
+            ],
+            "keywords": ["OCaml", "C", "x86 Assembly"],
+            "startDate": "2022",
+            "endDate": "2022"
+        }
+    ],
+
+    "awards": [],
+    "certificates": [],
+    "interests": [],
+    "languages": [],
+    "meta": {},
+    "publications": [],
+    "references": [],
+    "volunteer": []
+}
