@@ -1,34 +1,47 @@
-use std::fs::File;
+use anyhow::{Context, Result};
+use std::{fs::File, io::Write, path::Path};
 
-use anyhow::{Context, Error, Result, anyhow};
-use bon::Builder;
+use crate::resume::ResumeSlice;
 
-use crate::{render::render_builder::State, resume::RenderResumeSlice, resume::ResumeSlice};
-
-pub const DEFAULT_FONT: &str = "carlito";
-pub const DEFAULT_FONT_SIZE: u32 = 11;
-pub const DEFAULT_LINE_HEIGHT: f32 = 1.0;
-pub const DEFAULT_MARGIN: f32 = 1.0;
-
-#[derive(Builder)]
-pub struct Render {
-    #[builder(default = DEFAULT_FONT.to_owned())]
-    pub font: String,
-
-    #[builder(default = DEFAULT_FONT_SIZE)]
-    pub font_size: u32,
-
-    #[builder(default = DEFAULT_LINE_HEIGHT)]
-    pub line_height: f32,
-
-    #[builder(default = DEFAULT_MARGIN)]
-    pub margin: f32,
+pub enum ArtifactKind {
+    Json,
+    Pdf,
 }
 
-impl RenderResumeSlice for Render {
-    fn render_resume_slice(
-        resume: &json_resume::Resume,
-        resume_slice: &ResumeSlice,
-    ) -> Result<File> {
+impl ArtifactKind {
+    fn extension(&self) -> String {
+        match self {
+            Self::Json => String::from("json"),
+            Self::Pdf => String::from("pdf"),
+        }
     }
+}
+
+pub struct Artifact {
+    pub kind: ArtifactKind,
+    pub content: Vec<u8>,
+}
+
+impl Artifact {
+    pub fn write(&self, path: &Path, name: &str) -> Result<File> {
+        let extension = self.kind.extension();
+        let file_name = format!("{name}.{extension}");
+        let mut file = File::create(path.join(file_name))
+            .context(format!("failed to create {extension} file"))?;
+
+        file.write(&self.content)
+            .context(format!("failed to write to {extension} file"))?;
+
+        Ok(file)
+    }
+}
+
+#[allow(dead_code)]
+pub struct Rendering {
+    pub intermediates: Vec<Artifact>,
+    pub final_render: Artifact,
+}
+
+pub trait Render {
+    fn render(resume: ResumeSlice) -> Result<Rendering>;
 }

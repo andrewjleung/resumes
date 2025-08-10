@@ -1,6 +1,5 @@
-use std::{fs::File, str::FromStr};
+use std::str::FromStr;
 
-use anyhow::{Error, Result};
 use chrono::NaiveDate;
 use json_resume::{Project, Resume, Work};
 
@@ -10,27 +9,11 @@ pub enum ResumeFilterPredicate {
     After(NaiveDate),
 }
 
-pub enum ResumeFilter {
-    ProjectsFilter(ResumeFilterPredicate),
-    WorkFilter(ResumeFilterPredicate),
-}
-
-pub struct ResumeSlice {
-    pub filters: Vec<ResumeFilter>,
-    pub resume: Resume,
-}
-
-impl From<Resume> for ResumeSlice {
-    fn from(resume: Resume) -> Self {
-        ResumeSlice::new(resume)
-    }
-}
-
 pub trait Headline {
     fn apply(&self, predicate: &ResumeFilterPredicate) -> bool {
         match predicate {
             ResumeFilterPredicate::After(date) => {
-                self.start_date().unwrap_or(NaiveDate::MIN) > *date
+                self.start_date().unwrap_or(NaiveDate::MIN) >= *date
             }
             ResumeFilterPredicate::Exclude(value) => self.name().is_some_and(|name| name != *value),
             ResumeFilterPredicate::Include(value) => self.name().is_some_and(|name| name == *value),
@@ -65,27 +48,57 @@ impl Headline for Project {
     }
 }
 
+pub struct ResumeSlice {
+    pub work_filters: Vec<ResumeFilterPredicate>,
+    pub project_filters: Vec<ResumeFilterPredicate>,
+    pub resume: Resume,
+}
+
+impl From<Resume> for ResumeSlice {
+    fn from(resume: Resume) -> Self {
+        ResumeSlice::new(resume)
+    }
+}
+
+impl From<ResumeSlice> for Resume {
+    fn from(resume_slice: ResumeSlice) -> Self {
+        let mut resume = resume_slice.resume;
+
+        resume
+            .work
+            .retain(|work| resume_slice.work_filters.iter().all(|f| work.apply(f)));
+
+        resume.projects.retain(|project| {
+            resume_slice
+                .project_filters
+                .iter()
+                .all(|f| project.apply(f))
+        });
+
+        resume
+    }
+}
+
 impl ResumeSlice {
     pub fn projects(mut self, predicates: impl IntoIterator<Item = ResumeFilterPredicate>) -> Self {
-        self.filters
-            .extend(predicates.into_iter().map(ResumeFilter::ProjectsFilter));
+        self.project_filters.extend(predicates);
         self
     }
 
     pub fn work(mut self, predicates: impl IntoIterator<Item = ResumeFilterPredicate>) -> Self {
-        self.filters
-            .extend(predicates.into_iter().map(ResumeFilter::WorkFilter));
+        self.work_filters.extend(predicates);
         self
     }
 
     pub fn new(resume: Resume) -> ResumeSlice {
         ResumeSlice {
-            filters: Vec::new(),
+            work_filters: Vec::new(),
+            project_filters: Vec::new(),
             resume,
         }
     }
 
-    pub fn render_document(self) -> Result<String> {
-        Err(Error::msg("Unimplemented!"))
+    pub fn apply_slice(self) -> Resume {
+        Resume::from(self)
     }
 }

@@ -4,8 +4,10 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-json-resume = { git = "https://github.com/jsonresume/rust-json-resume.git", version = "0.1.0" }
-serde_json = "1.0"
+anyhow = "1.0"
 bon = "3.6"
 chrono = "0.4"
-anyhow = "1.0"
+json-resume = { git = "https://github.com/jsonresume/rust-json-resume.git", version = "0.1.0" }
+repo_path_lib = "1.2"
+serde_json = "1.0"
+regex = "1.11"

@@ -1,55 +1,52 @@
 use std::{
-    fs::File,
-    io::{Read, Write},
-    path::{Path, PathBuf},
-    process::Command,
+    fs::{DirBuilder, read_to_string},
+    path::Path,
 };
 
-use anyhow::{Error, Result};
+use anyhow::{Context, Error, Result};
 use chrono::NaiveDate;
 use json_resume::Resume;
 
 mod render;
 mod resume;
+mod typst;
 
+use render::Render;
+use repo_path_lib::repo_dir;
 use resume::{ResumeFilterPredicate::*, ResumeSlice};
+use typst::Typst;
 
 static SECOND_COOP_START_DATE: NaiveDate = NaiveDate::from_ymd_opt(2020, 1, 6).unwrap();
 
-fn read_resume() -> Result<Resume> {
-    Err(Error::msg("Unimplemented!"))
+fn read_resume(path: &Path) -> Result<Resume> {
+    let resume_json = read_to_string(path)?;
+    serde_json::from_str(&resume_json)
+        .map_err(Error::new)
+        .context("failed to read resume json")
 }
 
 fn main() {
-    let document = ResumeSlice::from(read_resume().expect("failed to read resume data"))
+    DirBuilder::new()
+        .recursive(true)
+        .create(repo_dir().join("rust/artifacts"))
+        .map_err(Error::new)
+        .context("failed to create artifacts directory")
+        .unwrap();
+
+    let resume = read_resume(&repo_dir().join("rust/resume.json")).unwrap();
+    let resume = ResumeSlice::from(resume)
         .work([
             After(SECOND_COOP_START_DATE),
-            Exclude("Sandbox at Northeastern University".to_owned()),
+            Exclude(String::from("Sandbox at Northeastern University")),
         ])
-        .projects([Include("Compiler for Python-like Language".to_owned())])
-        .render_document()
-        .expect("failed to render typst document");
+        .projects([Include(String::from("Compiler for Python-like Language"))]);
 
-    let mut child = Command::new("typst")
-        .args(["compile", "-f pdf", "-", "-"])
-        .spawn()
-        .expect("failed to spawn typst process");
+    let pdf_content = Typst::render(resume).unwrap();
 
-    let mut stdin = child.stdin.take().expect("failed to take ");
-    let stdout = child.stdout.take().expect("failed to take ");
+    pdf_content
+        .final_render
+        .write(&repo_dir().join("rust/artifacts"), "resume")
+        .unwrap();
 
-    stdin.write(document.as_bytes());
-
-    // File::create(path)
-    // stdout.bytes();
-
-    // match rendered {
-    //     Ok(_) => {
-    //         println!("rendered!")
-    //     }
-    //     Err(e) => {
-    //         eprintln!("{e:?}");
-    //         exit(1);
-    //     }
-    // };
+    println!("success!")
 }
