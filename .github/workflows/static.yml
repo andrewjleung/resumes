@@ -19,15 +19,9 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
-env:
-  TITLE: rust_resume
-
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./rust
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable

@@ -41,13 +41,14 @@ impl Render for Typst {
 
         let template_file_path = Path::from_path(&repo_dir())
             .ok_or(Error::msg("failed to create path from repo directory"))?
-            .join("rust") // TODO: once this implementation replaces the existing, remove
             .join(TEMPLATE_FILE_NAME);
 
         let template_file_artifact = Artifact {
             title: config.title.clone(),
             kind: ArtifactKind::Typst,
-            content: read(&template_file_path).context("failed to read typst template")?,
+            content: read(&template_file_path).context(format!(
+                "failed to read typst template: {template_file_path}"
+            ))?,
         };
 
         template_file_artifact.write(&config.output_dir)?;
