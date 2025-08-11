@@ -25,8 +25,8 @@
         {
             "institution": "Northeastern University",
             "url": "https://www.northeastern.edu/",
-            "area": "Computer Science",
-            "studyType": "B.S.",
+            "area": "Boston, MA",
+            "studyType": "B.S. Computer Science",
             "startDate": "2017-09-01",
             "endDate": "2022-05-01",
             "score": "3.9/4.0"
@@ -35,20 +35,21 @@
 
     "skills": [
         {
-            "name": "Programming Languages",
+            "name": "Languages",
             "level": "Intermediate",
             "keywords": [
                 "TypeScript",
                 "JavaScript",
-                "Python",
                 "Ruby",
+                "Rust",
+                "Python",
                 "SQL",
                 "HTML",
                 "CSS"
             ]
         },
         {
-            "name": "Tools & Frameworks",
+            "name": "Tooling",
             "level": "Intermediate",
             "keywords": [
                 "React",
@@ -67,18 +68,18 @@
     "work": [
         {
             "name": "PayPal",
-            "location": "Remote",
+            "summary": "Remote",
             "description": "Braintree post-processing, treasury funding.",
             "position": "Software Engineer",
             "url": "https://paypal.com",
             "startDate": "2023-06-12",
             "highlights": [
-                "Maintained Braintree's Ruby on Rails application used to disburse $1.5B a day across 15,000 active merchants",
+                "Maintained Braintree's Ruby on Rails app used to payout $1.5B a day across 15K merchants",
                 "Led development, coordinated live testing, and served as a subject matter expert for a feature used to withhold $1.5M a day from high-risk or delinquent merchants",
-                "Automated the migration of $57M out of a closing account for merchants onboarding to new banking partners",
-                "Enhanced disbursement reconciliation processes by improving data quality and designing queries in Google BigQuery, reducing unreconciled funds by 88% and increasing reconciliation accuracy to 99.7%",
-                "Increased monthly revenue by $650,000 by correcting fee calculations to use rounding instead of truncation",
-                "Identified and corrected the misallocation of $80M caused by a regression from a Ruby on Rails upgrade",
+                "Automated a $57M migration in held funds to new banking partners and an updated internal ledger",
+                "Coordinated engineering effort to debug and resolve funds reconciliation issues, decreasing unreconciled funds by 88% and increasing reconciliation accuracy to 99.7%",
+                "Identified, reproduced, and patched a regression from a Ruby on Rails upgrade, correcting over $80M in resulting misallocated funds",
+                "Increased monthly revenue by $650K by correcting fee calculations to round instead of truncate",
                 "Interviewed intern candidates and onboarded engineers with code walkthroughs and pair programming"
             ],
             "_highlights": [
@@ -88,22 +89,22 @@
 
         {
             "name": "Poloniex",
-            "location": "Remote",
+            "summary": "Remote",
             "description": "Crypto exchange.",
             "position": "Software Engineer Co-op",
             "url": "https://poloniex.com/",
             "startDate": "2021-01-06",
             "endDate": "2021-08-13",
             "highlights": [
-                "Developed internal tools for managing users, markets, and customer support tickets using TypeScript and React",
-                "Integrated web application with a content management system using GraphQL and Node.js, enabling marketing teams to update web content without engineering support",
-                "Contributed support for rule negation to an open source rules engine powering a Node.js permissions service"
+                "Integrated Poloniex's web app with a CMS, saving hours of weekly engineering effort",
+                "Contributed rule-negation support to an open source rules engine (json-rules-engine) powering an internal Node.js permissions service",
+                "Developed internal tools for managing users, markets, and support tickets using TypeScript and React"
             ]
         },
 
         {
             "name": "Sandbox at Northeastern University",
-            "location": "Remote",
+            "summary": "Remote",
             "description": "Northeastern's premier software consultancy.",
             "position": "Software Developer",
             "url": "https://www.sandboxnu.com/",
@@ -121,7 +122,7 @@
 
         {
             "name": "Teikametrics",
-            "location": "Boston, MA",
+            "summary": "Boston, MA",
             "description": "SaaS platform dealing in Amazon ads optimization.",
             "position": "Software Engineer Co-op",
             "url": "https://www.teikametrics.com/",
@@ -137,7 +138,7 @@
 
         {
             "name": "Curriculum Associates",
-            "location": "Billerica, MA",
+            "summary": "Billerica, MA",
             "description": "Educational software company.",
             "position": "Software Engineer Co-op",
             "url": "https://www.curriculumassociates.com/",
@@ -164,7 +165,7 @@
 
         {
             "name": "Veoneer",
-            "location": "Lowell, MA",
+            "summary": "Lowell, MA",
             "description": "Manufacturer of automotive safety systems.",
             "position": "Technical Intern",
             "url": "https://www.veoneer.com",
@@ -245,10 +246,10 @@
             "name": "Compiler for Python-like Language",
             "roles": [],
             "highlights": [
-                "Wrote a compiler backend in OCaml and a C runtime for a Python-like expression-oriented language",
-                "Supported dynamically-typed values including numbers, Booleans, tuples, strings, and first-class functions",
+                "Wrote an x86 compiler in OCaml and a C runtime for a Python-like expression-oriented language",
+                "Supported dynamic types with integers, booleans, tuples, strings, and first-class functions",
                 "Managed program memory with mark-and-sweep garbage collection and register allocation",
-                "Wrote over 600 unit tests and end-to-end tests to ensure correctness of compilation using OUnit"
+                "Wrote over 600 unit and E2E tests with OUnit to validate compiliation and language semantics"
             ],
             "keywords": ["OCaml", "C", "x86 Assembly"],
             "startDate": "2022",

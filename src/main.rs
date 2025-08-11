@@ -17,6 +17,7 @@ use typst::Typst;
 use crate::render::RenderConfig;
 
 static SECOND_COOP_START_DATE: NaiveDate = NaiveDate::from_ymd_opt(2020, 1, 6).unwrap();
+static _THIRD_COOP_START_DATE: NaiveDate = NaiveDate::from_ymd_opt(2021, 1, 6).unwrap();
 
 // TODO: support STDIN
 // TODO: filtering through CLI

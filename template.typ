@@ -2,8 +2,8 @@
   #set line(length: 100%, stroke: 0.5pt + black)
   #set list(indent: 0.5em)
   #set page("us-letter", margin: 1in)
-  #set par(linebreaks: "simple", leading: 1em, spacing: 1.4em)
-  #set text(font: "Carlito", size: 10pt)
+  #set par(linebreaks: "simple", leading: 1em, spacing: 1.2em)
+  #set text(font: "Helvetica", size: 10pt)
 
   #show heading.where(level: 1): set text(size: 18pt)
 
@@ -12,7 +12,7 @@
   }
 
   #let headline(name, desc, location: none, detail) = {
-    box[#pad(right: 0.25em)[*#name*]]
+    box[#pad(right: 0.4em)[*#name*]]
     [#desc]
     if location != none [
       — #location

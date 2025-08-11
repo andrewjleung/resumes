@@ -30,16 +30,6 @@ jobs:
             - uses: dtolnay/rust-toolchain@stable
             - uses: typst-community/setup-typst@v4
 
-            - name: Download Carlito font
-              run: |
-                  cd /usr/share/fonts
-                  sudo mkdir googlefonts
-                  cd googlefonts
-                  sudo wget -O Carlito.zip https://fonts.google.com/download?family=Carlito
-                  sudo unzip -d . ./Carlito.zip
-                  sudo chmod -R --reference=/usr/share/fonts/opentype /usr/share/fonts/googlefonts
-                  sudo fc-cache -fv
-
             - name: Create artifact
               run: cargo run -- -c -o ${{ github.workspace }}/artifacts -t $TITLE
 
