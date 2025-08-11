@@ -30,6 +30,12 @@ jobs:
             - uses: dtolnay/rust-toolchain@stable
             - uses: typst-community/setup-typst@v4
 
+            - name: Download Helvetica
+              run: |
+                  wget -O Helvetica.zip https://fonts.google.com/download?family=Helvetica
+                  unzip -d helvetica/ Helvetica.zip
+                  fc-cache -fv
+
             - name: Create artifact
               run: cargo run -- -c -o ${{ github.workspace }}/artifacts -t $TITLE
 
