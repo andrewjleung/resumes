@@ -4,7 +4,6 @@
   #set page("us-letter", margin: 1in)
   #set par(linebreaks: "simple", leading: 1em, spacing: 1.2em)
   #set text(font: "Helvetica", size: 10pt)
-  #set strong(delta: 200)
 
   #show heading.where(level: 1): set text(size: 18pt)
 
