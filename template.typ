@@ -4,6 +4,7 @@
   #set page("us-letter", margin: 1in)
   #set par(linebreaks: "simple", leading: 1em, spacing: 1.2em)
   #set text(font: "Helvetica", size: 10pt)
+  #set strong(delta: 200)
 
   #show heading.where(level: 1): set text(size: 18pt)
 
@@ -32,16 +33,9 @@
     ]
   }
 
-  #let nicelink(l, scheme: "https") = {
-    let components = l.split(regex("(://)|:"))
-
-    let (scheme, authority) = if components.len() == 2 {
-      components
-    } else {
-      (scheme, l)
-    }
-
-    link(scheme + ":" + authority)[#authority]
+  #let nicelink(l) = {
+    let authority = l.split(regex("(://)|:")).last()
+    link(l)[#authority]
   }
 
   #let twocolumn(leftcontent, rightcontent) = {
@@ -56,7 +50,7 @@
   #twocolumn(
     [
       = #resume.basics.name
-      #nicelink(resume.basics.email, scheme: "mailto")
+      #nicelink("mailto:" + resume.basics.email)
     ],
     align(
       right,
