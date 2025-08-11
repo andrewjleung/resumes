@@ -80,7 +80,7 @@
                 "Coordinated engineering effort to debug and resolve funds reconciliation issues, decreasing unreconciled funds by 88% and increasing reconciliation accuracy to 99.7%",
                 "Identified, reproduced, and fixed a regression caused by a Ruby on Rails upgrade, correcting over $80M in resulting misallocated funds",
                 "Increased monthly revenue by $650K by correcting fee calculations to round instead of truncate",
-                "Interviewed intern candidates and onboarded engineers with code walkthroughs and pair programming"
+                "Interviewed intern candidates and onboarded engineers with knowledge sharing and pair programming"
             ],
             "_highlights": [
                 "Prevented the misallocation of $6M by identifying and fixing an edge case in the timing of internal routing of funds to different bank accounts"
@@ -98,7 +98,7 @@
             "highlights": [
                 "Integrated Poloniex's web app with a CMS, saving hours of weekly engineering effort",
                 "Contributed rule-negation support to an open source rules engine (json-rules-engine) powering an internal Node.js permissions service",
-                "Developed internal tools for managing users, markets, and support tickets using TypeScript and React"
+                "Developed internal tools for managing users, markets, and support tickets with TypeScript and React"
             ]
         },
 
