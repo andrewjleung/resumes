@@ -32,8 +32,9 @@ jobs:
 
             - name: Download Helvetica
               run: |
-                  wget -O Helvetica.zip https://fonts.google.com/download?family=Helvetica
+                  wget -O Helvetica.zip https://font.download/dl/font/helvetica-255.zip
                   unzip -d helvetica/ Helvetica.zip
+                  mv helvetica /usr/share/fonts/
                   fc-cache -fv
 
             - name: Create artifact
