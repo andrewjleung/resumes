@@ -9,6 +9,7 @@ use std::fs::read_to_string;
 mod render;
 mod resume;
 mod typst;
+mod watcher;
 
 use render::Render;
 use resume::{ResumeFilterPredicate::*, ResumeSlice};
@@ -49,6 +50,11 @@ struct Args {
     #[arg(short, long)]
     /// If set, automatically remove all created intermediate artifacts, keeping the final render.
     clean: bool,
+
+    #[arg(short, long)]
+    /// If set, run the CLI in watch mode. This will automatically re-render the resume on changes
+    /// to the resume JSON specified in the `resume` argument.
+    watch: bool,
 }
 
 impl TryFrom<&Args> for RenderConfig {
@@ -84,10 +90,7 @@ fn read_resume(path: &Path) -> Result<Resume> {
 
 fn run_with_resume(args: &Args, f: fn(ResumeSlice) -> ResumeSlice) -> Result<()> {
     let resume = f(read_resume(Path::new(&args.resume))?.into());
-    let render_config: RenderConfig = args.try_into()?;
-
-    Typst.render(resume, &render_config)?;
-
+    Typst.render(resume, &args.try_into()?)?;
     Ok(())
 }
 

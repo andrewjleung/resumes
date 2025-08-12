@@ -13,3 +13,4 @@ json-resume = { git = "https://github.com/jsonresume/rust-json-resume.git", vers
 regex = "1.11"
 repo_path_lib = "1.2"
 serde_json = "1.0"
+notify = "8.2"
