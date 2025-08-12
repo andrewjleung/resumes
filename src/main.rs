@@ -16,6 +16,7 @@ use resume::{ResumeFilterPredicate::*, ResumeSlice};
 use typst::Typst;
 
 use crate::render::RenderConfig;
+use crate::watcher::watch;
 
 static _SECOND_COOP_START_DATE: NaiveDate = NaiveDate::from_ymd_opt(2020, 1, 6).unwrap();
 static THIRD_COOP_START_DATE: NaiveDate = NaiveDate::from_ymd_opt(2021, 1, 6).unwrap();
@@ -88,7 +89,10 @@ fn read_resume(path: &Path) -> Result<Resume> {
         .context("failed to read resume json")
 }
 
-fn run_with_resume(args: &Args, f: fn(ResumeSlice) -> ResumeSlice) -> Result<()> {
+fn run_with_resume<F>(args: &Args, f: F) -> Result<()>
+where
+    F: Fn(ResumeSlice) -> ResumeSlice,
+{
     let resume = f(read_resume(Path::new(&args.resume))?.into());
     Typst.render(resume, &args.try_into()?)?;
     Ok(())
@@ -97,12 +101,20 @@ fn run_with_resume(args: &Args, f: fn(ResumeSlice) -> ResumeSlice) -> Result<()>
 fn main() -> Result<()> {
     let args = Args::parse();
 
-    run_with_resume(&args, |resume| {
+    let filter_resume = |resume: ResumeSlice| {
         resume
             .work([
                 After(THIRD_COOP_START_DATE),
                 Exclude(String::from("Sandbox at Northeastern University")),
             ])
             .projects([Include(String::from("Compiler for Python-like Language"))])
-    })
+    };
+
+    if args.watch {
+        watch(Path::new(&args.resume), || {
+            run_with_resume(&args, filter_resume)
+        })
+    } else {
+        run_with_resume(&args, filter_resume)
+    }
 }
