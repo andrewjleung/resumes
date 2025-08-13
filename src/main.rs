@@ -1,5 +1,6 @@
 use anyhow::{Context, Error, Result};
 use camino::Utf8Path as Path;
+use camino::Utf8PathBuf as PathBuf;
 use chrono::NaiveDate;
 use clap::Parser;
 use json_resume::Resume;
@@ -9,17 +10,24 @@ use std::fs::read_to_string;
 mod render;
 mod resume;
 mod typst;
+mod view;
 mod watcher;
+mod world;
 
 use render::Render;
 use resume::{ResumeFilterPredicate::*, ResumeSlice};
 use typst::Typst;
+use world::World;
 
-use crate::render::RenderConfig;
+use crate::view::View;
 use crate::watcher::watch;
 
 static SECOND_COOP_START_DATE: NaiveDate = NaiveDate::from_ymd_opt(2020, 1, 6).unwrap();
 static _THIRD_COOP_START_DATE: NaiveDate = NaiveDate::from_ymd_opt(2021, 1, 6).unwrap();
+
+fn main_path() -> PathBuf {
+    Path::new(env!("CARGO_MANIFEST_DIR")).join("src/main.rs")
+}
 
 // TODO: support STDIN
 // TODO: filtering through CLI
@@ -58,10 +66,10 @@ struct Args {
     watch: bool,
 }
 
-impl TryFrom<&Args> for RenderConfig {
+impl TryFrom<&Args> for World {
     type Error = anyhow::Error;
 
-    fn try_from(args: &Args) -> Result<RenderConfig> {
+    fn try_from(args: &Args) -> Result<World> {
         DirBuilder::new()
             .recursive(true)
             .create(&args.output_dir)
@@ -71,13 +79,19 @@ impl TryFrom<&Args> for RenderConfig {
                 &args.output_dir
             ))?;
 
-        Ok(RenderConfig {
+        let resume_data_path = Path::new(&args.resume);
+        let main_source_path = main_path();
+
+        Ok(World {
+            artifact_title: args.title.clone(),
             clean: args.clean,
             output_dir: Path::new(&args.output_dir)
                 .to_path_buf()
                 .canonicalize_utf8()
                 .context("failed to canonicalize output directory path")?,
-            title: args.title.clone(),
+            extra_watched_file_paths: vec![main_source_path],
+            resume_data_path: resume_data_path.into(),
+            watch: args.watch,
         })
     }
 }
@@ -89,17 +103,23 @@ fn read_resume(path: &Path) -> Result<Resume> {
         .context("failed to read resume json")
 }
 
-fn run_with_resume<F>(args: &Args, f: F) -> Result<()>
+fn run_with_resume<F>(world: &World, f: F) -> Result<()>
 where
     F: Fn(ResumeSlice) -> ResumeSlice,
 {
-    let resume = f(read_resume(Path::new(&args.resume))?.into());
-    Typst.render(resume, &args.try_into()?)?;
+    View::Updating.print(world)?;
+
+    let resume = f(read_resume(&world.resume_data_path)?.into());
+    Typst.render(resume, world)?;
+
+    View::Updated.print(world)?;
+
     Ok(())
 }
 
 fn main() -> Result<()> {
     let args = Args::parse();
+    let world = World::try_from(&args)?;
 
     let filter_resume = |resume: ResumeSlice| {
         resume
@@ -110,11 +130,15 @@ fn main() -> Result<()> {
             .projects([Include(String::from("Compiler for Python-like Language"))])
     };
 
-    if args.watch {
-        watch(Path::new(&args.resume), || {
-            run_with_resume(&args, filter_resume)
-        })
+    let result = if args.watch {
+        watch(&world, || run_with_resume(&world, filter_resume))
     } else {
-        run_with_resume(&args, filter_resume)
-    }
+        run_with_resume(&world, filter_resume)
+    };
+
+    if let Err(e) = result {
+        View::Error(e).print(&world)?
+    };
+
+    Ok(())
 }

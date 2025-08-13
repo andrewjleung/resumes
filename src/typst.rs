@@ -1,6 +1,7 @@
 use crate::{
-    render::{Artifact, ArtifactKind, Render, RenderConfig, Rendering},
+    render::{Artifact, ArtifactKind, Render, Rendering},
     resume::ResumeSlice,
+    world::World,
 };
 use anyhow::{Context, Error, Result};
 use camino::Utf8Path as Path;
@@ -14,7 +15,7 @@ const TEMPLATE_FILE_NAME: &str = "template.typ";
 pub struct Typst;
 
 impl Render for Typst {
-    fn render_artifacts(&self, resume: ResumeSlice, config: &RenderConfig) -> Result<Rendering> {
+    fn render_artifacts(&self, resume: ResumeSlice, config: &World) -> Result<Rendering> {
         let resume_json_content = serde_json::to_string(&resume.apply_slice())
             .context("failed to serialize resume data")?;
 
@@ -30,7 +31,7 @@ impl Render for Typst {
             .into_owned();
 
         let resume_json_artifact = Artifact {
-            title: format!("{}.slice", config.title),
+            title: format!("{}.slice", config.artifact_title),
             kind: ArtifactKind::Json,
             content: resume_json_content.into_bytes(),
         };
@@ -44,7 +45,7 @@ impl Render for Typst {
             .join(TEMPLATE_FILE_NAME);
 
         let template_file_artifact = Artifact {
-            title: config.title.clone(),
+            title: config.artifact_title.clone(),
             kind: ArtifactKind::Typst,
             content: read(&template_file_path).context(format!(
                 "failed to read typst template: {template_file_path}"
@@ -85,7 +86,7 @@ impl Render for Typst {
         Ok(Rendering {
             intermediates: vec![resume_json_artifact, template_file_artifact],
             final_render: Artifact {
-                title: config.title.clone(),
+                title: config.artifact_title.clone(),
                 kind: ArtifactKind::Pdf,
                 content: output.stdout,
             },
