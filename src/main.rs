@@ -9,12 +9,14 @@ use std::fs::read_to_string;
 mod render;
 mod resume;
 mod typst;
+mod watcher;
 
 use render::Render;
 use resume::{ResumeFilterPredicate::*, ResumeSlice};
 use typst::Typst;
 
 use crate::render::RenderConfig;
+use crate::watcher::watch;
 
 static _SECOND_COOP_START_DATE: NaiveDate = NaiveDate::from_ymd_opt(2020, 1, 6).unwrap();
 static THIRD_COOP_START_DATE: NaiveDate = NaiveDate::from_ymd_opt(2021, 1, 6).unwrap();
@@ -49,6 +51,11 @@ struct Args {
     #[arg(short, long)]
     /// If set, automatically remove all created intermediate artifacts, keeping the final render.
     clean: bool,
+
+    #[arg(short, long)]
+    /// If set, run the CLI in watch mode. This will automatically re-render the resume on changes
+    /// to the resume JSON specified in the `resume` argument.
+    watch: bool,
 }
 
 impl TryFrom<&Args> for RenderConfig {
@@ -82,24 +89,32 @@ fn read_resume(path: &Path) -> Result<Resume> {
         .context("failed to read resume json")
 }
 
-fn run_with_resume(args: &Args, f: fn(ResumeSlice) -> ResumeSlice) -> Result<()> {
+fn run_with_resume<F>(args: &Args, f: F) -> Result<()>
+where
+    F: Fn(ResumeSlice) -> ResumeSlice,
+{
     let resume = f(read_resume(Path::new(&args.resume))?.into());
-    let render_config: RenderConfig = args.try_into()?;
-
-    Typst.render(resume, &render_config)?;
-
+    Typst.render(resume, &args.try_into()?)?;
     Ok(())
 }
 
 fn main() -> Result<()> {
     let args = Args::parse();
 
-    run_with_resume(&args, |resume| {
+    let filter_resume = |resume: ResumeSlice| {
         resume
             .work([
                 After(THIRD_COOP_START_DATE),
                 Exclude(String::from("Sandbox at Northeastern University")),
             ])
             .projects([Include(String::from("Compiler for Python-like Language"))])
-    })
+    };
+
+    if args.watch {
+        watch(Path::new(&args.resume), || {
+            run_with_resume(&args, filter_resume)
+        })
+    } else {
+        run_with_resume(&args, filter_resume)
+    }
 }
