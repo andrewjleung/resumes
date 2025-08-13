@@ -78,12 +78,12 @@
                 "Led development, coordinated live testing, and served as a subject matter expert for a feature used to withhold $1.4M a day from high-risk or delinquent merchants",
                 "Automated a $57M migration in held funds to new banking partners and an updated internal ledger",
                 "Coordinated engineering effort to debug and resolve funds reconciliation issues, decreasing unreconciled funds by 88% and increasing reconciliation accuracy to 99.7%",
-                "Identified, reproduced, and fixed a regression caused by a Ruby on Rails upgrade, correcting over $80M in resulting misallocated funds",
-                "Increased monthly revenue by $650K by correcting fee calculations to round instead of truncate",
-                "Interviewed intern candidates and onboarded engineers with knowledge sharing and pair programming"
+                "Identified and patched a regression caused by a Rails upgrade, correcting $80M in misallocated funds",
+                "Increased monthly revenue by $650K by correcting fee calculations to round instead of truncate"
             ],
             "_highlights": [
-                "Prevented the misallocation of $6M by identifying and fixing an edge case in the timing of internal routing of funds to different bank accounts"
+                "Prevented the misallocation of $6M by identifying and fixing an edge case in the timing of internal routing of funds to different bank accounts",
+                "Interviewed intern candidates and onboarded engineers with knowledge sharing and pair programming"
             ]
         },
 
@@ -96,7 +96,7 @@
             "startDate": "2021-01-06",
             "endDate": "2021-08-13",
             "highlights": [
-                "Integrated Poloniex's web app with a CMS, saving hours of weekly engineering effort",
+                "Integrated Poloniex's web app with a CMS, saving hours of weekly engineering effort spent manually updating web content on behalf of marketing teams",
                 "Contributed rule-negation support to an open source rules engine (json-rules-engine) powering an internal Node.js permissions service",
                 "Developed internal tools for managing users, markets, and support tickets with TypeScript and React"
             ]
