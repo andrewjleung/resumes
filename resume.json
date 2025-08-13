@@ -78,7 +78,7 @@
                 "Led development, coordinated live testing, and served as a subject matter expert for a feature used to withhold $1.4M a day from high-risk or delinquent merchants",
                 "Automated a $57M migration in held funds to new banking partners and an updated internal ledger",
                 "Coordinated engineering effort to debug and resolve funds reconciliation issues, decreasing unreconciled funds by 88% and increasing reconciliation accuracy to 99.7%",
-                "Identified and patched a regression caused by a Rails upgrade, correcting $80M in misallocated funds",
+                "Identified and patched a regression caused by a Rails upgrade, correcting the misallocation of $80M",
                 "Increased monthly revenue by $650K by correcting fee calculations to round instead of truncate"
             ],
             "_highlights": [
