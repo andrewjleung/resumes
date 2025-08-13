@@ -74,8 +74,8 @@
             "url": "https://paypal.com",
             "startDate": "2023-06-12",
             "highlights": [
-                "Maintained Braintree's Ruby on Rails app used to payout $1.5B a day across 15K merchants",
-                "Led development, coordinated live testing, and served as a subject matter expert for a feature used to withhold $1.5M a day from high-risk or delinquent merchants",
+                "Maintained Braintree's Ruby on Rails app used to payout $1.6B a day across 15K merchants",
+                "Led development, coordinated live testing, and served as a subject matter expert for a feature used to withhold $1.4M a day from high-risk or delinquent merchants",
                 "Automated a $57M migration in held funds to new banking partners and an updated internal ledger",
                 "Coordinated engineering effort to debug and resolve funds reconciliation issues, decreasing unreconciled funds by 88% and increasing reconciliation accuracy to 99.7%",
                 "Identified, reproduced, and fixed a regression caused by a Ruby on Rails upgrade, correcting over $80M in resulting misallocated funds",
