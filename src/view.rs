@@ -74,6 +74,7 @@ impl View<'_> {
                 .map_err(Error::new)
             }
         }
+        .and_then(|()| execute!(stdout(), MoveToNextLine(2)).map_err(Error::new))
         .context("failed to print to terminal")
     }
 }
