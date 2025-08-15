@@ -6,6 +6,7 @@ use clap::Parser;
 use json_resume::Resume;
 use std::fs::DirBuilder;
 use std::fs::read_to_string;
+use std::process::exit;
 
 mod render;
 mod resume;
@@ -110,22 +111,19 @@ fn run_with_resume<F>(world: &World, f: F) -> Result<()>
 where
     F: Fn(ResumeSlice) -> ResumeSlice,
 {
-    View::Updating.print(world)?;
+    View::Updating.print(world).unwrap();
 
     let resume = f(read_resume(&world.resume_data_path)?.into());
     Typst
         .render(resume, world)
         .context("failed to render resume with typst")?;
 
-    View::Updated.print(world)?;
+    View::Updated.print(world).unwrap();
 
     Ok(())
 }
 
-fn main() -> Result<()> {
-    let args = Args::parse();
-    let world = World::try_from(&args).unwrap();
-
+fn run(world: &World) -> Result<()> {
     let filter_resume = |resume: ResumeSlice| {
         resume
             .work([
@@ -135,15 +133,21 @@ fn main() -> Result<()> {
             .projects([Include(String::from("Compiler for Python-like Language"))])
     };
 
-    let result = if args.watch {
-        watch(&world, || run_with_resume(&world, filter_resume))
+    if world.watch {
+        watch(world, || run_with_resume(world, filter_resume))
     } else {
-        run_with_resume(&world, filter_resume)
-    };
+        run_with_resume(world, filter_resume)
+    }
+}
 
-    result
-        .inspect_err(|e| View::Error(e).print(&world).unwrap())
-        .unwrap();
+fn main() -> Result<()> {
+    let args = Args::parse();
+    let world = World::try_from(&args).unwrap();
+
+    if let Err(e) = run(&world) {
+        View::Error(&e).print(&world)?;
+        exit(1);
+    }
 
     Ok(())
 }
