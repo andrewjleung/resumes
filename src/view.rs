@@ -1,37 +1,43 @@
 use anyhow::Context;
-use anyhow::Error;
 use anyhow::Result;
+use crossterm::cursor::MoveToPreviousLine;
+use crossterm::queue;
 use crossterm::{
     cursor::MoveTo,
     cursor::MoveToNextLine,
-    execute,
     style::{Color, PrintStyledContent, Stylize},
     terminal::Clear,
 };
+use std::io::Write;
 use std::io::stdout;
 
 use crate::world::World;
 
-fn print_watching_prelude(world: &World) -> Result<()> {
-    if !world.watch {
-        return Ok(());
-    }
-
+fn print_watching_prelude(world: &World) -> std::io::Result<()> {
     let watched_file_names: Vec<String> = world
         .watched_file_paths()
         .map(|path| path.file_name().unwrap_or(path.as_str()).to_owned())
         .collect();
 
-    execute!(
+    queue!(
         stdout(),
         Clear(crossterm::terminal::ClearType::All),
         MoveTo(0, 0),
-        PrintStyledContent("watching ".with(Color::Cyan)),
+        PrintStyledContent("watching ".to_string().with(Color::Cyan)),
         PrintStyledContent(watched_file_names.join(", ").with(Color::Reset)),
-        MoveTo(0, 2),
-    )?;
+        MoveToNextLine(2)
+    )
+}
 
-    Ok(())
+pub fn move_lines(lines: i32) -> std::io::Result<()> {
+    if lines < 0 {
+        queue!(
+            stdout(),
+            MoveToPreviousLine(lines.abs().try_into().unwrap())
+        )
+    } else {
+        queue!(stdout(), MoveToNextLine(lines.try_into().unwrap()))
+    }
 }
 
 pub enum View<'a> {
@@ -42,39 +48,46 @@ pub enum View<'a> {
 }
 
 impl View<'_> {
-    pub fn print(&self, world: &World) -> Result<()> {
+    fn print_view(&self) -> std::io::Result<()> {
         match self {
-            View::Watching => print_watching_prelude(world),
+            View::Watching => Ok(()),
             View::Updating => {
-                print_watching_prelude(world)?;
-                execute!(
+                queue!(
                     stdout(),
                     PrintStyledContent("updating...".with(Color::Yellow)),
+                    MoveToNextLine(1)
                 )
-                .map_err(Error::new)
             }
             View::Updated => {
-                print_watching_prelude(world)?;
-                execute!(
+                queue!(
                     stdout(),
                     PrintStyledContent("content updated!".with(Color::Green)),
+                    MoveToNextLine(1)
                 )
-                .map_err(Error::new)
             }
             View::Error(err) => {
-                print_watching_prelude(world)?;
-                execute!(
+                queue!(
                     stdout(),
                     PrintStyledContent("⬤ ".with(Color::Red)),
                     PrintStyledContent(err.to_string().with(Color::Red)),
                     MoveToNextLine(1),
-                    PrintStyledContent("└─ ".with(Color::Red)),
+                    PrintStyledContent("└ ".with(Color::Red)),
                     PrintStyledContent(err.root_cause().to_string().with(Color::Red)),
+                    MoveToNextLine(1)
                 )
-                .map_err(Error::new)
             }
         }
-        .and_then(|()| execute!(stdout(), MoveToNextLine(2)).map_err(Error::new))
+    }
+
+    pub fn print(&self, world: &World) -> Result<()> {
+        if world.watch {
+            print_watching_prelude(world)
+                .and_then(|()| self.print_view())
+                .and_then(|()| move_lines(1))
+        } else {
+            self.print_view()
+        }
+        .and_then(|()| stdout().flush())
         .context("failed to print to terminal")
     }
 }
