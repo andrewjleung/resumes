@@ -3,6 +3,7 @@ use anyhow::Error;
 use anyhow::Result;
 use crossterm::{
     cursor::MoveTo,
+    cursor::MoveToNextLine,
     execute,
     style::{Color, PrintStyledContent, Stylize},
     terminal::Clear,
@@ -33,14 +34,14 @@ fn print_watching_prelude(world: &World) -> Result<()> {
     Ok(())
 }
 
-pub enum View {
+pub enum View<'a> {
     Watching,
     Updating,
     Updated,
-    Error(anyhow::Error),
+    Error(&'a anyhow::Error),
 }
 
-impl View {
+impl View<'_> {
     pub fn print(&self, world: &World) -> Result<()> {
         match self {
             View::Watching => print_watching_prelude(world),
@@ -64,7 +65,11 @@ impl View {
                 print_watching_prelude(world)?;
                 execute!(
                     stdout(),
+                    PrintStyledContent("⬤ ".with(Color::Red)),
                     PrintStyledContent(err.to_string().with(Color::Red)),
+                    MoveToNextLine(1),
+                    PrintStyledContent("└─ ".with(Color::Red)),
+                    PrintStyledContent(err.root_cause().to_string().with(Color::Red)),
                 )
                 .map_err(Error::new)
             }

@@ -24,11 +24,15 @@ where
 
     View::Watching.print(world)?;
 
+    if let Err(e) = f() {
+        View::Error(&e).print(world)?;
+    }
+
     for res in rx {
         match res {
             Ok(event) => {
                 if let Err(e) = handle(event, &f) {
-                    Err(e.context("failed to handle file watching event"))?
+                    View::Error(&e).print(world)?;
                 }
             }
             Err(e) => Err(Error::new(e).context("error while watching changes"))?,
@@ -47,7 +51,7 @@ where
         ..
     } = event
     {
-        f()?;
+        return f();
     }
 
     Ok(())

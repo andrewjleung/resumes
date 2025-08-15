@@ -29,6 +29,10 @@ fn main_path() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR")).join("src/main.rs")
 }
 
+fn template_path() -> PathBuf {
+    Path::new(env!("CARGO_MANIFEST_DIR")).join("template.typ")
+}
+
 // TODO: support STDIN
 // TODO: filtering through CLI
 // TODO: logging?
@@ -80,7 +84,6 @@ impl TryFrom<&Args> for World {
             ))?;
 
         let resume_data_path = Path::new(&args.resume);
-        let main_source_path = main_path();
 
         Ok(World {
             artifact_title: args.title.clone(),
@@ -89,7 +92,7 @@ impl TryFrom<&Args> for World {
                 .to_path_buf()
                 .canonicalize_utf8()
                 .context("failed to canonicalize output directory path")?,
-            extra_watched_file_paths: vec![main_source_path],
+            extra_watched_file_paths: vec![main_path(), template_path()],
             resume_data_path: resume_data_path.into(),
             watch: args.watch,
         })
@@ -110,7 +113,9 @@ where
     View::Updating.print(world)?;
 
     let resume = f(read_resume(&world.resume_data_path)?.into());
-    Typst.render(resume, world)?;
+    Typst
+        .render(resume, world)
+        .context("failed to render resume with typst")?;
 
     View::Updated.print(world)?;
 
@@ -119,7 +124,7 @@ where
 
 fn main() -> Result<()> {
     let args = Args::parse();
-    let world = World::try_from(&args)?;
+    let world = World::try_from(&args).unwrap();
 
     let filter_resume = |resume: ResumeSlice| {
         resume
@@ -136,9 +141,9 @@ fn main() -> Result<()> {
         run_with_resume(&world, filter_resume)
     };
 
-    if let Err(e) = result {
-        View::Error(e).print(&world)?
-    };
+    result
+        .inspect_err(|e| View::Error(e).print(&world).unwrap())
+        .unwrap();
 
     Ok(())
 }
