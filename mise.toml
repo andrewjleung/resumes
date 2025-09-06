@@ -1,0 +1,8 @@
+[tasks.pdf]
+description = "View the rendered resume with tdf"
+run = "tdf resume.pdf"
+dir = "{{config_root}}/artifacts"
+
+[tasks.watch]
+description = "Start the renderer with file-watching enabled"
+run = "cargo run --quiet -- --watch --clean"
