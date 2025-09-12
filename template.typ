@@ -3,7 +3,7 @@
   #set list(indent: 0.5em)
   #set page("us-letter", margin: 1in)
   #set par(linebreaks: "simple", leading: 1em, spacing: 1.2em)
-  #set text(font: "Helvetica", size: 10pt)
+  #set text(font: "Nimbus Sans L", size: 10pt)
 
   #show heading.where(level: 1): set text(size: 18pt)
 
