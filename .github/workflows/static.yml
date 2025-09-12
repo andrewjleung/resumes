@@ -30,11 +30,11 @@ jobs:
             - uses: dtolnay/rust-toolchain@stable
             - uses: typst-community/setup-typst@v4
 
-            - name: Download Helvetica
+            - name: Download Nimbus Sans L
               run: |
-                  wget -O Helvetica.zip https://font.download/dl/font/helvetica-255.zip
-                  unzip -d helvetica/ Helvetica.zip
-                  mv helvetica /usr/share/fonts/
+                  wget -O nimbus_sans_l.zip https://www.fontsquirrel.com/fonts/download/nimbus-sans-l
+                  unzip -d nimbus_sans_l/ nimbus_sans_l.zip
+                  mv nimbus-sans-l /usr/share/fonts/
                   fc-cache -fv
 
             - name: Create artifact
