@@ -34,7 +34,7 @@ jobs:
               run: |
                   wget -O nimbus_sans_l.zip https://www.fontsquirrel.com/fonts/download/nimbus-sans-l
                   unzip -d nimbus_sans_l/ nimbus_sans_l.zip
-                  mv nimbus-sans-l /usr/share/fonts/
+                  mv nimbus_sans_l /usr/share/fonts/
                   fc-cache -fv
 
             - name: Create artifact
