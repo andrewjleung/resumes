@@ -11,6 +11,16 @@ pub enum ResumeFilterPredicate {
     After(NaiveDate),
 }
 
+impl ResumeFilterPredicate {
+    fn conjunctive(&self) -> bool {
+        matches!(self, Self::Exclude(_))
+    }
+
+    fn disjunctive(&self) -> bool {
+        matches!(self, Self::Include(_) | Self::After(_))
+    }
+}
+
 pub trait Headline {
     fn apply(&self, predicate: &ResumeFilterPredicate) -> bool {
         match predicate {
@@ -20,6 +30,14 @@ pub trait Headline {
             ResumeFilterPredicate::Exclude(value) => self.name().is_some_and(|name| name != *value),
             ResumeFilterPredicate::Include(value) => self.name().is_some_and(|name| name == *value),
         }
+    }
+
+    fn apply_many(&self, predicates: impl IntoIterator<Item = ResumeFilterPredicate>) -> bool {
+        let (disjunctive_predicates, conjunctive_predicates): (Vec<_>, Vec<_>) =
+            predicates.into_iter().partition(|p| p.disjunctive());
+
+        disjunctive_predicates.iter().any(|p| self.apply(p))
+            && conjunctive_predicates.iter().all(|p| self.apply(p))
     }
 
     fn name(&self) -> Option<String>;
@@ -68,14 +86,11 @@ impl From<ResumeSlice> for Resume {
 
         resume
             .work
-            .retain(|work| resume_slice.work_filters.iter().all(|f| work.apply(f)));
+            .retain(|work| work.apply_many(resume_slice.work_filters.clone()));
 
-        resume.projects.retain(|project| {
-            resume_slice
-                .project_filters
-                .iter()
-                .all(|f| project.apply(f))
-        });
+        resume
+            .projects
+            .retain(|project| project.apply_many(resume_slice.project_filters.clone()));
 
         resume
     }
