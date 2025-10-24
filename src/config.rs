@@ -21,6 +21,7 @@ pub struct ProjectConfig {
     pub filters: Option<Vec<ResumeFilterPredicate>>,
 }
 
+// TODO: allow specifying multiple versions with different filters?
 #[derive(Serialize, Deserialize, Default, Clone)]
 pub struct Config {
     pub work: Option<WorkConfig>,

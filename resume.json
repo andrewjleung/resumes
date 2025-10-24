@@ -1,6 +1,5 @@
 {
     "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
-
     "basics": {
         "name": "Andrew Leung",
         "label": "Software Engineer",
@@ -20,7 +19,6 @@
             }
         ]
     },
-
     "education": [
         {
             "institution": "Northeastern University",
@@ -32,7 +30,6 @@
             "score": "3.9/4.0"
         }
     ],
-
     "skills": [
         {
             "name": "Languages",
@@ -65,7 +62,6 @@
             ]
         }
     ],
-
     "work": [
         {
             "name": "PayPal",
@@ -87,7 +83,6 @@
                 "Interviewed intern candidates and onboarded engineers with knowledge sharing and pair programming"
             ]
         },
-
         {
             "name": "Poloniex",
             "summary": "Remote",
@@ -102,7 +97,6 @@
                 "Developed internal tools for managing users, markets, and support tickets with TypeScript and React"
             ]
         },
-
         {
             "name": "Sandbox at Northeastern University",
             "summary": "Remote",
@@ -120,7 +114,6 @@
                 "Modeled course schedule data in TypeScript, wrote logic for validating course requirements, and implemented React components to display interactive course plans to users"
             ]
         },
-
         {
             "name": "Teikametrics",
             "summary": "Boston, MA",
@@ -136,7 +129,6 @@
                 "Rapidly ramped up onto new technologies, progressing from no Scala, TypeScript, or web development experience to becoming an active contributor to a Scala with Cats backend and a TypeScript, React, and Redux frontend"
             ]
         },
-
         {
             "name": "Curriculum Associates",
             "summary": "Billerica, MA",
@@ -151,7 +143,6 @@
                 "Refactored database schemas with Liquibase and updated existing data for education platform privileges"
             ]
         },
-
         {
             "name": "Northeastern University College of Computer and Information Science",
             "location": "Boston, MA",
@@ -163,7 +154,6 @@
                 "Reviewed and graded roughly 30 student coding assignments per week written in Racket"
             ]
         },
-
         {
             "name": "Veoneer",
             "summary": "Lowell, MA",
@@ -178,7 +168,6 @@
             ]
         }
     ],
-
     "projects": [
         {
             "name": "Bookmark Manager",
@@ -203,7 +192,6 @@
             "url": "https://github.com/andrewjleung/linkr",
             "startDate": "2023"
         },
-
         {
             "name": "Random Audio Player",
             "roles": [],
@@ -223,7 +211,6 @@
             "url": "https://github.com/andrewjleung/raudi",
             "startDate": "2022"
         },
-
         {
             "name": "TheNeedleDrop Review Dataset",
             "roles": [],
@@ -242,7 +229,6 @@
             "startDate": "2022",
             "endDate": "2022"
         },
-
         {
             "name": "Compiler for Python-like Language",
             "roles": [],
@@ -255,9 +241,37 @@
             "keywords": ["OCaml", "C", "x86 Assembly"],
             "startDate": "2022",
             "endDate": "2022"
+        },
+        {
+            "name": "reze",
+            "roles": [],
+            "highlights": [
+                "Created a Rust CLI for rendering JSON Resume into PDF with Typst and Clap",
+                "Designed a declarative API for filtering resume content in code or TOML configuration by name/date",
+                "Built a file-watcher for edits to resume data, supporting instant hot-reloading of PDF renders",
+                "Built a CI/CD pipeline with GitHub Actions to automatically render/deploy resumes to GitHub Pages"
+            ],
+            "keywords": ["Rust", "Clap", "Serde", "Typst"],
+            "startDate": "2025",
+            "description": "a resume rendering framework and CLI",
+            "url": "https://github.com/andrewjleung/resumes",
+            "type": "application"
+        },
+        {
+            "name": "ply",
+            "roles": [],
+            "highlights": [
+                "Created a Rust CLI for tracking job applications in Markdown/TOML documents using Clap and Serde",
+                "Built a scraping and parsing framework to automatically generate applications for job listing URLs",
+                "Defined an API for declaring parsers in 5-6 lines of code with CSS selectors and regular expressions"
+            ],
+            "keywords": ["Rust", "Clap", "Serde"],
+            "startDate": "2025",
+            "description": "a plaintext job applicaton tracker",
+            "url": "https://github.com/andrewjleung/ply",
+            "type": "application"
         }
     ],
-
     "awards": [],
     "certificates": [],
     "interests": [],
