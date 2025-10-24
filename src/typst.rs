@@ -6,11 +6,8 @@ use crate::{
 use anyhow::{Context, Error, Result};
 use camino::Utf8Path as Path;
 use regex::Regex;
-use repo_path_lib::repo_dir;
+use repo_path::repo_path;
 use std::{fs::read, process::Command};
-
-// TODO: Make this an input instead of relying on location relative to repo
-const TEMPLATE_FILE_NAME: &str = "template.typ";
 
 pub struct Typst;
 
@@ -40,14 +37,15 @@ impl Render for Typst {
             .write(&config.output_dir)
             .context("failed to write resume slice")?;
 
-        let template_file_path = Path::from_path(&repo_dir())
-            .ok_or(Error::msg("failed to create path from repo directory"))?
-            .join(TEMPLATE_FILE_NAME);
+        // TODO: Make this an input instead of relying on location relative to repo
+        let template_file_path = repo_path!("template.typ");
+        let template_file_path = Path::from_path(template_file_path.as_path())
+            .context("failed to create path to typst template")?;
 
         let template_file_artifact = Artifact {
             title: config.artifact_title.clone(),
             kind: ArtifactKind::Typst,
-            content: read(&template_file_path).context(format!(
+            content: read(template_file_path).context(format!(
                 "failed to read typst template: {template_file_path}"
             ))?,
         };

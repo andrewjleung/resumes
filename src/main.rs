@@ -7,7 +7,9 @@ use json_resume::Resume;
 use std::fs::DirBuilder;
 use std::fs::read_to_string;
 use std::process::exit;
+use std::vec;
 
+mod config;
 mod render;
 mod resume;
 mod typst;
@@ -16,14 +18,16 @@ mod watcher;
 mod world;
 
 use render::Render;
-use resume::{ResumeFilterPredicate::*, ResumeSlice};
+use resume::ResumeSlice;
 use typst::Typst;
 use world::World;
 
+use crate::config::config;
+use crate::config::default_config_path;
 use crate::view::View;
 use crate::watcher::watch;
 
-static SECOND_COOP_START_DATE: NaiveDate = NaiveDate::from_ymd_opt(2020, 1, 6).unwrap();
+static _SECOND_COOP_START_DATE: NaiveDate = NaiveDate::from_ymd_opt(2020, 1, 6).unwrap();
 static _THIRD_COOP_START_DATE: NaiveDate = NaiveDate::from_ymd_opt(2021, 1, 6).unwrap();
 
 fn main_path() -> PathBuf {
@@ -42,33 +46,38 @@ fn template_path() -> PathBuf {
 #[command(version, about)]
 /// Utility for resume rendering and editing using the Resume JSON spec.
 struct Args {
-    #[arg(short, long, default_value = "resume.json")]
     /// The path to the Resume JSON file to render.
+    #[arg(short, long, default_value = "resume.json")]
     resume: String,
 
-    #[arg(short, long, default_value = "artifacts")]
     /// The directory to output rendering artifacts to.
     ///
     /// This directory will be recursively created.
+    #[arg(short, long, default_value = "artifacts")]
     output_dir: String,
 
-    #[arg(short, long, default_value = "resume")]
     /// A generic title used as the name for all generated artifacts.
     ///
     /// E.g. a title of "resume" will produce artifacts like:
     ///
     ///   - "resume.slice.json"
     ///   - "resume.pdf"
+    #[arg(short, long, default_value = "resume")]
     title: String,
 
-    #[arg(short, long)]
     /// If set, automatically remove all created intermediate artifacts, keeping the final render.
+    #[arg(short, long)]
     clean: bool,
 
-    #[arg(short, long)]
     /// If set, run the CLI in watch mode. This will automatically re-render the resume on changes
     /// to the resume JSON specified in the `resume` argument.
+    #[arg(short, long)]
     watch: bool,
+
+    /// Attempt to initialize a config file at '$HOME/.config/reze/reze.toml' if
+    /// it does not exist already.
+    #[arg(short, long)]
+    init: bool,
 }
 
 impl TryFrom<&Args> for World {
@@ -93,9 +102,10 @@ impl TryFrom<&Args> for World {
                 .to_path_buf()
                 .canonicalize_utf8()
                 .context("failed to canonicalize output directory path")?,
-            extra_watched_file_paths: vec![main_path(), template_path()],
+            extra_watched_file_paths: vec![main_path(), template_path(), default_config_path()],
             resume_data_path: resume_data_path.into(),
             watch: args.watch,
+            config: config()?,
         })
     }
 }
@@ -123,14 +133,23 @@ where
     Ok(())
 }
 
-fn run(world: &World) -> Result<()> {
+fn run(world: &mut World) -> Result<()> {
     let filter_resume = |resume: ResumeSlice| {
-        resume
-            .work([
-                After(SECOND_COOP_START_DATE),
-                Exclude(String::from("Sandbox at Northeastern University")),
-            ])
-            .projects([Include(String::from("Compiler for Python-like Language"))])
+        let work_filters = world
+            .config
+            .clone()
+            .and_then(|config| config.work)
+            .and_then(|work| work.filters)
+            .unwrap_or_default();
+
+        let projects_filters = world
+            .config
+            .clone()
+            .and_then(|config| config.projects)
+            .and_then(|projects| projects.filters)
+            .unwrap_or_default();
+
+        resume.work(work_filters).projects(projects_filters)
     };
 
     if world.watch {
@@ -142,9 +161,14 @@ fn run(world: &World) -> Result<()> {
 
 fn main() -> Result<()> {
     let args = Args::parse();
-    let world = World::try_from(&args).unwrap();
 
-    if let Err(e) = run(&world) {
+    if args.init {
+        config::init().context("failed to initialize config")?;
+    }
+
+    let mut world = World::try_from(&args).context("failed to initialize")?;
+
+    if let Err(e) = run(&mut world) {
         View::Error(&e).print(&world)?;
         exit(1);
     }
