@@ -37,19 +37,6 @@ pub fn default_config_path() -> PathBuf {
         .expect("home directory should exist")
 }
 
-impl Config {
-    pub fn reload(&mut self) -> Result<()> {
-        let reloaded = config().context("failed to reload config")?;
-
-        if let Some(reloaded) = reloaded {
-            self.work = reloaded.work;
-            self.projects = reloaded.projects;
-        }
-
-        Ok(())
-    }
-}
-
 #[allow(dead_code)]
 fn tilde_expand(dir: &Path) -> PathBuf {
     Path::new(&shellexpand::tilde(dir.as_str())).to_path_buf()

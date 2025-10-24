@@ -105,7 +105,6 @@ impl TryFrom<&Args> for World {
             extra_watched_file_paths: vec![main_path(), template_path(), default_config_path()],
             resume_data_path: resume_data_path.into(),
             watch: args.watch,
-            config: config()?,
         })
     }
 }
@@ -135,17 +134,18 @@ where
 
 fn run(world: &mut World) -> Result<()> {
     let filter_resume = |resume: ResumeSlice| {
-        let work_filters = world
-            .config
-            .clone()
-            .and_then(|config| config.work)
+        let config = config()
+            .context("failed to open config")
+            .unwrap()
+            .unwrap_or_default();
+
+        let work_filters = config
+            .work
             .and_then(|work| work.filters)
             .unwrap_or_default();
 
-        let projects_filters = world
-            .config
-            .clone()
-            .and_then(|config| config.projects)
+        let projects_filters = config
+            .projects
             .and_then(|projects| projects.filters)
             .unwrap_or_default();
 
