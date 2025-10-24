@@ -2,7 +2,9 @@ use std::str::FromStr;
 
 use chrono::NaiveDate;
 use json_resume::{Project, Resume, Work};
+use serde::{Deserialize, Serialize};
 
+#[derive(Serialize, Deserialize, Clone)]
 pub enum ResumeFilterPredicate {
     Exclude(String),
     Include(String),
