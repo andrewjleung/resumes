@@ -23,7 +23,7 @@ use typst::Typst;
 use world::World;
 
 use crate::config::config;
-use crate::config::default_config_path;
+use crate::config::config_path;
 use crate::view::View;
 use crate::watcher::watch;
 
@@ -94,6 +94,11 @@ impl TryFrom<&Args> for World {
             ))?;
 
         let resume_data_path = Path::new(&args.resume);
+        let mut extra_watched_file_paths = vec![main_path(), template_path()];
+
+        if let Some(path) = config_path() {
+            extra_watched_file_paths.push(path);
+        }
 
         Ok(World {
             artifact_title: args.title.clone(),
@@ -102,7 +107,7 @@ impl TryFrom<&Args> for World {
                 .to_path_buf()
                 .canonicalize_utf8()
                 .context("failed to canonicalize output directory path")?,
-            extra_watched_file_paths: vec![main_path(), template_path(), default_config_path()],
+            extra_watched_file_paths,
             resume_data_path: resume_data_path.into(),
             watch: args.watch,
         })
@@ -134,10 +139,7 @@ where
 
 fn run(world: &mut World) -> Result<()> {
     let filter_resume = |resume: ResumeSlice| {
-        let config = config()
-            .context("failed to open config")
-            .unwrap()
-            .unwrap_or_default();
+        let config = config().unwrap_or_default();
 
         let work_filters = config
             .work
