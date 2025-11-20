@@ -1,0 +1,14 @@
+[[work.filters]]
+After = "2021-01-01"
+
+[[work.filters]]
+Exclude = "Sandbox at Northeastern University"
+
+# [[projects.filters]]
+# Include = "Compiler for Python-like Language"
+
+[[projects.filters]]
+Include = "Ply"
+
+[[projects.filters]]
+Include = "Reze"

@@ -91,15 +91,18 @@ pub fn init() -> Result<bool> {
     Ok(true)
 }
 
-pub fn config() -> Result<Option<Config>> {
+pub fn config_path() -> Option<PathBuf> {
     let cwd = env::current_dir()
         .context("failed to retrieve current working directory")
         .and_then(|path| try_into_utf8pathbuf(&path))
         .ok(); // TODO: logging?
 
     let ancestor_config_path = cwd.and_then(|dir| find_in_ancestors(&dir, CONFIG_FILE_NAME));
-    let config_path = ancestor_config_path.or_else(|| default_config_path().ok());
-    let config = config_path.and_then(|path| {
+    ancestor_config_path.or_else(|| default_config_path().ok())
+}
+
+pub fn config() -> Option<Config> {
+    config_path().and_then(|path| {
         File::open(path)
             .context("failed to open config")
             .and_then(|file| read_to_string(file).context("failed to read config"))
@@ -107,7 +110,5 @@ pub fn config() -> Result<Option<Config>> {
                 toml::from_str(&content).context("failed to parse config into TOML")
             })
             .ok() // TODO: logging?
-    });
-
-    Ok(config)
+    })
 }

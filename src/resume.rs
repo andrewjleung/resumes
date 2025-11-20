@@ -12,6 +12,7 @@ pub enum ResumeFilterPredicate {
 }
 
 impl ResumeFilterPredicate {
+    #[allow(dead_code)]
     fn conjunctive(&self) -> bool {
         matches!(self, Self::Exclude(_))
     }
