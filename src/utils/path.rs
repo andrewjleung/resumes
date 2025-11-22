@@ -1,0 +1,28 @@
+use std::str::FromStr;
+
+use crate::prelude::*;
+
+pub fn normalize_path(path: &std::path::Path) -> Result<PathBuf> {
+    PathBuf::from_path_buf(path.to_path_buf())
+        .map_err(|path| {
+            anyhow!(
+                "failed to coerce path into UTF-8 path: {}",
+                path.to_string_lossy()
+            )
+        })?
+        .canonicalize_utf8()
+        .context("failed to canonicalize path")
+}
+
+pub fn path_buf_from_str(path: &str) -> Result<PathBuf> {
+    PathBuf::from_str(path)?
+        .canonicalize_utf8()
+        .context("failed to canonicalize path")
+}
+
+pub fn current_dir() -> Result<PathBuf> {
+    std::env::current_dir()
+        .map_err(Error::new)
+        .and_then(|path| normalize_path(&path))
+        .context("unable to access current working directory")
+}

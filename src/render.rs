@@ -3,8 +3,8 @@ use camino::Utf8Path as Path;
 use std::fs::remove_file;
 use std::{fs::File, io::Write};
 
+use crate::config::config::Config;
 use crate::resume::ResumeSlice;
-use crate::world::World;
 
 pub enum ArtifactKind {
     Json,
@@ -66,20 +66,21 @@ impl Rendering {
 }
 
 pub trait Render {
-    fn render(&self, resume: ResumeSlice, world: &World) -> Result<Rendering> {
-        let rendering = self.render_artifacts(resume, world)?;
+    fn render(&self, resume: ResumeSlice, config: &Config) -> Result<Rendering> {
+        let rendering = self.render_artifacts(resume, config)?;
+        let output_dir = config.output_dir()?;
 
-        if world.clean {
-            rendering.clean(&world.output_dir)?;
+        if config.clean {
+            rendering.clean(&output_dir)?;
         }
 
         rendering
             .final_render
-            .write(&world.output_dir)
+            .write(&output_dir)
             .context("failed to write final render")?;
 
         Ok(rendering)
     }
 
-    fn render_artifacts(&self, resume: ResumeSlice, config: &World) -> Result<Rendering>;
+    fn render_artifacts(&self, resume: ResumeSlice, config: &Config) -> Result<Rendering>;
 }

@@ -11,11 +11,12 @@ use crossterm::{
 use std::io::Write;
 use std::io::stdout;
 
-use crate::world::World;
+use crate::config::config::Config;
 
-fn print_watching_prelude(world: &World) -> std::io::Result<()> {
-    let watched_file_names: Vec<String> = world
+fn print_watching_prelude(config: &Config) -> std::io::Result<()> {
+    let watched_file_names: Vec<String> = config
         .watched_file_paths()
+        .iter()
         .map(|path| path.file_name().unwrap_or(path.as_str()).to_owned())
         .collect();
 
@@ -79,9 +80,9 @@ impl View<'_> {
         }
     }
 
-    pub fn print(&self, world: &World) -> Result<()> {
-        if world.watch {
-            print_watching_prelude(world)
+    pub fn print(&self, config: &Config, watcher: bool) -> Result<()> {
+        if watcher {
+            print_watching_prelude(config)
                 .and_then(|()| self.print_view())
                 .and_then(|()| move_lines(1))
         } else {

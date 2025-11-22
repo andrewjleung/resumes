@@ -4,6 +4,8 @@ use chrono::NaiveDate;
 use json_resume::{Project, Resume, Work};
 use serde::{Deserialize, Serialize};
 
+use crate::config::config::Config;
+
 #[derive(Serialize, Deserialize, Clone)]
 pub enum ResumeFilterPredicate {
     Exclude(String),
@@ -118,5 +120,13 @@ impl ResumeSlice {
 
     pub fn apply_slice(self) -> Resume {
         Resume::from(self)
+    }
+
+    pub fn from_config(config: &Config, resume: Resume) -> Self {
+        ResumeSlice {
+            work_filters: config.work.clone().unwrap_or_default().filters,
+            project_filters: config.projects.clone().unwrap_or_default().filters,
+            resume,
+        }
     }
 }

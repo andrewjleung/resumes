@@ -6,13 +6,14 @@ edition = "2024"
 [dependencies]
 anyhow = { version = "1.0", features = ["backtrace"] }
 bon = "3.6"
-camino = "1.1"
+camino = { version = "1.2.1", features = ["serde1"] }
 chrono = { version = "0.4", features = ["serde"] }
 clap = { version = "4.5", features = ["derive"] }
 colored = "3.0"
 crossterm = "0.29"
 dirs = "6.0.0"
 json-resume = "0.2.0"
+merge = { version = "0.2.0", features = ["derive"] }
 notify = "8.2"
 regex = "1.11"
 repo_path = "1.2.3"
