@@ -11,14 +11,14 @@
     datetime(year: date.year, month: date.month, day: date.day)
   }
 
-  #let headline(name, desc, location: none, detail) = {
+  #let headline(name, desc, detail: none, timing) = {
     box[#pad(right: 0.4em)[*#name*]]
     [#desc]
-    if location != none [
-      — #location
+    if detail != none [
+      — #detail
     ]
     h(1fr)
-    [#detail]
+    [#timing]
   }
 
   #let monthrange(startdate, enddate: none) = {
@@ -84,7 +84,7 @@
         #headline(
           w.name,
           w.position,
-          location: w.summary,
+          detail: w.summary,
           monthrange(w.startDate, enddate: w.endDate),
         )
 
@@ -107,7 +107,16 @@
           nicelink(project.url)
         }
 
-        headline(project.name, detail, project.startDate)
+        if project.description == none {
+          headline(project.name, detail, project.startDate)
+        } else {
+          headline(
+            project.name,
+            project.description,
+            detail: detail,
+            project.startDate,
+          )
+        }
 
         list(..project.highlights)
       })
@@ -124,7 +133,7 @@
       .map(e => headline(
         e.institution,
         [#e.studyType, #e.score GPA],
-        location: e.area,
+        detail: e.area,
         parse(e.endDate).display("[year repr:full]"),
       ))
       .join()

@@ -72,11 +72,11 @@
             "startDate": "2023-06-12",
             "highlights": [
                 "Maintained Braintree's Ruby on Rails app used to payout $1.6B a day across 15K merchants",
-                "Led development, coordinated live testing, and served as a subject matter expert for a feature used to withhold $1.4M a day from high-risk or delinquent merchants",
-                "Automated a $57M migration in held funds to new banking partners and an updated internal ledger",
+                "Served as lead and SME for a feature used to withhold $1.4M a day from risky/delinquent merchants",
+                "Automated a $57M migration in withheld funds to new banking partners and an updated internal ledger",
                 "Coordinated engineering effort to debug and resolve funds reconciliation issues, decreasing unreconciled funds by 88% and increasing reconciliation accuracy to 99.7%",
                 "Identified and patched a regression caused by a Rails upgrade, correcting the misallocation of $80M",
-                "Increased monthly revenue by $650K by correcting fee calculations to round instead of truncate"
+                "Enhanced job queue simulation in E2E specs to support partial system failures and resumability, enabling modeling of production failures and remediation scenarios in specs"
             ],
             "_highlights": [
                 "Prevented the misallocation of $6M by identifying and fixing an edge case in the timing of internal routing of funds to different bank accounts",
@@ -243,31 +243,31 @@
             "endDate": "2022"
         },
         {
-            "name": "reze",
+            "name": "Reze",
+            "description": "a resume content and rendering manager",
             "roles": [],
             "highlights": [
-                "Created a Rust CLI for rendering JSON Resume into PDF with Typst and Clap",
-                "Designed a declarative API for filtering resume content in code or TOML configuration by name/date",
-                "Built a file-watcher for edits to resume data, supporting instant hot-reloading of PDF renders",
-                "Built a CI/CD pipeline with GitHub Actions to automatically render/deploy resumes to GitHub Pages"
+                "Created a Rust CLI for rendering the JSON Resume standard into PDF with Typst with Clap",
+                "Supported declarative filtering of CV content by date and title in code or TOML configuration",
+                "Built a file-watcher for edits to resume content, supporting hot-reloading for PDF renders",
+                "Configured a CI/CD pipeline with GitHub Actions to render and deploy resumes to GitHub Pages"
             ],
             "keywords": ["Rust", "Clap", "Serde", "Typst"],
             "startDate": "2025",
-            "description": "a resume rendering framework and CLI",
             "url": "https://github.com/andrewjleung/resumes",
             "type": "application"
         },
         {
-            "name": "ply",
+            "name": "Ply",
+            "description": "a plaintext job application tracker",
             "roles": [],
             "highlights": [
-                "Created a Rust CLI for tracking job applications in Markdown/TOML documents using Clap and Serde",
-                "Built a scraping and parsing framework to automatically generate applications for job listing URLs",
-                "Defined an API for declaring parsers in 5-6 lines of code with CSS selectors and regular expressions"
+                "Built a Rust CLI for tracking job application metadata/notes in TOML/Markdown using Clap and Serde",
+                "Designed a framework to scrape/parse job listings over HTTP and generate job tracking documents",
+                "Defined an API for declaring parsers for job boards in 5-6 lines of code with CSS selectors and regex"
             ],
             "keywords": ["Rust", "Clap", "Serde"],
             "startDate": "2025",
-            "description": "a plaintext job applicaton tracker",
             "url": "https://github.com/andrewjleung/ply",
             "type": "application"
         }

@@ -1,18 +1,20 @@
 use crate::{
+    config::{config::Config, typst::TypstConfig},
     render::{Artifact, ArtifactKind, Render, Rendering},
     resume::ResumeSlice,
-    world::World,
 };
 use anyhow::{Context, Error, Result};
-use camino::Utf8Path as Path;
 use regex::Regex;
-use repo_path::repo_path;
 use std::{fs::read, process::Command};
 
-pub struct Typst;
+#[derive(Default)]
+pub struct Typst {
+    pub config: TypstConfig,
+}
 
 impl Render for Typst {
-    fn render_artifacts(&self, resume: ResumeSlice, config: &World) -> Result<Rendering> {
+    fn render_artifacts(&self, resume: ResumeSlice, config: &Config) -> Result<Rendering> {
+        let output_dir = config.output_dir()?;
         let resume_json_content = serde_json::to_string(&resume.apply_slice())
             .context("failed to serialize resume data")?;
 
@@ -28,32 +30,28 @@ impl Render for Typst {
             .into_owned();
 
         let resume_json_artifact = Artifact {
-            title: format!("{}.slice", config.artifact_title),
+            title: format!("{}.slice", config.artifact_title()),
             kind: ArtifactKind::Json,
             content: resume_json_content.into_bytes(),
         };
 
         resume_json_artifact
-            .write(&config.output_dir)
+            .write(&output_dir)
             .context("failed to write resume slice")?;
 
-        // TODO: Make this an input instead of relying on location relative to repo
-        let template_file_path = repo_path!("template.typ");
-        let template_file_path = Path::from_path(template_file_path.as_path())
-            .context("failed to create path to typst template")?;
-
+        let template_file_path = self.config.template.clone().unwrap_or_default();
         let template_file_artifact = Artifact {
-            title: config.artifact_title.clone(),
+            title: config.artifact_title(),
             kind: ArtifactKind::Typst,
-            content: read(template_file_path).context(format!(
+            content: read(&template_file_path).context(format!(
                 "failed to read typst template: {template_file_path}"
             ))?,
         };
 
-        template_file_artifact.write(&config.output_dir)?;
+        template_file_artifact.write(&output_dir)?;
 
         let output = Command::new("typst")
-            .current_dir(&config.output_dir)
+            .current_dir(&output_dir)
             .args([
                 "compile",
                 "-f",
@@ -84,7 +82,7 @@ impl Render for Typst {
         Ok(Rendering {
             intermediates: vec![resume_json_artifact, template_file_artifact],
             final_render: Artifact {
-                title: config.artifact_title.clone(),
+                title: config.artifact_title(),
                 kind: ArtifactKind::Pdf,
                 content: output.stdout,
             },
