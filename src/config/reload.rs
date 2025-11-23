@@ -10,18 +10,14 @@ pub struct ReloadableConfig {
 
 impl ReloadableConfig {
     pub fn new(base: Config, secondary: Option<Config>) -> Self {
-        match secondary {
-            Some(secondary) => {
-                let mut current = base.clone();
-                current.merge(secondary);
-                current.merge(Config::default());
-                ReloadableConfig { base, current }
-            }
-            None => ReloadableConfig {
-                current: base.clone(),
-                base,
-            },
+        let mut current = base.clone();
+
+        if let Some(secondary) = secondary {
+            current.merge(secondary);
         }
+
+        current.merge(Config::default());
+        ReloadableConfig { base, current }
     }
 
     pub fn reload(self) -> Self {

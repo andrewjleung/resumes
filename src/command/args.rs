@@ -44,6 +44,6 @@ pub struct Args {
     /// ```typst
     /// #template(json(sys.inputs.data_path))
     /// ```
-    #[arg(short, long)]
+    #[arg(long)]
     pub template: Option<String>,
 }

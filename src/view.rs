@@ -16,7 +16,7 @@ use crate::config::config::Config;
 fn print_watching_prelude(config: &Config) -> std::io::Result<()> {
     let watched_file_names: Vec<String> = config
         .watched_file_paths()
-        .iter()
+        .into_iter()
         .map(|path| path.file_name().unwrap_or(path.as_str()).to_owned())
         .collect();
 

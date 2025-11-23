@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::config::config::Config;
 
-#[derive(Serialize, Deserialize, Clone)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum ResumeFilterPredicate {
     Exclude(String),
     Include(String),
