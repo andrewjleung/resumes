@@ -3,6 +3,7 @@ use std::fs;
 use std::fs::File;
 use std::io::Write;
 use std::io::read_to_string;
+use std::iter::once;
 
 use merge::Merge;
 use serde::Deserialize;
@@ -17,20 +18,20 @@ use crate::resume::ResumeFilterPredicate;
 use crate::utils::path::current_dir;
 use crate::utils::path::path_buf_from_str;
 
-#[derive(Serialize, Deserialize, Default, Clone, Merge)]
+#[derive(Serialize, Deserialize, Default, Clone, Merge, Debug)]
 pub struct WorkConfig {
     #[merge(strategy = merge::vec::append)]
     pub filters: Vec<ResumeFilterPredicate>,
 }
 
-#[derive(Serialize, Deserialize, Default, Clone, Merge)]
+#[derive(Serialize, Deserialize, Default, Clone, Merge, Debug)]
 pub struct ProjectConfig {
     #[merge(strategy = merge::vec::append)]
     pub filters: Vec<ResumeFilterPredicate>,
 }
 
 // TODO: allow specifying multiple versions with different filters?
-#[derive(Serialize, Deserialize, Default, Clone, Merge, Builder)]
+#[derive(Serialize, Deserialize, Default, Clone, Merge, Builder, Debug)]
 pub struct Config {
     #[merge(strategy = merge::option::recurse)]
     pub typst: Option<TypstConfig>,
@@ -47,28 +48,23 @@ pub struct Config {
     #[merge(strategy = merge::bool::overwrite_false)]
     pub clean: bool,
 
-    #[merge(strategy = merge::vec::append)]
-    #[builder(default)]
-    pub extra_watched_file_paths: Vec<PathBuf>,
-
     #[merge(strategy = merge::option::overwrite_none)]
-    #[builder(with = |dir: &str| -> Result<_> { path_buf_from_str(dir) })]
+    #[builder(with = |dir: &str| -> Result<_> { path_buf_from_str(dir).context("failed to canonicalize output directory path") })]
     output_dir: Option<PathBuf>,
 
     #[merge(strategy = merge::option::overwrite_none)]
-    #[builder(with = |dir: &str| -> Result<_> { path_buf_from_str(dir) })]
+    #[builder(with = |dir: &str| -> Result<_> { path_buf_from_str(dir).context("failed to canonicalize resume data path") })]
     resume_data_path: Option<PathBuf>,
 }
 
 impl Config {
-    pub fn watched_file_paths(&self) -> Vec<PathBuf> {
-        self.extra_watched_file_paths
-            .iter()
-            .chain(self.resume_data_path.iter())
-            .chain(self.typst.clone().and_then(|cfg| cfg.template).iter())
-            .chain(config_path().iter())
-            .cloned()
-            .collect()
+    pub fn watched_file_paths(&self) -> impl IntoIterator<Item = PathBuf> {
+        once(self.resume_data_path().ok())
+            .chain(once(Some(
+                self.typst.clone().unwrap_or_default().template(),
+            )))
+            .chain(once(config_path()))
+            .flatten()
     }
 
     pub fn artifact_title(&self) -> String {

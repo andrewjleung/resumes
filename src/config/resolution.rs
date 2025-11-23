@@ -13,7 +13,7 @@ pub fn default_config_path() -> Result<PathBuf> {
         .join(DEFAULT_CONFIG_SUBDIRECTORY)
         .join(CONFIG_FILE_NAME);
 
-    normalize_path(&path)
+    normalize_path(&path).context("failed to normalize default config path")
 }
 
 pub fn find_in_ancestors(path: &Path, file_name: &str) -> Option<PathBuf> {

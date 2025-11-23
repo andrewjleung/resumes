@@ -11,13 +11,16 @@ pub fn normalize_path(path: &std::path::Path) -> Result<PathBuf> {
             )
         })?
         .canonicalize_utf8()
-        .context("failed to canonicalize path")
+        .context(anyhow!(
+            "failed to canonicalize path {}",
+            path.to_string_lossy()
+        ))
 }
 
 pub fn path_buf_from_str(path: &str) -> Result<PathBuf> {
     PathBuf::from_str(path)?
         .canonicalize_utf8()
-        .context("failed to canonicalize path")
+        .context(anyhow!("failed to canonicalize path {}", path))
 }
 
 pub fn current_dir() -> Result<PathBuf> {
