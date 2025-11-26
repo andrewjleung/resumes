@@ -1,4 +1,5 @@
 use crate::command::Run;
+use crate::command::args::RenderArgs;
 use crate::config::Config;
 use crate::render::Render as RenderTrait;
 use crate::resume::ResumeSlice;
@@ -10,7 +11,10 @@ use crate::{prelude::*, resume};
 use clap::Args;
 
 #[derive(Args)]
-pub struct Watch {}
+pub struct Watch {
+    #[command(flatten)]
+    pub render_args: RenderArgs,
+}
 
 fn render(config: &Config) -> Result<()> {
     View::Updating.print(config, true).unwrap();
