@@ -3,7 +3,7 @@ use camino::Utf8Path as Path;
 use std::fs::remove_file;
 use std::{fs::File, io::Write};
 
-use crate::config::config::Config;
+use crate::config::Config;
 use crate::resume::ResumeSlice;
 
 pub enum ArtifactKind {
