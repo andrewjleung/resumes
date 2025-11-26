@@ -5,6 +5,7 @@ use crate::prelude::*;
 use clap::{Parser, Subcommand};
 use merge::Merge;
 
+pub mod args;
 pub mod render;
 pub mod watch;
 
@@ -18,38 +19,6 @@ pub trait Run {
 pub struct Reze {
     #[command(subcommand)]
     command: RezeCommand,
-
-    /// If set, automatically remove all created intermediate artifacts, keeping the final render.
-    #[arg(short, long)]
-    pub clean: bool,
-
-    /// The directory to output rendering artifacts to.
-    ///
-    /// This directory will be recursively created.
-    #[arg(short, long)]
-    pub output_dir: Option<String>,
-
-    /// The path to the Resume JSON file to render.
-    #[arg(short, long)]
-    pub resume: Option<String>,
-
-    /// Path to the typst template to render with. This template should support receiving a path to
-    /// a JSON file following the Resume JSON standard via system inputs like so:
-    ///
-    /// ```typst
-    /// #template(json(sys.inputs.data_path))
-    /// ```
-    #[arg(long)]
-    pub template: Option<String>,
-
-    /// A generic title used as the name for all generated artifacts.
-    ///
-    /// E.g. a title of "resume" will produce artifacts like:
-    ///
-    ///   - "resume.slice.json"
-    ///   - "resume.pdf"
-    #[arg(short, long)]
-    pub title: Option<String>,
 }
 
 #[derive(Subcommand)]
@@ -60,15 +29,20 @@ pub enum RezeCommand {
 
 impl Reze {
     fn config(&self) -> Result<Config> {
+        let args = match &self.command {
+            RezeCommand::Render(cmd) => cmd.render_args.clone(),
+            RezeCommand::Watch(cmd) => cmd.render_args.clone(),
+        };
+
         let typst_config = TypstConfig::builder()
-            .maybe_template(self.template.as_deref())?
+            .maybe_template(args.template.as_deref())?
             .build();
 
         let base_config = Config::builder()
-            .maybe_artifact_title(self.title.clone())
-            .clean(self.clean)
-            .maybe_output_dir(self.output_dir.as_deref())?
-            .maybe_resume_data_path(self.resume.as_deref())?
+            .maybe_artifact_title(args.title)
+            .clean(args.clean)
+            .maybe_output_dir(args.output_dir.as_deref())?
+            .maybe_resume_data_path(args.resume.as_deref())?
             .typst(typst_config)
             .build();
 
