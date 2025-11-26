@@ -65,7 +65,7 @@
     "work": [
         {
             "name": "PayPal",
-            "summary": "Remote",
+            "location": "Remote",
             "description": "Braintree post-processing, treasury funding.",
             "position": "Software Engineer",
             "url": "https://paypal.com",
@@ -85,7 +85,7 @@
         },
         {
             "name": "Poloniex",
-            "summary": "Remote",
+            "location": "Remote",
             "description": "Crypto exchange.",
             "position": "Software Engineer Co-op",
             "url": "https://poloniex.com/",
@@ -99,7 +99,7 @@
         },
         {
             "name": "Sandbox at Northeastern University",
-            "summary": "Remote",
+            "location": "Remote",
             "description": "Northeastern's premier software consultancy.",
             "position": "Software Developer",
             "url": "https://www.sandboxnu.com/",
@@ -116,7 +116,7 @@
         },
         {
             "name": "Teikametrics",
-            "summary": "Boston, MA",
+            "location": "Boston, MA",
             "description": "SaaS platform dealing in Amazon ads optimization.",
             "position": "Software Engineer Co-op",
             "url": "https://www.teikametrics.com/",
@@ -131,7 +131,7 @@
         },
         {
             "name": "Curriculum Associates",
-            "summary": "Billerica, MA",
+            "location": "Billerica, MA",
             "description": "Educational software company.",
             "position": "Software Engineer Co-op",
             "url": "https://www.curriculumassociates.com/",
@@ -156,7 +156,7 @@
         },
         {
             "name": "Veoneer",
-            "summary": "Lowell, MA",
+            "location": "Lowell, MA",
             "description": "Manufacturer of automotive safety systems.",
             "position": "Technical Intern",
             "url": "https://www.veoneer.com",

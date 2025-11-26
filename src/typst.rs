@@ -1,5 +1,5 @@
 use crate::{
-    config::{config::Config, typst::TypstConfig},
+    config::{Config, typst::TypstConfig},
     render::{Artifact, ArtifactKind, Render, Rendering},
     resume::ResumeSlice,
 };
@@ -10,6 +10,12 @@ use std::{fs::read, process::Command};
 #[derive(Default)]
 pub struct Typst {
     pub config: TypstConfig,
+}
+
+impl Typst {
+    pub fn new(config: TypstConfig) -> Self {
+        Typst { config }
+    }
 }
 
 impl Render for Typst {

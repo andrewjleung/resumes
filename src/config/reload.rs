@@ -1,6 +1,6 @@
 use merge::Merge;
 
-use crate::config::config::{Config, load};
+use crate::config::{Config, load};
 
 #[derive(Clone)]
 pub struct ReloadableConfig {

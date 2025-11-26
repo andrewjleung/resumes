@@ -84,7 +84,7 @@
         #headline(
           w.name,
           w.position,
-          detail: w.summary,
+          detail: w.at("location", default: none),
           monthrange(w.startDate, enddate: w.endDate),
         )
 

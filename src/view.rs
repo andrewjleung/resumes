@@ -11,7 +11,7 @@ use crossterm::{
 use std::io::Write;
 use std::io::stdout;
 
-use crate::config::config::Config;
+use crate::config::Config;
 
 fn print_watching_prelude(config: &Config) -> std::io::Result<()> {
     let watched_file_names: Vec<String> = config

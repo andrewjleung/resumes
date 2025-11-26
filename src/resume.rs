@@ -4,7 +4,9 @@ use chrono::NaiveDate;
 use json_resume::{Project, Resume, Work};
 use serde::{Deserialize, Serialize};
 
-use crate::config::config::Config;
+use crate::config::Config;
+
+pub mod file;
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum ResumeFilterPredicate {
@@ -71,6 +73,7 @@ impl Headline for Project {
     }
 }
 
+#[derive(Debug)]
 pub struct ResumeSlice {
     pub work_filters: Vec<ResumeFilterPredicate>,
     pub project_filters: Vec<ResumeFilterPredicate>,

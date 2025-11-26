@@ -1,0 +1,32 @@
+use crate::command::Run;
+use crate::config::Config;
+use crate::render::Render as RenderTrait;
+use crate::resume::ResumeSlice;
+use crate::typst::Typst;
+use crate::view::View;
+use crate::watcher::watch;
+use crate::{prelude::*, resume};
+
+use clap::Args;
+
+#[derive(Args)]
+pub struct Watch {}
+
+fn render(config: &Config) -> Result<()> {
+    View::Updating.print(config, true).unwrap();
+    let resume = resume::file::read(&config.resume_data_path()?)?;
+    let resume_slice = ResumeSlice::from_config(config, resume);
+
+    Typst::new(config.typst.clone().unwrap_or_default())
+        .render(resume_slice, config)
+        .context("failed to render resume with typst")?;
+
+    View::Updated.print(config, true).unwrap();
+    Ok(())
+}
+
+impl Run for Watch {
+    fn run(&self, config: &Config) -> Result<()> {
+        watch(config.clone().into(), render)
+    }
+}

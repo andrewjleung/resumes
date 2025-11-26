@@ -8,7 +8,7 @@ use notify::event::ModifyKind;
 use std::sync::mpsc;
 use std::sync::mpsc::Receiver;
 
-use crate::config::config::Config;
+use crate::config::Config;
 use crate::config::reload::ReloadableConfig;
 use crate::view::View;
 
