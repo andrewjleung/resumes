@@ -41,7 +41,7 @@ pub trait Headline {
         let (disjunctive_predicates, conjunctive_predicates): (Vec<_>, Vec<_>) =
             predicates.into_iter().partition(|p| p.disjunctive());
 
-        disjunctive_predicates.iter().any(|p| self.apply(p))
+        (disjunctive_predicates.is_empty() || disjunctive_predicates.iter().any(|p| self.apply(p)))
             && conjunctive_predicates.iter().all(|p| self.apply(p))
     }
 
