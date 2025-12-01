@@ -1,4 +1,5 @@
 use crate::command::{render::Render, watch::Watch};
+use crate::config::resolution::config_path;
 use crate::config::typst::TypstConfig;
 use crate::config::{Config, load};
 use crate::prelude::*;
@@ -25,6 +26,7 @@ pub struct Reze {
 pub enum RezeCommand {
     Render(Render),
     Watch(Watch),
+    Config,
 }
 
 impl Reze {
@@ -32,6 +34,7 @@ impl Reze {
         let args = match &self.command {
             RezeCommand::Render(cmd) => cmd.render_args.clone(),
             RezeCommand::Watch(cmd) => cmd.render_args.clone(),
+            _ => return load(),
         };
 
         let typst_config = TypstConfig::builder()
@@ -52,13 +55,20 @@ impl Reze {
     pub fn run(&self) -> Result<()> {
         let mut config = self.config().context("failed to create config from args")?;
 
-        if let Some(file_config) = load() {
+        if let Ok(file_config) = load() {
             config.merge(file_config);
         }
 
         match &self.command {
             RezeCommand::Render(cmd) => cmd.run(&config),
             RezeCommand::Watch(cmd) => cmd.run(&config),
+            RezeCommand::Config => {
+                println!(
+                    "{}",
+                    config_path().ok_or(anyhow!("failed to get config path"))?
+                );
+                Ok(())
+            }
         }
     }
 }

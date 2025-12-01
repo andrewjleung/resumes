@@ -38,7 +38,7 @@ jobs:
                   fc-cache -fv
 
             - name: Create artifact
-              run: cargo run -- -c -o ${{ github.workspace }}/artifacts -t $TITLE
+              run: cargo run -- -c -o ${{ github.workspace }}/artifacts -t $TITLE render
 
             - name: Upload artifact
               uses: actions/upload-artifact@v4

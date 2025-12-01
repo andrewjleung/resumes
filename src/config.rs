@@ -114,14 +114,9 @@ pub fn init() -> Result<bool> {
     Ok(true)
 }
 
-pub fn load() -> Option<Config> {
-    config_path().and_then(|path| {
-        File::open(path)
-            .context("failed to open config")
-            .and_then(|file| read_to_string(file).context("failed to read config"))
-            .and_then(|content| {
-                toml::from_str(&content).context("failed to parse config into TOML")
-            })
-            .ok() // TODO: logging?
-    })
+pub fn load() -> Result<Config> {
+    Ok(config_path().unwrap_or_default())
+        .and_then(|path| File::open(path).context("failed to open config"))
+        .and_then(|file| read_to_string(file).context("failed to read config"))
+        .and_then(|content| toml::from_str(&content).context("failed to parse config into TOML"))
 }
