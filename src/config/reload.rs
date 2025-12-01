@@ -2,7 +2,7 @@ use merge::Merge;
 
 use crate::config::{Config, load};
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct ReloadableConfig {
     base: Config,
     pub current: Config,
@@ -21,7 +21,7 @@ impl ReloadableConfig {
     }
 
     pub fn reload(self) -> Self {
-        Self::new(self.base, load())
+        Self::new(self.base, load().ok())
     }
 }
 

@@ -12,11 +12,13 @@ use serde::Serialize;
 pub struct TypstConfig {
     #[merge(strategy = merge::option::overwrite_none)]
     #[builder(with = |dir: &str| -> Result<_> { path_buf_from_str(dir).context("failed to canonicalize output directory path") })]
-    pub template: Option<PathBuf>,
+    template: Option<PathBuf>,
 }
 
 impl TypstConfig {
     pub fn template(&self) -> PathBuf {
-        PathBuf::from_str("template.typ").expect("default typst template path is valid UTF-8")
+        self.template.clone().unwrap_or(
+            PathBuf::from_str("template.typ").expect("default typst template path is valid UTF-8"),
+        )
     }
 }

@@ -45,7 +45,7 @@ impl Render for Typst {
             .write(&output_dir)
             .context("failed to write resume slice")?;
 
-        let template_file_path = self.config.template.clone().unwrap_or_default();
+        let template_file_path = self.config.template();
         let template_file_artifact = Artifact {
             title: config.artifact_title(),
             kind: ArtifactKind::Typst,

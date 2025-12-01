@@ -17,7 +17,12 @@ fn print_watching_prelude(config: &Config) -> std::io::Result<()> {
     let watched_file_names: Vec<String> = config
         .watched_file_paths()
         .into_iter()
-        .map(|path| path.file_name().unwrap_or(path.as_str()).to_owned())
+        .map(|path| {
+            path.canonicalize_utf8()
+                .expect("path should be UTF-8")
+                .as_str()
+                .to_owned()
+        })
         .collect();
 
     queue!(
@@ -72,10 +77,18 @@ impl View<'_> {
                     PrintStyledContent("⬤ ".with(Color::Red)),
                     PrintStyledContent(err.to_string().with(Color::Red)),
                     MoveToNextLine(1),
-                    PrintStyledContent("└ ".with(Color::Red)),
-                    PrintStyledContent(err.root_cause().to_string().with(Color::Red)),
-                    MoveToNextLine(1)
-                )
+                )?;
+
+                for trace_err in err.chain() {
+                    queue!(
+                        stdout(),
+                        PrintStyledContent("└ ".with(Color::Red)),
+                        PrintStyledContent(trace_err.to_string().with(Color::Red)),
+                        MoveToNextLine(1)
+                    )?
+                }
+
+                Ok(())
             }
         }
     }
