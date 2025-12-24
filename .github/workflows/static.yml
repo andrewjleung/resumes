@@ -34,9 +34,11 @@ jobs:
             - name: Download Nimbus Sans L
               run: |
                   wget -O nimbus_sans_l.zip https://www.fontsquirrel.com/fonts/download/nimbus-sans-l
+                  ls
                   unzip -d nimbus_sans_l/ nimbus_sans_l.zip
                   mv nimbus_sans_l /usr/share/fonts/
                   fc-cache -fv
+
             - uses: jdx/mise-action@v2
               with:
                   version: 2024.12.14 # [default: latest] mise version to install
