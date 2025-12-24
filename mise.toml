@@ -7,11 +7,6 @@ description = "Render the resume"
 run = "cargo run --quiet -- render --clean"
 dir = "{{cwd}}"
 
-[tasks.watch]
-description = "Start the renderer with file-watching enabled"
-run = "cargo run --quiet -- watch --clean"
-dir = "{{cwd}}"
-
 [tasks.update-schema]
 description = "Update the resume and config JSON schemas based on their current definitions"
 run = [

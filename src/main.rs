@@ -5,8 +5,6 @@ mod render;
 mod resume;
 mod typst;
 mod utils;
-mod view;
-mod watcher;
 
 use clap::Parser;
 use prelude::*;

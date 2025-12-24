@@ -1,4 +1,3 @@
-pub mod reload;
 pub mod resolution;
 pub mod typst;
 
@@ -8,7 +7,6 @@ use std::fs;
 use std::fs::File;
 use std::io::Write;
 use std::io::read_to_string;
-use std::iter::once;
 
 use merge::Merge;
 use serde::Deserialize;
@@ -76,15 +74,6 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn watched_file_paths(&self) -> impl IntoIterator<Item = PathBuf> {
-        once(self.resume_data_path().ok())
-            .chain(once(Some(
-                self.typst.clone().unwrap_or_default().template(),
-            )))
-            .chain(once(config_path()))
-            .flatten()
-    }
-
     pub fn artifact_title(&self) -> String {
         self.artifact_title.clone().unwrap_or("resume".to_owned())
     }

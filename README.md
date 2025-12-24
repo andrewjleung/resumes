@@ -41,14 +41,6 @@ The CLI is then used to handle resume filtering, simple orchestration of `typst`
 
 The main utility of this CLI is to separate resume data from resume view with declarative filtering. This way, you can keep record of all of your historical resume data within a resume JSON file while only rendering the notable or recent parts.
 
-### Watch Mode
-
-Running the CLI with the `-w` / `--watch` flag will run the CLI in watch mode.
-
-In watch mode, the CLI process will stay alive until interrupted or killed and automatically re-render the resume when it detects changes to the resume JSON file's content.
-
-This comes in handy if you have a PDF viewer with hot reloading like `tdf` on one side of your screen and an editor with resume content on the other side. 
-
 ## Publishing
 
 Commits to `main` will trigger a [GitHub Actions workflow](./.github/workflows/static.yml) to render my resume as a PDF artifact and deploy it to GitHub Pages.
