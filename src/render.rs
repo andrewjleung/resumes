@@ -7,6 +7,7 @@ use crate::config::Config;
 use crate::resume::query::Query;
 use crate::resume::schema::Resume;
 
+#[allow(dead_code)]
 pub enum ArtifactKind {
     Json,
     Toml,

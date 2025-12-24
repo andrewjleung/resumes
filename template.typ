@@ -24,11 +24,11 @@
   #let monthrange(startdate, enddate: none) = {
     let format = "[month repr:short] [year repr:full]"
 
-    parse(startdate).display(format)
+    startdate.display(format)
     if enddate == none [
       \- Present
     ] else [
-      \- #parse(enddate).display(format)
+      \- #enddate.display(format)
     ]
   }
 
@@ -44,21 +44,50 @@
     )
   }
 
+  #let location(l) = {
+    if l == none {
+      return none
+    }
+
+    if "CityState" in l {
+      return [#l.CityState.at(0), #l.CityState.at(1)]
+    } else if "Address" in l {
+      return [#l.Address.city, #l.Address.region]
+    } else if (
+      l == "Remote"
+    ) {
+      return l
+    } else {
+      panic("unrecognized location kind", l)
+    }
+  }
+
+  #let when(w) = {
+    if w == none {
+      return none
+    }
+
+    if "Range" in w {
+      return monthrange(w.Range.start, enddate: w.Range.end)
+    } else if "Started" in w {
+      return monthrange(w.Started)
+    } else if "Year" in w {
+      return w.Year
+    }
+  }
+
   // DOCUMENT START
 
   #twocolumn(
     [
-      = #resume.basics.name
-      #nicelink("mailto:" + resume.basics.email)
+      = #resume.profile.first_name, #resume.profile.last_name
+      #if "contact" in resume {
+        nicelink("mailto:" + resume.contact.personal_email)
+      }
     ],
     align(
       right,
-      (
-        nicelink(resume.basics.url),
-        resume.basics.profiles.map(profile => nicelink(profile.url)),
-      )
-        .flatten()
-        .join[\ ],
+      resume.socials.map(social => nicelink(social.url)).join[\ ],
     ),
   )
 
@@ -69,7 +98,8 @@
   #(
     resume
       .skills
-      .map(skill => [*#skill.name*: #skill.keywords.join[, ]])
+      .pairs()
+      .map(entry => [*#entry.at(0)*: #entry.at(1).join[, ]])
       .join[\ ]
   )
 
@@ -77,19 +107,16 @@
 
   #line()
 
+  #let work(w) = {
+    headline(w.context, w.name, detail: location(w.location), when(w.when))
+    list(..w.highlights)
+  }
+
   #(
     resume
-      .work
-      .map(w => [
-        #headline(
-          w.name,
-          w.position,
-          detail: w.at("location", default: none),
-          monthrange(w.startDate, enddate: w.endDate),
-        )
-
-        #list(..w.highlights)
-      ])
+      .experiences
+      .filter(e => e.kind == "work" and e.highlights.len() > 0)
+      .map(w => work(w))
       .join()
   )
 
@@ -97,29 +124,27 @@
 
   #line()
 
+  #let project(p) = {
+    let detail = if p.at("url", default: none) == none {
+      "Closed Source"
+    } else {
+      nicelink(p.url)
+    }
+
+    if p.at("summary", default: none) == none {
+      headline(p.name, detail, when(p.when))
+    } else {
+      headline(p.name, p.summary, detail: detail, when(p.when))
+    }
+
+    list(..p.highlights)
+  }
+
   #(
     resume
-      .projects
-      .map(project => {
-        let detail = if project.url == none {
-          "Closed Source"
-        } else {
-          nicelink(project.url)
-        }
-
-        if project.description == none {
-          headline(project.name, detail, project.startDate)
-        } else {
-          headline(
-            project.name,
-            project.description,
-            detail: detail,
-            project.startDate,
-          )
-        }
-
-        list(..project.highlights)
-      })
+      .experiences
+      .filter(e => e.kind == "project" and e.highlights.len() > 0)
+      .map(p => project(p))
       .join()
   )
 
@@ -127,17 +152,16 @@
 
   #line()
 
-  #(
-    resume
-      .education
-      .map(e => headline(
-        e.institution,
-        [#e.studyType, #e.score GPA],
-        detail: e.area,
-        parse(e.endDate).display("[year repr:full]"),
-      ))
-      .join()
-  )
+  #let education(e) = {
+    headline(
+      e.institution,
+      [#e.kind #e.area, #e.score GPA],
+      detail: location(e.location),
+      e.when.Range.end.display("[year repr:full]"),
+    )
+  }
+
+  #resume.education.map(e => education(e)).join()
 ]
 
-#template(json(sys.inputs.data_path))
+#template(toml(sys.inputs.data_path))

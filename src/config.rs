@@ -37,6 +37,7 @@ pub struct WorkConfig {
 #[derive(Serialize, Deserialize, Default, Clone, Merge, Debug, JsonSchema)]
 pub struct ProjectConfig {
     #[merge(strategy = merge::vec::append)]
+    #[serde(default)]
     pub filters: Vec<ResumeFilterPredicate>,
 
     #[merge(strategy = merge::vec::append)]

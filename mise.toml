@@ -1,12 +1,20 @@
-[tasks.pdf]
-description = "View the rendered resume with tdf"
-run = "tdf resume.pdf"
-dir = "{{config_root}}/artifacts"
+[tasks.install]
+description = "Install the CLI"
+run = "cargo install --path {{config_root}}"
+
+[tasks.render]
+description = "Render the resume"
+run = "cargo run --quiet -- render --clean"
+dir = "{{cwd}}"
 
 [tasks.watch]
 description = "Start the renderer with file-watching enabled"
-run = "cargo run --quiet -- --watch --clean"
+run = "cargo run --quiet -- watch --clean"
+dir = "{{cwd}}"
 
 [tasks.update-schema]
 description = "Update the resume and config JSON schemas based on their current definitions"
-run = "cargo run -- schema resume > {{config_root}}/resume.schema.json && cargo run -- schema config > {{config_root}}/config.schema.json"
+run = [
+  "cargo run --quiet -- schema resume > {{config_root}}/schemas/resume.schema.json",
+  "cargo run --quiet -- schema config > {{config_root}}/schemas/config.schema.json"
+]

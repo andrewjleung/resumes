@@ -21,6 +21,7 @@ concurrency:
 
 env:
     TITLE: AndrewLeung_Resume
+    VERSION: ${{ github.workspace }}/versions/primary
 
 jobs:
     build:
@@ -36,15 +37,19 @@ jobs:
                   unzip -d nimbus_sans_l/ nimbus_sans_l.zip
                   mv nimbus_sans_l /usr/share/fonts/
                   fc-cache -fv
+            - uses: jdx/mise-action@v2
+              with:
+                  version: 2024.12.14 # [default: latest] mise version to install
 
             - name: Create artifact
-              run: cargo run -- -c -o ${{ github.workspace }}/artifacts -t $TITLE render
+              run: mise run render
+              working-directory: ${{ env.VERSION }}
 
             - name: Upload artifact
               uses: actions/upload-artifact@v4
               with:
                   name: resume
-                  path: ${{ github.workspace }}/artifacts/${{ env.TITLE }}.pdf
+                  path: ${{ env.VERSION }}/artifacts/${{ env.TITLE }}.pdf
 
     deploy:
         environment:
@@ -58,13 +63,13 @@ jobs:
             - uses: actions/download-artifact@v4
               with:
                   name: resume
-                  path: ${{ github.workspace }}/${{ env.TITLE }}.pdf
+                  path: ${{ env.VERSION }}/${{ env.TITLE }}.pdf
             - name: Setup Pages
               uses: actions/configure-pages@v5
             - name: Upload artifact
               uses: actions/upload-pages-artifact@v3
               with:
-                  path: ${{ github.workspace }}/${{ env.TITLE }}.pdf
+                  path: ${{ env.VERSION }}/${{ env.TITLE }}.pdf
             - name: Deploy to GitHub Pages
               id: deployment
               uses: actions/deploy-pages@v4

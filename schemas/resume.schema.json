@@ -327,23 +327,6 @@
         "last_name"
       ]
     },
-    "Range_of_NaiveDate": {
-      "type": "object",
-      "properties": {
-        "end": {
-          "type": "string",
-          "format": "date"
-        },
-        "start": {
-          "type": "string",
-          "format": "date"
-        }
-      },
-      "required": [
-        "start",
-        "end"
-      ]
-    },
     "Social": {
       "type": "object",
       "properties": {
@@ -373,7 +356,21 @@
           "type": "object",
           "properties": {
             "Range": {
-              "$ref": "#/$defs/Range_of_NaiveDate"
+              "type": "object",
+              "properties": {
+                "end": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "start": {
+                  "type": "string",
+                  "format": "date"
+                }
+              },
+              "required": [
+                "start",
+                "end"
+              ]
             }
           },
           "additionalProperties": false,
