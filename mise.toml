@@ -6,3 +6,7 @@ dir = "{{config_root}}/artifacts"
 [tasks.watch]
 description = "Start the renderer with file-watching enabled"
 run = "cargo run --quiet -- --watch --clean"
+
+[tasks.update-schema]
+description = "Update the resume and config JSON schemas based on their current definitions"
+run = "cargo run -- schema resume > {{config_root}}/resume.schema.json && cargo run -- schema config > {{config_root}}/config.schema.json"

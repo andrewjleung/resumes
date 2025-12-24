@@ -1,0 +1,413 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Resume",
+  "type": "object",
+  "properties": {
+    "contact": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Contact"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "education": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Education"
+      }
+    },
+    "experiences": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Experience"
+      }
+    },
+    "profile": {
+      "$ref": "#/$defs/Profile"
+    },
+    "skills": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "default": {}
+    },
+    "socials": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Social"
+      }
+    }
+  },
+  "required": [
+    "profile"
+  ],
+  "$defs": {
+    "Address": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "address_second_line": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country_code": {
+          "type": "string"
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "postal_code": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "region": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "country_code",
+        "region",
+        "city",
+        "address",
+        "address_second_line"
+      ]
+    },
+    "Contact": {
+      "type": "object",
+      "properties": {
+        "personal_email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "work_email": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "personal_email"
+      ]
+    },
+    "Education": {
+      "type": "object",
+      "properties": {
+        "area": {
+          "type": "string"
+        },
+        "courses": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          }
+        },
+        "highlights": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          }
+        },
+        "institution": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "location": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Location"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "score": {
+          "type": "string"
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "when": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/When"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "institution",
+        "area",
+        "kind",
+        "score"
+      ]
+    },
+    "Experience": {
+      "type": "object",
+      "properties": {
+        "context": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "highlights": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          }
+        },
+        "kind": {
+          "type": "string"
+        },
+        "location": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Location"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "summary": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tags": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          }
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "when": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/When"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "name"
+      ]
+    },
+    "Location": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "Remote"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "CityState": {
+              "type": "array",
+              "maxItems": 2,
+              "minItems": 2,
+              "prefixItems": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "CityState"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "Address": {
+              "$ref": "#/$defs/Address"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "Address"
+          ]
+        }
+      ]
+    },
+    "Profile": {
+      "type": "object",
+      "properties": {
+        "first_name": {
+          "type": "string"
+        },
+        "headline": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "middle_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "profile_picture_url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "summary": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "first_name",
+        "last_name"
+      ]
+    },
+    "Range_of_NaiveDate": {
+      "type": "object",
+      "properties": {
+        "end": {
+          "type": "string",
+          "format": "date"
+        },
+        "start": {
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ]
+    },
+    "Social": {
+      "type": "object",
+      "properties": {
+        "network": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "username": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "When": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "Range": {
+              "$ref": "#/$defs/Range_of_NaiveDate"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "Range"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "Started": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "Started"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "Year": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "Year"
+          ]
+        }
+      ]
+    }
+  }
+}

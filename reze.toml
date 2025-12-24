@@ -1,14 +1,26 @@
-[[work.filters]]
-After = "2021-01-01"
+#:schema ./config.schema.json
 
-[[work.filters]]
-Exclude = "Sandbox at Northeastern University"
+artifact_title = "test"
+output_dir = "./artifacts"
+resume_data_path = "./resume.toml"
 
-# [[projects.filters]]
-# Include = "Compiler for Python-like Language"
+[typst]
+template = "./template_v2.typ"
 
-[[projects.filters]]
-Include = "Ply"
+[work]
+filters = [
+  { After = 2021-01-01 },
+  { Exclude = "Sandbox at Northeastern University" },
+]
+queries = [
+  { After = 2021-01-01 },
+  { Hide = "Sandbox at Northeastern University" },
+]
 
-[[projects.filters]]
-Include = "Reze"
+[projects]
+filters = [
+  # { Include = "Compiler for Python-like Language" },
+  { Include = "Ply" },
+  { Include = "Reze" },
+]
+queries = [{ Show = "Ply" }, { Show = "Reze" }]

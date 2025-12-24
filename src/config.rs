@@ -3,6 +3,7 @@ pub mod resolution;
 pub mod typst;
 
 use bon::Builder;
+use schemars::JsonSchema;
 use std::fs;
 use std::fs::File;
 use std::io::Write;
@@ -18,23 +19,33 @@ use crate::config::resolution::default_config_path;
 use crate::config::typst::TypstConfig;
 use crate::prelude::*;
 use crate::resume::ResumeFilterPredicate;
+use crate::resume::query::Clause;
 use crate::utils::path::current_dir;
 use crate::utils::path::path_buf_from_str;
 
-#[derive(Serialize, Deserialize, Default, Clone, Merge, Debug)]
+#[derive(Serialize, Deserialize, Default, Clone, Merge, Debug, JsonSchema)]
 pub struct WorkConfig {
     #[merge(strategy = merge::vec::append)]
+    #[serde(default)]
     pub filters: Vec<ResumeFilterPredicate>,
+
+    #[merge(strategy = merge::vec::append)]
+    #[serde(default)]
+    pub queries: Vec<Clause>,
 }
 
-#[derive(Serialize, Deserialize, Default, Clone, Merge, Debug)]
+#[derive(Serialize, Deserialize, Default, Clone, Merge, Debug, JsonSchema)]
 pub struct ProjectConfig {
     #[merge(strategy = merge::vec::append)]
     pub filters: Vec<ResumeFilterPredicate>,
+
+    #[merge(strategy = merge::vec::append)]
+    #[serde(default)]
+    pub queries: Vec<Clause>,
 }
 
 // TODO: allow specifying multiple versions with different filters?
-#[derive(Serialize, Deserialize, Default, Clone, Merge, Builder, Debug)]
+#[derive(Serialize, Deserialize, Default, Clone, Merge, Builder, Debug, JsonSchema)]
 pub struct Config {
     #[merge(strategy = merge::option::recurse)]
     pub typst: Option<TypstConfig>,
@@ -54,10 +65,12 @@ pub struct Config {
 
     #[merge(strategy = merge::option::overwrite_none)]
     #[builder(with = |dir: &str| -> Result<_> { path_buf_from_str(dir).context("failed to canonicalize output directory path") })]
+    #[schemars(with = "String")]
     output_dir: Option<PathBuf>,
 
     #[merge(strategy = merge::option::overwrite_none)]
     #[builder(with = |dir: &str| -> Result<_> { path_buf_from_str(dir).context("failed to canonicalize resume data path") })]
+    #[schemars(with = "String")]
     resume_data_path: Option<PathBuf>,
 }
 

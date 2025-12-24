@@ -2,7 +2,6 @@ use crate::command::Run;
 use crate::command::args::RenderArgs;
 use crate::config::Config;
 use crate::render::Render as RenderTrait;
-use crate::resume::ResumeSlice;
 use crate::typst::Typst;
 use crate::view::View;
 use crate::watcher::watch;
@@ -18,11 +17,10 @@ pub struct Watch {
 
 fn render(config: &Config) -> Result<()> {
     View::Updating.print(config, true).unwrap();
-    let resume = resume::file::read(&config.resume_data_path()?)?;
-    let resume_slice = ResumeSlice::from_config(config, resume);
+    let mut resume = resume::file::read_toml(&config.resume_data_path()?)?;
 
     Typst::new(config.typst.clone().unwrap_or_default())
-        .render(resume_slice, config)
+        .render(&mut resume, config)
         .context("failed to render resume with typst")?;
 
     View::Updated.print(config, true).unwrap();

@@ -4,10 +4,12 @@ use std::fs::remove_file;
 use std::{fs::File, io::Write};
 
 use crate::config::Config;
-use crate::resume::ResumeSlice;
+use crate::resume::query::Query;
+use crate::resume::schema::Resume;
 
 pub enum ArtifactKind {
     Json,
+    Toml,
     Pdf,
     Typst,
 }
@@ -16,6 +18,7 @@ impl ArtifactKind {
     fn extension(&self) -> String {
         match self {
             Self::Json => String::from("json"),
+            Self::Toml => String::from("toml"),
             Self::Pdf => String::from("pdf"),
             Self::Typst => String::from("typ"),
         }
@@ -66,7 +69,21 @@ impl Rendering {
 }
 
 pub trait Render {
-    fn render(&self, resume: ResumeSlice, config: &Config) -> Result<Rendering> {
+    fn render(&self, resume: &mut Resume, config: &Config) -> Result<Rendering> {
+        resume.experiences.retain(|experience| {
+            if experience.kind == "work"
+                && let Some(wc) = &config.work
+            {
+                experience.query(&wc.queries)
+            } else if experience.kind == "project"
+                && let Some(pc) = &config.projects
+            {
+                experience.query(&pc.queries)
+            } else {
+                true
+            }
+        });
+
         let rendering = self.render_artifacts(resume, config)?;
         let output_dir = config.output_dir()?;
 
@@ -82,5 +99,5 @@ pub trait Render {
         Ok(rendering)
     }
 
-    fn render_artifacts(&self, resume: ResumeSlice, config: &Config) -> Result<Rendering>;
+    fn render_artifacts(&self, resume: &Resume, config: &Config) -> Result<Rendering>;
 }
