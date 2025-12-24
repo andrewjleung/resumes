@@ -33,8 +33,7 @@ jobs:
 
             - name: Download Nimbus Sans L
               run: |
-                  wget -O nimbus_sans_l.zip https://www.fontsquirrel.com/fonts/download/nimbus-sans-l
-                  ls
+                  wget -O nimbus_sans_l.zip https://dl.dafontfree.io/download/nimbus-sans.zip
                   unzip -d nimbus_sans_l/ nimbus_sans_l.zip
                   mv nimbus_sans_l /usr/share/fonts/
                   fc-cache -fv
