@@ -1,5 +1,5 @@
+use crate::command::render::Render;
 use crate::command::schema::Schema;
-use crate::command::{render::Render, watch::Watch};
 use crate::config::resolution::config_path;
 use crate::config::typst::TypstConfig;
 use crate::config::{Config, load};
@@ -10,7 +10,6 @@ use merge::Merge;
 pub mod args;
 pub mod render;
 pub mod schema;
-pub mod watch;
 
 pub trait Run {
     fn run(&self, config: &Config) -> Result<()>;
@@ -29,14 +28,12 @@ pub enum RezeCommand {
     Config,
     Render(Render),
     Schema(Schema),
-    Watch(Watch),
 }
 
 impl Reze {
     fn config(&self) -> Result<Config> {
         let args = match &self.command {
             RezeCommand::Render(cmd) => cmd.render_args.clone(),
-            RezeCommand::Watch(cmd) => cmd.render_args.clone(),
             _ => return load(),
         };
 
@@ -64,7 +61,6 @@ impl Reze {
 
         match &self.command {
             RezeCommand::Render(cmd) => cmd.run(&config),
-            RezeCommand::Watch(cmd) => cmd.run(&config),
             RezeCommand::Config => {
                 println!(
                     "{}",
