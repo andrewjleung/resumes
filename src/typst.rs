@@ -4,7 +4,10 @@ use crate::{
     resume::schema::Resume,
 };
 use anyhow::{Context, Error, Result};
-use std::{fs::read, process::Command};
+use std::{
+    fs::{self, read},
+    process::Command,
+};
 
 #[derive(Default)]
 pub struct Typst {
@@ -20,6 +23,15 @@ impl Typst {
 impl Render for Typst {
     fn render_artifacts(&self, resume: &Resume, config: &Config) -> Result<Rendering> {
         let output_dir = config.output_dir()?;
+
+        fs::DirBuilder::new()
+            .recursive(true)
+            .create(&output_dir)
+            .context(format!(
+                "failed to create output directory at {}",
+                output_dir
+            ))?;
+
         let resume_content = toml::to_string(&resume).context("failed to serialize resume data")?;
 
         let resume_content_artifact = Artifact {

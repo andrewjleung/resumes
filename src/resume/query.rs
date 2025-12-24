@@ -52,6 +52,7 @@ pub enum Clause {
     Tagged(String),
 }
 
+#[allow(dead_code)]
 impl Clause {
     fn conjunctive(&self) -> bool {
         match self {

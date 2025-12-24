@@ -1,4 +1,4 @@
-#:schema ./resume.schema.json
+#:schema ./schemas/resume.schema.json
 
 [profile]
 first_name = "Andrew"
@@ -87,7 +87,7 @@ highlights = [
 ]
 
 [[experiences]]
-kind = "extracurricular"
+kind = "work"
 name = "Software Developer"
 context = "Sandbox at Northeastern University"
 summary = "Northeastern's premier software consultancy."

@@ -1,0 +1,17 @@
+#:schema ../../schemas/config.schema.json
+
+artifact_title = "AndrewLeung_Resume"
+output_dir = "./artifacts"
+resume_data_path = "../../resume.toml"
+
+[typst]
+template = "../../template.typ"
+
+[work]
+queries = [
+  { After = 2020-01-01 },
+  { Hide = "Sandbox at Northeastern University" },
+]
+
+[projects]
+queries = [{ Show = "Compiler" }]

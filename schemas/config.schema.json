@@ -84,18 +84,6 @@
         {
           "type": "object",
           "properties": {
-            "HideDetail": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false,
-          "required": [
-            "HideDetail"
-          ]
-        },
-        {
-          "type": "object",
-          "properties": {
             "After": {
               "type": "string",
               "format": "date"
@@ -125,6 +113,7 @@
       "properties": {
         "filters": {
           "type": "array",
+          "default": [],
           "items": {
             "$ref": "#/$defs/ResumeFilterPredicate"
           }
@@ -136,10 +125,7 @@
             "$ref": "#/$defs/Clause"
           }
         }
-      },
-      "required": [
-        "filters"
-      ]
+      }
     },
     "ResumeFilterPredicate": {
       "oneOf": [
