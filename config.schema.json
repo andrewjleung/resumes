@@ -1,0 +1,216 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Config",
+  "type": "object",
+  "properties": {
+    "artifact_title": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "clean": {
+      "type": "boolean",
+      "default": false
+    },
+    "output_dir": {
+      "type": "string"
+    },
+    "projects": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ProjectConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "resume_data_path": {
+      "type": "string"
+    },
+    "typst": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/TypstConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "work": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/WorkConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "output_dir",
+    "resume_data_path"
+  ],
+  "$defs": {
+    "Clause": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "Show": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "Show"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "Hide": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "Hide"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "HideDetail": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "HideDetail"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "After": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "After"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "Tagged": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "Tagged"
+          ]
+        }
+      ]
+    },
+    "ProjectConfig": {
+      "type": "object",
+      "properties": {
+        "filters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ResumeFilterPredicate"
+          }
+        },
+        "queries": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Clause"
+          }
+        }
+      },
+      "required": [
+        "filters"
+      ]
+    },
+    "ResumeFilterPredicate": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "Exclude": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "Exclude"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "Include": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "Include"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "After": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "After"
+          ]
+        }
+      ]
+    },
+    "TypstConfig": {
+      "type": "object",
+      "properties": {
+        "template": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "template"
+      ]
+    },
+    "WorkConfig": {
+      "type": "object",
+      "properties": {
+        "filters": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/ResumeFilterPredicate"
+          }
+        },
+        "queries": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Clause"
+          }
+        }
+      }
+    }
+  }
+}

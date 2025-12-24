@@ -31,7 +31,10 @@ fn print_watching_prelude(config: &Config) -> std::io::Result<()> {
         MoveTo(0, 0),
         PrintStyledContent("watching ".to_string().with(Color::Cyan)),
         PrintStyledContent(watched_file_names.join(", ").with(Color::Reset)),
-        MoveToNextLine(2)
+        MoveToNextLine(1),
+        PrintStyledContent("output ".to_string().with(Color::Cyan)),
+        PrintStyledContent(config.output_dir().unwrap().to_string().with(Color::Reset)),
+        MoveToNextLine(2),
     )
 }
 

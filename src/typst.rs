@@ -1,10 +1,9 @@
 use crate::{
     config::{Config, typst::TypstConfig},
     render::{Artifact, ArtifactKind, Render, Rendering},
-    resume::ResumeSlice,
+    resume::schema::Resume,
 };
 use anyhow::{Context, Error, Result};
-use regex::Regex;
 use std::{fs::read, process::Command};
 
 #[derive(Default)]
@@ -19,29 +18,17 @@ impl Typst {
 }
 
 impl Render for Typst {
-    fn render_artifacts(&self, resume: ResumeSlice, config: &Config) -> Result<Rendering> {
+    fn render_artifacts(&self, resume: &Resume, config: &Config) -> Result<Rendering> {
         let output_dir = config.output_dir()?;
-        let resume_json_content = serde_json::to_string(&resume.apply_slice())
-            .context("failed to serialize resume data")?;
+        let resume_content = toml::to_string(&resume).context("failed to serialize resume data")?;
 
-        // TODO: typst doesn't support parsing strings into datetimes, so this hack
-        // will just find and replace all dates in the resume JSON with an object
-        // containing a year, month, and date attribute
-        let resume_json_content = Regex::new(r#""(\d{4})-0*([1-9][0-9]*|0)-0*([1-9][0-9]*|0)""#)
-            .context("bad date regex")?
-            .replace_all(
-                &resume_json_content,
-                "{\"year\":$1,\"month\":$2,\"day\":$3}",
-            )
-            .into_owned();
-
-        let resume_json_artifact = Artifact {
+        let resume_content_artifact = Artifact {
             title: format!("{}.slice", config.artifact_title()),
-            kind: ArtifactKind::Json,
-            content: resume_json_content.into_bytes(),
+            kind: ArtifactKind::Toml,
+            content: resume_content.into_bytes(),
         };
 
-        resume_json_artifact
+        resume_content_artifact
             .write(&output_dir)
             .context("failed to write resume slice")?;
 
@@ -62,8 +49,15 @@ impl Render for Typst {
                 "compile",
                 "-f",
                 "pdf",
+                "--root",
+                config
+                    .resume_data_path()
+                    .expect("a data path")
+                    .parent()
+                    .expect("a parent dir")
+                    .as_str(),
                 "--input",
-                &format!("data_path={}", resume_json_artifact.file_name()),
+                &format!("data_path={}", resume_content_artifact.file_name()),
                 &template_file_artifact.file_name(),
                 "-",
             ])
@@ -86,7 +80,7 @@ impl Render for Typst {
         }
 
         Ok(Rendering {
-            intermediates: vec![resume_json_artifact, template_file_artifact],
+            intermediates: vec![resume_content_artifact, template_file_artifact],
             final_render: Artifact {
                 title: config.artifact_title(),
                 kind: ArtifactKind::Pdf,

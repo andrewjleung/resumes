@@ -1,7 +1,6 @@
 use crate::command::Run;
 use crate::command::args::RenderArgs;
 use crate::render::Render as RenderTrait;
-use crate::resume::ResumeSlice;
 use crate::typst::Typst;
 use crate::{prelude::*, resume};
 use clap::Args;
@@ -14,11 +13,10 @@ pub struct Render {
 
 impl Run for Render {
     fn run(&self, config: &crate::config::Config) -> Result<()> {
-        let resume = resume::file::read(&config.resume_data_path()?)?;
-        let resume_slice = ResumeSlice::from_config(config, resume);
+        let mut resume = resume::file::read_toml(&config.resume_data_path()?)?;
 
         Typst::new(config.typst.clone().unwrap_or_default())
-            .render(resume_slice, config)
+            .render(&mut resume, config)
             .context("failed to render resume with typst")?;
 
         Ok(())

@@ -1,3 +1,4 @@
+use crate::command::schema::Schema;
 use crate::command::{render::Render, watch::Watch};
 use crate::config::resolution::config_path;
 use crate::config::typst::TypstConfig;
@@ -8,6 +9,7 @@ use merge::Merge;
 
 pub mod args;
 pub mod render;
+pub mod schema;
 pub mod watch;
 
 pub trait Run {
@@ -24,9 +26,10 @@ pub struct Reze {
 
 #[derive(Subcommand)]
 pub enum RezeCommand {
-    Render(Render),
-    Watch(Watch),
     Config,
+    Render(Render),
+    Schema(Schema),
+    Watch(Watch),
 }
 
 impl Reze {
@@ -69,6 +72,7 @@ impl Reze {
                 );
                 Ok(())
             }
+            RezeCommand::Schema(cmd) => cmd.run(&config),
         }
     }
 }

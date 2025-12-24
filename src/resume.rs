@@ -2,16 +2,22 @@ use std::str::FromStr;
 
 use chrono::NaiveDate;
 use json_resume::{Project, Resume, Work};
+use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
+use toml_datetime_compat::{deserialize, serialize};
 
 use crate::config::Config;
 
 pub mod file;
+pub mod query;
+pub mod schema;
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, JsonSchema)]
 pub enum ResumeFilterPredicate {
     Exclude(String),
     Include(String),
+
+    #[serde(serialize_with = "serialize", deserialize_with = "deserialize")]
     After(NaiveDate),
 }
 

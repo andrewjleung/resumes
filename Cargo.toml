@@ -17,7 +17,9 @@ merge = { version = "0.2.0", features = ["derive"] }
 notify = "8.2"
 regex = "1.11"
 repo_path = "1.2.3"
+schemars = { version = "1.1.0", features = ["chrono04"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 shellexpand = "3.1.1"
 toml = { version = "0.9", features = ["serde"] }
+toml-datetime-compat = { version = "0.3.0", features = ["chrono"] }
