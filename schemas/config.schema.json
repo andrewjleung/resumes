@@ -3,12 +3,6 @@
   "title": "Config",
   "type": "object",
   "properties": {
-    "artifact_title": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
     "clean": {
       "type": "boolean",
       "default": false
@@ -28,6 +22,16 @@
     },
     "resume_data_path": {
       "type": "string"
+    },
+    "title": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Title"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "typst": {
       "anyOf": [
@@ -111,13 +115,6 @@
     "ProjectConfig": {
       "type": "object",
       "properties": {
-        "filters": {
-          "type": "array",
-          "default": [],
-          "items": {
-            "$ref": "#/$defs/ResumeFilterPredicate"
-          }
-        },
         "queries": {
           "type": "array",
           "default": [],
@@ -127,46 +124,8 @@
         }
       }
     },
-    "ResumeFilterPredicate": {
-      "oneOf": [
-        {
-          "type": "object",
-          "properties": {
-            "Exclude": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false,
-          "required": [
-            "Exclude"
-          ]
-        },
-        {
-          "type": "object",
-          "properties": {
-            "Include": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false,
-          "required": [
-            "Include"
-          ]
-        },
-        {
-          "type": "object",
-          "properties": {
-            "After": {
-              "type": "string",
-              "format": "date"
-            }
-          },
-          "additionalProperties": false,
-          "required": [
-            "After"
-          ]
-        }
-      ]
+    "Title": {
+      "type": "string"
     },
     "TypstConfig": {
       "type": "object",
@@ -182,13 +141,6 @@
     "WorkConfig": {
       "type": "object",
       "properties": {
-        "filters": {
-          "type": "array",
-          "default": [],
-          "items": {
-            "$ref": "#/$defs/ResumeFilterPredicate"
-          }
-        },
         "queries": {
           "type": "array",
           "default": [],

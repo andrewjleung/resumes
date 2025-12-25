@@ -75,6 +75,7 @@ impl Rendering {
 
 pub trait Render {
     fn render(&self, resume: &mut Resume, config: &Config) -> Result<Rendering> {
+        // TODO: come up with a more flexible way to do this
         resume.experiences.retain(|experience| {
             if experience.kind == "work"
                 && let Some(wc) = &config.work
