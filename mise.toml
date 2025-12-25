@@ -7,6 +7,11 @@ description = "Render the resume"
 run = "cargo run --quiet -- render --clean"
 dir = "{{cwd}}"
 
+[tasks.watch]
+description = "Render the resume with mise's file watcher"
+run = "mise w -w {{config_root}} -c clear -f 'reze.toml' -f 'resume.toml' render"
+dir = "{{cwd}}"
+
 [tasks.update-schema]
 description = "Update the resume and config JSON schemas based on their current definitions"
 run = [
