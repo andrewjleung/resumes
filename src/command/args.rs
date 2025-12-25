@@ -12,15 +12,15 @@ pub struct RenderArgs {
     #[arg(short, long)]
     pub output_dir: Option<String>,
 
-    /// The path to the Resume JSON file to render.
+    /// The path to the TOML resume file to render.
     #[arg(short, long)]
     pub resume: Option<String>,
 
     /// Path to the typst template to render with. This template should support receiving a path to
-    /// a JSON file following the Resume JSON standard via system inputs like so:
+    /// a TOML resume.
     ///
     /// ```typst
-    /// #template(json(sys.inputs.data_path))
+    /// #template(toml(sys.inputs.data_path))
     /// ```
     #[arg(long)]
     pub template: Option<String>,

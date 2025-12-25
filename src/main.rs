@@ -11,8 +11,6 @@ use prelude::*;
 
 use crate::command::Reze;
 
-// TODO: support STDIN
-// TODO: filtering through CLI
 // TODO: logging?
 
 fn main() -> Result<()> {

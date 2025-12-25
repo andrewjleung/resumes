@@ -3,7 +3,7 @@ use camino::Utf8Path as Path;
 use std::fs::remove_file;
 use std::{fs::File, io::Write};
 
-use crate::config::Config;
+use crate::config::{Config, Title};
 use crate::resume::query::Query;
 use crate::resume::schema::Resume;
 
@@ -27,14 +27,13 @@ impl ArtifactKind {
 }
 
 pub struct Artifact {
-    pub title: String,
     pub kind: ArtifactKind,
     pub content: Vec<u8>,
 }
 
 impl Artifact {
-    pub fn write(&self, dir: &Path) -> Result<File> {
-        let file_name = self.file_name();
+    pub fn write(&self, title: &Title, dir: &Path) -> Result<File> {
+        let file_name = self.file_name(title);
         let path = dir.join(&file_name);
 
         let mut file =
@@ -46,9 +45,9 @@ impl Artifact {
         Ok(file)
     }
 
-    pub fn file_name(&self) -> String {
+    pub fn file_name(&self, title: &Title) -> String {
         let extension = self.kind.extension();
-        format!("{}.{extension}", self.title)
+        format!("{}.{extension}", title)
     }
 }
 
@@ -59,9 +58,14 @@ pub struct Rendering {
 }
 
 impl Rendering {
-    pub fn clean(&self, dir: &Path) -> Result<()> {
+    pub fn clean(&self, dir: &Path, config: &Config) -> Result<()> {
+        let title = match &config.title {
+            Some(t) => t,
+            None => &Title::default(),
+        };
+
         for intermediate in &self.intermediates {
-            let path = dir.join(intermediate.file_name());
+            let path = dir.join(intermediate.file_name(title));
             remove_file(&path).context(format!("failed to remove intermediate artifact: {path}"))?
         }
 
@@ -87,14 +91,18 @@ pub trait Render {
 
         let rendering = self.render_artifacts(resume, config)?;
         let output_dir = config.output_dir()?;
+        let title = match &config.title {
+            Some(t) => t,
+            None => &Title::default(),
+        };
 
         if config.clean {
-            rendering.clean(&output_dir)?;
+            rendering.clean(&output_dir, config)?;
         }
 
         rendering
             .final_render
-            .write(&output_dir)
+            .write(title, &output_dir)
             .context("failed to write final render")?;
 
         Ok(rendering)

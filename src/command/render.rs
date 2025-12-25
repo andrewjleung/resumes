@@ -15,7 +15,7 @@ impl Run for Render {
     fn run(&self, config: &crate::config::Config) -> Result<()> {
         let mut resume = resume::file::read_toml(&config.resume_data_path()?)?;
 
-        Typst::new(config.typst.clone().unwrap_or_default())
+        Typst()
             .render(&mut resume, config)
             .context("failed to render resume with typst")?;
 

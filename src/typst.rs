@@ -1,5 +1,8 @@
 use crate::{
-    config::{Config, typst::TypstConfig},
+    config::{
+        Config, Title,
+        typst::{Template, TypstConfig},
+    },
     render::{Artifact, ArtifactKind, Render, Rendering},
     resume::schema::Resume,
 };
@@ -10,15 +13,7 @@ use std::{
 };
 
 #[derive(Default)]
-pub struct Typst {
-    pub config: TypstConfig,
-}
-
-impl Typst {
-    pub fn new(config: TypstConfig) -> Self {
-        Typst { config }
-    }
-}
+pub struct Typst();
 
 impl Render for Typst {
     fn render_artifacts(&self, resume: &Resume, config: &Config) -> Result<Rendering> {
@@ -35,25 +30,31 @@ impl Render for Typst {
         let resume_content = toml::to_string(&resume).context("failed to serialize resume data")?;
 
         let resume_content_artifact = Artifact {
-            title: format!("{}.slice", config.artifact_title()),
             kind: ArtifactKind::Toml,
             content: resume_content.into_bytes(),
         };
 
-        resume_content_artifact
-            .write(&output_dir)
-            .context("failed to write resume slice")?;
-
-        let template_file_path = self.config.template();
-        let template_file_artifact = Artifact {
-            title: config.artifact_title(),
-            kind: ArtifactKind::Typst,
-            content: read(&template_file_path).context(format!(
-                "failed to read typst template: {template_file_path}"
-            ))?,
+        let title = match &config.title {
+            Some(t) => t,
+            None => &Title::default(),
         };
 
-        template_file_artifact.write(&output_dir)?;
+        resume_content_artifact
+            .write(title, &output_dir)
+            .context("failed to write resume slice")?;
+
+        let Template(template) = match &config.typst {
+            Some(TypstConfig { template: Some(t) }) => t,
+            _ => &Template::default(),
+        };
+
+        let template_file_artifact = Artifact {
+            kind: ArtifactKind::Typst,
+            content: read(template)
+                .context(format!("failed to read typst template: {template}"))?,
+        };
+
+        template_file_artifact.write(title, &output_dir)?;
 
         let output = Command::new("typst")
             .current_dir(&output_dir)
@@ -69,8 +70,8 @@ impl Render for Typst {
                     .expect("a parent dir")
                     .as_str(),
                 "--input",
-                &format!("data_path={}", resume_content_artifact.file_name()),
-                &template_file_artifact.file_name(),
+                &format!("data_path={}", resume_content_artifact.file_name(title)),
+                &template_file_artifact.file_name(title),
                 "-",
             ])
             .output()
@@ -94,7 +95,6 @@ impl Render for Typst {
         Ok(Rendering {
             intermediates: vec![resume_content_artifact, template_file_artifact],
             final_render: Artifact {
-                title: config.artifact_title(),
                 kind: ArtifactKind::Pdf,
                 content: output.stdout,
             },

@@ -2,7 +2,7 @@ use crate::command::render::Render;
 use crate::command::schema::Schema;
 use crate::config::resolution::config_path;
 use crate::config::typst::TypstConfig;
-use crate::config::{Config, load};
+use crate::config::{Config, Title, load};
 use crate::prelude::*;
 use clap::{Parser, Subcommand};
 use merge::Merge;
@@ -17,7 +17,7 @@ pub trait Run {
 
 #[derive(Parser)]
 #[command(version, about)]
-/// Utility for resume rendering and editing using the Resume JSON spec.
+/// Utility for rendering resumes from TOML.
 pub struct Reze {
     #[command(subcommand)]
     command: RezeCommand,
@@ -42,7 +42,7 @@ impl Reze {
             .build();
 
         let base_config = Config::builder()
-            .maybe_artifact_title(args.title)
+            .maybe_title(args.title.map(Title))
             .clean(args.clean)
             .maybe_output_dir(args.output_dir.as_deref())?
             .maybe_resume_data_path(args.resume.as_deref())?

@@ -3,6 +3,7 @@ pub mod typst;
 
 use bon::Builder;
 use schemars::JsonSchema;
+use std::fmt::Display;
 use std::fs;
 use std::fs::File;
 use std::io::Write;
@@ -16,17 +17,30 @@ use crate::config::resolution::config_path;
 use crate::config::resolution::default_config_path;
 use crate::config::typst::TypstConfig;
 use crate::prelude::*;
-use crate::resume::ResumeFilterPredicate;
 use crate::resume::query::Clause;
 use crate::utils::path::current_dir;
 use crate::utils::path::path_buf_from_str;
 
+const DEFAULT_TITLE: &str = "resume";
+
+#[derive(Serialize, Deserialize, Clone, Debug, JsonSchema)]
+pub struct Title(pub String);
+
+impl Default for Title {
+    fn default() -> Self {
+        Title(DEFAULT_TITLE.to_string())
+    }
+}
+
+impl Display for Title {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let Title(s) = self;
+        s.fmt(f)
+    }
+}
+
 #[derive(Serialize, Deserialize, Default, Clone, Merge, Debug, JsonSchema)]
 pub struct WorkConfig {
-    #[merge(strategy = merge::vec::append)]
-    #[serde(default)]
-    pub filters: Vec<ResumeFilterPredicate>,
-
     #[merge(strategy = merge::vec::append)]
     #[serde(default)]
     pub queries: Vec<Clause>,
@@ -34,10 +48,6 @@ pub struct WorkConfig {
 
 #[derive(Serialize, Deserialize, Default, Clone, Merge, Debug, JsonSchema)]
 pub struct ProjectConfig {
-    #[merge(strategy = merge::vec::append)]
-    #[serde(default)]
-    pub filters: Vec<ResumeFilterPredicate>,
-
     #[merge(strategy = merge::vec::append)]
     #[serde(default)]
     pub queries: Vec<Clause>,
@@ -56,7 +66,7 @@ pub struct Config {
     pub projects: Option<ProjectConfig>,
 
     #[merge(strategy = merge::option::overwrite_none)]
-    artifact_title: Option<String>,
+    pub title: Option<Title>,
 
     #[merge(strategy = merge::bool::overwrite_false)]
     #[serde(default)]
@@ -74,10 +84,6 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn artifact_title(&self) -> String {
-        self.artifact_title.clone().unwrap_or("resume".to_owned())
-    }
-
     pub fn output_dir(&self) -> Result<PathBuf> {
         match self.output_dir.clone() {
             Some(dir) => Ok(dir),
