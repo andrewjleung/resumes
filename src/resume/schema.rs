@@ -71,9 +71,9 @@ pub struct Education {
     pub when: Option<When>,
     pub location: Option<Location>,
     pub url: Option<String>,
-    pub area: String,
-    pub kind: String,
-    pub score: String,
+    pub area: Option<String>,
+    pub kind: Option<String>,
+    pub score: Option<String>,
 
     #[serde(default)]
     pub highlights: Vec<String>,
@@ -84,6 +84,9 @@ pub struct Education {
 
 #[derive(Serialize, Deserialize, Clone, Debug, JsonSchema)]
 pub enum When {
+    #[serde(serialize_with = "serialize", deserialize_with = "deserialize")]
+    Date(NaiveDate),
+
     Range {
         #[serde(serialize_with = "serialize", deserialize_with = "deserialize")]
         start: NaiveDate,

@@ -10,6 +10,7 @@ use crate::resume::schema::{Experience, When};
 impl PartialEq<NaiveDate> for When {
     fn eq(&self, other: &NaiveDate) -> bool {
         match self {
+            When::Date(d) => d.eq(other),
             When::Range { start, end } => other >= start && other <= end,
             When::Started(start) => other >= start,
             When::Year(y) => other.year() == *y,
@@ -29,6 +30,7 @@ impl PartialEq<NaiveDate> for Experience {
 impl PartialOrd<NaiveDate> for When {
     fn partial_cmp(&self, other: &NaiveDate) -> Option<std::cmp::Ordering> {
         match self {
+            When::Date(d) => d.partial_cmp(other),
             When::Year(y) => y.partial_cmp(&other.year()),
             When::Range { start, .. } => start.partial_cmp(other),
             When::Started(start) => start.partial_cmp(other),

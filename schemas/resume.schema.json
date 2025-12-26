@@ -118,7 +118,10 @@
       "type": "object",
       "properties": {
         "area": {
-          "type": "string"
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "courses": {
           "type": "array",
@@ -138,7 +141,10 @@
           "type": "string"
         },
         "kind": {
-          "type": "string"
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "location": {
           "anyOf": [
@@ -151,7 +157,10 @@
           ]
         },
         "score": {
-          "type": "string"
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "url": {
           "type": [
@@ -171,10 +180,7 @@
         }
       },
       "required": [
-        "institution",
-        "area",
-        "kind",
-        "score"
+        "institution"
       ]
     },
     "Experience": {
@@ -352,6 +358,19 @@
     },
     "When": {
       "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "Date": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "Date"
+          ]
+        },
         {
           "type": "object",
           "properties": {
