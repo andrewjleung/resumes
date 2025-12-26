@@ -121,6 +121,33 @@
           "required": [
             "HideDetail"
           ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "OverrideHighlights": {
+              "type": "object",
+              "properties": {
+                "highlights": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "target": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "target",
+                "highlights"
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "OverrideHighlights"
+          ]
         }
       ]
     },

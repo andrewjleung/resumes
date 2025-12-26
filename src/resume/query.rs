@@ -52,6 +52,10 @@ pub enum Clause {
     Tagged(String),
 
     HideDetail(String),
+    OverrideHighlights {
+        target: String,
+        highlights: Vec<String>,
+    },
 }
 
 pub trait Query
@@ -103,6 +107,13 @@ impl Query for Experience {
             && self.contains(s)
         {
             self.highlights.clear();
+        }
+
+        if show
+            && let Clause::OverrideHighlights { target, highlights } = clause
+            && self.contains(target)
+        {
+            self.highlights = highlights.clone();
         }
 
         show
