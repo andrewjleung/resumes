@@ -9,12 +9,12 @@ dir = "{{cwd}}"
 
 [tasks.watch]
 description = "Render the resume with mise's file watcher"
-run = "mise w -w {{config_root}} -c clear -f 'reze.toml' -f 'resume.toml' render"
+run = "mise w -w {{config_root}} -c clear -f 'reze.toml' -f 'resume.toml' -f 'template.typ' render"
 dir = "{{cwd}}"
 
 [tasks.update-schema]
 description = "Update the resume and config JSON schemas based on their current definitions"
 run = [
-  "cargo run --quiet -- schema resume > {{config_root}}/schemas/resume.schema.json",
-  "cargo run --quiet -- schema config > {{config_root}}/schemas/config.schema.json"
+    "cargo run --quiet -- schema resume > {{config_root}}/schemas/resume.schema.json",
+    "cargo run --quiet -- schema config > {{config_root}}/schemas/config.schema.json"
 ]

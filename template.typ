@@ -113,11 +113,7 @@
   }
 
   #(
-    resume
-      .experiences
-      .filter(e => e.kind == "work" and e.highlights.len() > 0)
-      .map(w => work(w))
-      .join()
+    resume.experiences.filter(e => e.kind == "work").map(w => work(w)).join()
   )
 
   == Projects
@@ -143,7 +139,7 @@
   #(
     resume
       .experiences
-      .filter(e => e.kind == "project" and e.highlights.len() > 0)
+      .filter(e => e.kind == "project")
       .map(p => project(p))
       .join()
   )

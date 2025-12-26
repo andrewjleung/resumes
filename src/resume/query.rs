@@ -50,31 +50,17 @@ pub enum Clause {
     #[serde(serialize_with = "serialize", deserialize_with = "deserialize")]
     After(NaiveDate),
     Tagged(String),
-}
 
-#[allow(dead_code)]
-impl Clause {
-    fn conjunctive(&self) -> bool {
-        match self {
-            Self::Show(_) => false,
-            Self::Hide(_) => true,
-            Self::After(_) => false,
-            Self::Tagged(_) => false,
-        }
-    }
-
-    fn disjunctive(&self) -> bool {
-        !self.conjunctive()
-    }
+    HideDetail(String),
 }
 
 pub trait Query
 where
     Self: Sized,
 {
-    fn query_one(&self, clause: &Clause) -> bool;
+    fn query_one(&mut self, clause: &Clause) -> bool;
 
-    fn query(&self, clauses: &[Clause]) -> bool {
+    fn query(&mut self, clauses: &[Clause]) -> bool {
         let mut show_clauses = clauses
             .iter()
             .filter(|clause| matches!(clause, Clause::Show(_)))
@@ -100,15 +86,25 @@ impl Experience {
 }
 
 impl Query for Experience {
-    fn query_one(&self, clause: &Clause) -> bool
+    fn query_one(&mut self, clause: &Clause) -> bool
     where
         Self: Sized,
     {
-        match clause {
+        let show = match clause {
             Clause::Show(s) => self.contains(s),
             Clause::Hide(s) => self.contains(s).not(),
             Clause::After(d) => self.when.as_ref().is_some_and(|when| *when >= *d),
             Clause::Tagged(t) => self.tags.contains(t),
+            _ => true,
+        };
+
+        if show
+            && let Clause::HideDetail(s) = clause
+            && self.contains(s)
+        {
+            self.highlights.clear();
         }
+
+        show
     }
 }

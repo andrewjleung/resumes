@@ -109,6 +109,18 @@
           "required": [
             "Tagged"
           ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "HideDetail": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "HideDetail"
+          ]
         }
       ]
     },
