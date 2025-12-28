@@ -3,12 +3,15 @@
   "title": "Config",
   "type": "object",
   "properties": {
-    "clean": {
-      "type": "boolean",
-      "default": false
-    },
-    "output_dir": {
-      "type": "string"
+    "typst": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/TypstConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "queries": {
       "type": "object",
@@ -20,9 +23,6 @@
       },
       "default": {}
     },
-    "resume_data_path": {
-      "type": "string"
-    },
     "title": {
       "anyOf": [
         {
@@ -33,15 +33,15 @@
         }
       ]
     },
-    "typst": {
-      "anyOf": [
-        {
-          "$ref": "#/$defs/TypstConfig"
-        },
-        {
-          "type": "null"
-        }
-      ]
+    "clean": {
+      "type": "boolean",
+      "default": false
+    },
+    "output_dir": {
+      "type": "string"
+    },
+    "resume_data_path": {
+      "type": "string"
     }
   },
   "required": [
@@ -49,101 +49,6 @@
     "resume_data_path"
   ],
   "$defs": {
-    "Clause": {
-      "oneOf": [
-        {
-          "type": "object",
-          "properties": {
-            "Show": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false,
-          "required": [
-            "Show"
-          ]
-        },
-        {
-          "type": "object",
-          "properties": {
-            "Hide": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false,
-          "required": [
-            "Hide"
-          ]
-        },
-        {
-          "type": "object",
-          "properties": {
-            "After": {
-              "type": "string",
-              "format": "date"
-            }
-          },
-          "additionalProperties": false,
-          "required": [
-            "After"
-          ]
-        },
-        {
-          "type": "object",
-          "properties": {
-            "Tagged": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false,
-          "required": [
-            "Tagged"
-          ]
-        },
-        {
-          "type": "object",
-          "properties": {
-            "HideDetail": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false,
-          "required": [
-            "HideDetail"
-          ]
-        },
-        {
-          "type": "object",
-          "properties": {
-            "OverrideHighlights": {
-              "type": "object",
-              "properties": {
-                "highlights": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "target": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "target",
-                "highlights"
-              ]
-            }
-          },
-          "additionalProperties": false,
-          "required": [
-            "OverrideHighlights"
-          ]
-        }
-      ]
-    },
-    "Title": {
-      "type": "string"
-    },
     "TypstConfig": {
       "type": "object",
       "properties": {
@@ -154,6 +59,101 @@
       "required": [
         "template"
       ]
+    },
+    "Clause": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "Show": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "Show"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "Hide": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "Hide"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "After": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          "required": [
+            "After"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "Tagged": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "Tagged"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "HideDetail": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "HideDetail"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "OverrideHighlights": {
+              "type": "object",
+              "properties": {
+                "target": {
+                  "type": "string"
+                },
+                "highlights": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "target",
+                "highlights"
+              ]
+            }
+          },
+          "required": [
+            "OverrideHighlights"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "Title": {
+      "type": "string"
     }
   }
 }
