@@ -4,7 +4,6 @@ use std::fs::remove_file;
 use std::{fs::File, io::Write};
 
 use crate::config::{Config, Title};
-use crate::resume::query::Query;
 use crate::resume::schema::Resume;
 
 #[allow(dead_code)]
@@ -75,20 +74,9 @@ impl Rendering {
 
 pub trait Render {
     fn render(&self, resume: &mut Resume, config: &Config) -> Result<Rendering> {
-        // TODO: come up with a more flexible way to do this
-        resume.experiences.retain_mut(|experience| {
-            if experience.kind == "work"
-                && let Some(wc) = &config.work
-            {
-                experience.query(&wc.queries)
-            } else if experience.kind == "project"
-                && let Some(pc) = &config.projects
-            {
-                experience.query(&pc.queries)
-            } else {
-                true
-            }
-        });
+        for (kind, clauses) in config.queries.iter() {
+            resume.query_experiences_by_kind(kind, clauses);
+        }
 
         let rendering = self.render_artifacts(resume, config)?;
         let output_dir = config.output_dir()?;

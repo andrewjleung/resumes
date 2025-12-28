@@ -5,7 +5,7 @@ use toml_datetime_compat::{deserialize, serialize};
 use chrono::{Datelike, NaiveDate};
 use schemars::JsonSchema;
 
-use crate::resume::schema::{Experience, When};
+use crate::resume::schema::{Experience, Resume, When};
 
 impl PartialEq<NaiveDate> for When {
     fn eq(&self, other: &NaiveDate) -> bool {
@@ -60,6 +60,7 @@ pub enum Clause {
     },
 }
 
+// TODO: these are unexpectedly mutable
 pub trait Query
 where
     Self: Sized,
@@ -119,5 +120,17 @@ impl Query for Experience {
         }
 
         show
+    }
+}
+
+impl Resume {
+    pub fn query_experiences_by_kind(&mut self, kind: &str, clauses: &[Clause]) {
+        self.experiences.retain_mut(|experience| {
+            if experience.kind == kind {
+                experience.query(clauses)
+            } else {
+                true
+            }
+        });
     }
 }

@@ -10,15 +10,15 @@
     "output_dir": {
       "type": "string"
     },
-    "projects": {
-      "anyOf": [
-        {
-          "$ref": "#/$defs/ProjectConfig"
-        },
-        {
-          "type": "null"
+    "queries": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "$ref": "#/$defs/Clause"
         }
-      ]
+      },
+      "default": {}
     },
     "resume_data_path": {
       "type": "string"
@@ -37,16 +37,6 @@
       "anyOf": [
         {
           "$ref": "#/$defs/TypstConfig"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "work": {
-      "anyOf": [
-        {
-          "$ref": "#/$defs/WorkConfig"
         },
         {
           "type": "null"
@@ -151,18 +141,6 @@
         }
       ]
     },
-    "ProjectConfig": {
-      "type": "object",
-      "properties": {
-        "queries": {
-          "type": "array",
-          "default": [],
-          "items": {
-            "$ref": "#/$defs/Clause"
-          }
-        }
-      }
-    },
     "Title": {
       "type": "string"
     },
@@ -176,18 +154,6 @@
       "required": [
         "template"
       ]
-    },
-    "WorkConfig": {
-      "type": "object",
-      "properties": {
-        "queries": {
-          "type": "array",
-          "default": [],
-          "items": {
-            "$ref": "#/$defs/Clause"
-          }
-        }
-      }
     }
   }
 }

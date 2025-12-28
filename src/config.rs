@@ -3,6 +3,7 @@ pub mod typst;
 
 use bon::Builder;
 use schemars::JsonSchema;
+use std::collections::HashMap;
 use std::fmt::Display;
 use std::fs;
 use std::fs::File;
@@ -39,31 +40,16 @@ impl Display for Title {
     }
 }
 
-#[derive(Serialize, Deserialize, Default, Clone, Merge, Debug, JsonSchema)]
-pub struct WorkConfig {
-    #[merge(strategy = merge::vec::append)]
-    #[serde(default)]
-    pub queries: Vec<Clause>,
-}
-
-#[derive(Serialize, Deserialize, Default, Clone, Merge, Debug, JsonSchema)]
-pub struct ProjectConfig {
-    #[merge(strategy = merge::vec::append)]
-    #[serde(default)]
-    pub queries: Vec<Clause>,
-}
-
 // TODO: allow specifying multiple versions with different filters?
 #[derive(Serialize, Deserialize, Default, Clone, Merge, Builder, Debug, JsonSchema)]
 pub struct Config {
     #[merge(strategy = merge::option::recurse)]
     pub typst: Option<TypstConfig>,
 
-    #[merge(strategy = merge::option::recurse)]
-    pub work: Option<WorkConfig>,
-
-    #[merge(strategy = merge::option::recurse)]
-    pub projects: Option<ProjectConfig>,
+    #[merge(strategy = merge::hashmap::overwrite)]
+    #[serde(default)]
+    #[builder(default)]
+    pub queries: HashMap<String, Vec<Clause>>,
 
     #[merge(strategy = merge::option::overwrite_none)]
     pub title: Option<Title>,

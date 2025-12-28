@@ -1,7 +1,6 @@
-use std::collections::HashMap;
-
 use bon::Builder;
 use chrono::NaiveDate;
+use indexmap::IndexMap;
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use toml_datetime_compat::{deserialize, serialize};
@@ -18,7 +17,7 @@ pub struct Resume {
     pub socials: Vec<Social>,
 
     #[serde(default)]
-    pub skills: HashMap<String, Vec<String>>,
+    pub skills: IndexMap<String, Vec<String>>,
 
     #[serde(default)]
     pub experiences: Vec<Experience>,
