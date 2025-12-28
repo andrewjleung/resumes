@@ -7,10 +7,6 @@
 
   #show heading.where(level: 1): set text(size: 18pt)
 
-  #let parse(date) = {
-    datetime(year: date.year, month: date.month, day: date.day)
-  }
-
   #let headline(name, desc, detail: none, timing) = {
     box[#pad(right: 0.4em)[*#name*]]
     [#desc]
