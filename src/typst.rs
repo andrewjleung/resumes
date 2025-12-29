@@ -51,6 +51,10 @@ impl Render for Typst {
             .write(title, &output_dir)
             .context("failed to write queried resume content")?;
 
+        template_file_artifact
+            .write(title, &output_dir)
+            .context("failed to write template artifact")?;
+
         let output = Command::new("typst")
             .current_dir(&output_dir)
             .args([
