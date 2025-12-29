@@ -4,7 +4,7 @@ run = "cargo install --path {{config_root}}"
 
 [tasks.render]
 description = "Render the resume"
-run = "cargo run --quiet -- render --clean"
+run = "cargo run --quiet -- render"
 dir = "{{cwd}}"
 
 [tasks.watch]
