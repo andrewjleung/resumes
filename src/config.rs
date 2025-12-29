@@ -40,7 +40,6 @@ impl Display for Title {
     }
 }
 
-// TODO: allow specifying multiple versions with different filters?
 #[derive(Serialize, Deserialize, Default, Clone, Merge, Builder, Debug, JsonSchema)]
 pub struct Config {
     #[merge(strategy = merge::option::recurse)]

@@ -1,3 +1,4 @@
+use std::fs;
 use std::str::FromStr;
 
 use crate::prelude::*;
@@ -28,4 +29,13 @@ pub fn current_dir() -> Result<PathBuf> {
         .map_err(Error::new)
         .and_then(|path| normalize_path(&path))
         .context("unable to access current working directory")
+}
+
+pub fn ensure_dir(dir: &Path) -> Result<()> {
+    fs::DirBuilder::new()
+        .recursive(true)
+        .create(dir)
+        .context(format!("failed to create directory at {}", dir))?;
+
+    Ok(())
 }

@@ -5,56 +5,51 @@ use crate::{
     },
     render::{Artifact, ArtifactKind, Render, Rendering},
     resume::schema::Resume,
+    utils::path::ensure_dir,
 };
 use anyhow::{Context, Error, Result};
-use std::{
-    fs::{self, read},
-    process::Command,
-};
+use std::{fs::read, process::Command};
 
 #[derive(Default)]
 pub struct Typst();
 
+fn create_resume_content_artifact(resume: &Resume) -> Result<Artifact> {
+    let resume_content = toml::to_string(&resume).context("failed to serialize resume data")?;
+
+    Ok(Artifact {
+        kind: ArtifactKind::Toml,
+        content: resume_content.into_bytes(),
+    })
+}
+
+fn create_template_file_artifact(config: &Config) -> Result<Artifact> {
+    let Template(template) = match &config.typst {
+        Some(TypstConfig { template: Some(t) }) => t,
+        _ => &Template::default(),
+    };
+
+    Ok(Artifact {
+        kind: ArtifactKind::Typst,
+        content: read(template).context(format!("failed to read typst template: {template}"))?,
+    })
+}
+
 impl Render for Typst {
     fn render_artifacts(&self, resume: &Resume, config: &Config) -> Result<Rendering> {
         let output_dir = config.output_dir()?;
-
-        fs::DirBuilder::new()
-            .recursive(true)
-            .create(&output_dir)
-            .context(format!(
-                "failed to create output directory at {}",
-                output_dir
-            ))?;
-
-        let resume_content = toml::to_string(&resume).context("failed to serialize resume data")?;
-
-        let resume_content_artifact = Artifact {
-            kind: ArtifactKind::Toml,
-            content: resume_content.into_bytes(),
-        };
+        ensure_dir(&output_dir)?;
 
         let title = match &config.title {
-            Some(t) => t,
+            Some(title) => title,
             None => &Title::default(),
         };
 
+        let resume_content_artifact = create_resume_content_artifact(resume)?;
+        let template_file_artifact = create_template_file_artifact(config)?;
+
         resume_content_artifact
             .write(title, &output_dir)
-            .context("failed to write resume slice")?;
-
-        let Template(template) = match &config.typst {
-            Some(TypstConfig { template: Some(t) }) => t,
-            _ => &Template::default(),
-        };
-
-        let template_file_artifact = Artifact {
-            kind: ArtifactKind::Typst,
-            content: read(template)
-                .context(format!("failed to read typst template: {template}"))?,
-        };
-
-        template_file_artifact.write(title, &output_dir)?;
+            .context("failed to write queried resume content")?;
 
         let output = Command::new("typst")
             .current_dir(&output_dir)

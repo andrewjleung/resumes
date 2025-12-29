@@ -21,7 +21,7 @@ repo_path = "1.2.3"
 schemars = { version = "1.1.0", features = [
     "chrono04",
     "indexmap2",
-    "preserve_order"
+    "preserve_order",
 ] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = { version = "1.0", features = ["preserve_order"] }
