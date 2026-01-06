@@ -50,6 +50,4 @@ Commits to `main` will trigger a [GitHub Actions workflow](./.github/workflows/s
 
 ## Future work
 
-- A terminal multiplexer preset to quickly open a live editing workspace
-- Resume variants for tailored resumes
 - Better logging
