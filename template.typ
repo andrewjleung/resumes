@@ -1,15 +1,17 @@
 #let template(resume) = [
   #set line(length: 100%, stroke: 0.5pt + black)
   #set list(indent: 0.5em)
-  #set page("us-letter", margin: 1in)
-  #set par(linebreaks: "simple", leading: 1.1em, spacing: 1.2em)
+  #set page("us-letter", margin: 0.75in)
+  #set par(linebreaks: "simple", leading: 0.95em, spacing: 1.2em)
   #set text(font: "Nimbus Sans L", size: 10pt)
 
   #show heading.where(level: 1): set text(size: 18pt)
 
   #let headline(name, desc, detail: none, timing) = {
-    box[#pad(right: 0.4em)[*#name*]]
-    [#desc]
+    [*#name*] 
+    if desc != none [
+        #box[#pad(left: 0.2em)[#desc]]
+    ]
     if detail != none [
       — #detail
     ]
@@ -76,7 +78,7 @@
 
   #twocolumn(
     [
-      = #resume.profile.first_name, #resume.profile.last_name
+      = #resume.profile.first_name #resume.profile.last_name
       #if "contact" in resume {
         nicelink("mailto:" + resume.contact.personal_email)
       }
@@ -124,7 +126,7 @@
     }
 
     if p.at("summary", default: none) == none {
-      headline(p.name, detail, when(p.when))
+      headline(p.name, none, detail: detail, when(p.when))
     } else {
       headline(p.name, p.summary, detail: detail, when(p.when))
     }
@@ -149,7 +151,7 @@
       e.institution,
       [#e.kind #e.area, #e.score GPA],
       detail: location(e.location),
-      e.when.Range.end.display("[year repr:full]"),
+      e.when.Range.end.display("[month repr:short] [year repr:full]"),
     )
   }
 

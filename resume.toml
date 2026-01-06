@@ -35,26 +35,28 @@ url = "https://linkedin.com/in/andrewjleung-"
 
 [skills]
 Languages = [
-  "TypeScript",
-  "JavaScript",
-  "Ruby",
-  "Rust",
-  "Go",
-  "Python",
-  "SQL",
-  "HTML",
-  "CSS",
+    "TypeScript",
+    "JavaScript",
+    "Ruby",
+    "Python",
+    "Rust",
+    "Java",
+    "Go",
+    "Bash",
+    "SQL",
+    "HTML/CSS",
 ]
-Tooling = [
-  "React",
-  "Next.js",
-  "Tailwind",
-  "Ruby on Rails",
-  "RSpec",
-  "PostgreSQL",
-  "Google BigQuery",
-  "Git",
-  "Neovim",
+Tools = [
+    "React",
+    "Next.js",
+    "Tailwind",
+    "Ruby on Rails",
+    # "RSpec",
+    "PostgreSQL",
+    "Google BigQuery",
+    "Git",
+    "Neovim",
+    "Docker",
 ]
 
 [[experiences]]
@@ -64,14 +66,14 @@ context = "PayPal"
 location = "Remote"
 when = { Started = 2023-06-12 }
 highlights = [
-  "Maintained Braintree's Ruby on Rails app used to payout $1.6B a day across 15K merchants",
-  "Led development, coordinated live testing, and served as a subject matter expert for a feature used to withhold $1.4M a day from high-risk or delinquent merchants",
-  "Automated a $57M migration in held funds to new banking partners and an updated internal ledger",
-  "Coordinated engineering effort to debug and resolve funds reconciliation issues, decreasing unreconciled funds by 88% and increasing reconciliation accuracy to 99.7%",
-  "Identified and patched a regression caused by a Rails upgrade, correcting the misallocation of $80M",
-  "Increased monthly revenue by $650K by correcting fee calculations to round instead of truncate",
-  # "Prevented the misallocation of $6M by identifying and fixing an edge case in the timing of internal routing of funds to different bank accounts",
-  # "Interviewed intern candidates and onboarded engineers with knowledge sharing and pair programming",
+    "Maintained Braintree's Ruby on Rails app used to payout $1.6B a day across 15K merchants",
+    "Led development, coordinated live testing, and served as the subject matter expert for a feature used to withhold $1.4M a day from high-risk or delinquent merchants",
+    "Automated a $57M migration in held funds to new banking partners and an updated internal ledger",
+    "Coordinated cross-functional effort across engineering, accounting, and product teams to debug and resolve funds reconciliation issues, increasing reconciliation accuracy to 99.7%",
+    "Identified and patched a regression caused by a Rails upgrade, correcting the misallocation of $80M",
+    "Increased monthly revenue by $650K by correcting fee calculations to round instead of truncate",
+    # "Prevented the misallocation of $6M by identifying and fixing an edge case in the timing of internal routing of funds to different bank accounts",
+    # "Interviewed intern candidates and onboarded engineers with knowledge sharing and pair programming",
 ]
 
 [[experiences]]
@@ -81,9 +83,9 @@ context = "Poloniex"
 location = "Remote"
 when = { Range = { start = 2021-01-01, end = 2021-08-01 } }
 highlights = [
-  "Integrated Poloniex's web app with a CMS, saving hours of weekly engineering effort spent manually updating web content on behalf of marketing teams",
-  "Contributed rule-negation support to an open source rules engine (json-rules-engine) powering an internal Node.js permissions service",
-  "Developed internal tools for managing users, markets, and support tickets with TypeScript and React",
+    "Oversaw migration of web content to a content management system, saving hours of engineering effort spent manually updating 10+ instances of web content per week on behalf of marketing teams",
+    "Contributed rule-negation to an open source rules engine powering an internal Node.js permissions service",
+    "Developed internal tools for managing users, markets, and support tickets with TypeScript and React",
 ]
 
 [[experiences]]
@@ -94,21 +96,21 @@ summary = "Northeastern's premier software consultancy."
 url = "https://sandboxnu.com"
 when = { Range = { start = 2020-09-01, end = 2021-05-01 } }
 highlights = [
-  "Developed features for a university course planning web application using Ruby on Rails, TypeScript, and React",
-  "Wrote a Node.js parser to translate university course documentation PDFs into JSON for internal usage",
-  "Provided technical mentoring to teammates on tasks through routine pair-programming",
-  # "Modeled course schedule data in TypeScript, wrote logic for validating course requirements, and implemented React components to display interactive course plans to users"
+    "Developed features for a university course planning web application using Ruby on Rails, TypeScript, and React",
+    "Wrote a Node.js parser to translate university course documentation PDFs into JSON for internal usage",
+    "Provided technical mentoring to teammates on tasks through routine pair-programming",
+    # "Modeled course schedule data in TypeScript, wrote logic for validating course requirements, and implemented React components to display interactive course plans to users"
 ]
 
 [[experiences]]
 kind = "work"
 name = "Software Engineer Co-op"
 context = "Teikametrics"
-location = "Remote"
+location = { CityState = ["Boston", "MA"] }
 when = { Range = { start = 2020-01-01, end = 2020-08-01 } }
 highlights = [
-  "Wrote backend APIs in Scala and implemented UIs with TypeScript, React, and Redux to support Amazon ad campaign creation and display campaign performance metrics to users",
-  # "Rapidly ramped up onto new technologies, progressing from no Scala, TypeScript, or web development experience to becoming an active contributor to a Scala with Cats backend and a TypeScript, React, and Redux frontend"
+    "Wrote backend APIs in Scala and implemented UIs with TypeScript, React, and Redux to support Amazon ad campaign creation and report campaign performance metrics",
+    # "Rapidly ramped up onto new technologies, progressing from no Scala, TypeScript, or web development experience to becoming an active contributor to a Scala with Cats backend and a TypeScript, React, and Redux frontend"
 ]
 
 [[experiences]]
@@ -119,9 +121,9 @@ location = { CityState = ["Billerica", "MA"] }
 url = "https://curriculumassociates.com"
 when = { Range = { start = 2019-01-14, end = 2019-06-20 } }
 highlights = [
-  "Updated SQL query templates in Java to retrieve language flags for student assessment data",
-  "Drafted and implemented integration tests to ensure correct functionality of query templates",
-  "Refactored database schemas with Liquibase and updated existing data for education platform privileges",
+    "Updated SQL query templates in Java to retrieve language flags for student assessment data",
+    "Drafted and implemented integration tests to ensure correct functionality of query templates",
+    "Refactored database schemas with Liquibase and updated existing data for education platform privileges",
 ]
 
 [[experiences]]
@@ -131,7 +133,7 @@ context = "Northeastern University College of Computer and Information Science"
 location = { CityState = ["Boston", "MA"] }
 when = { Range = { start = 2018-09-01, end = 2018-12-01 } }
 highlights = [
-  "Reviewed and graded roughly 30 student coding assignments per week written in Racket",
+    "Reviewed and graded roughly 30 student coding assignments per week written in Racket",
 ]
 
 [[experiences]]
@@ -143,8 +145,8 @@ location = { CityState = ["Lowell", "MA"] }
 url = "https://www.veoneer.com"
 when = { Range = { start = 2018-05-29, end = 2018-08-10 } }
 highlights = [
-  "Ported over C++ implementation of target track positioner software to a new radar sensor testing suite written in C#",
-  "Outlined architecture specifications for new radar units to lay groundwork for future sensor support within testing suite",
+    "Ported over C++ implementation of target track positioner software to a new radar sensor testing suite written in C#",
+    "Outlined architecture specifications for new radar units to lay groundwork for future sensor support within testing suite",
 ]
 
 [[experiences]]
@@ -153,21 +155,21 @@ name = "Bookmark Manager"
 url = "https://github.com/andrewjleung/linkr"
 when = { Year = 2023 }
 tags = [
-  "TypeScript",
-  "Node.js",
-  "React",
-  "Next.js",
-  "Tailwind",
-  "shadcn/ui",
-  "Supabase",
-  "Drizzle ORM",
-  "Jotai",
+    "TypeScript",
+    "Node.js",
+    "React",
+    "Next.js",
+    "Tailwind",
+    "shadcn/ui",
+    "Supabase",
+    "Drizzle ORM",
+    "Jotai",
 ]
 highlights = [
-  "Created a self-hosted bookmark manager for personal use using TypeScript, React, Next.js, and shadcn/ui components",
-  "Persisted bookmark data in a PostgreSQL database hosted by Supabase and queried with Drizzle ORM",
-  "Restricted sign-in to a predefined user with GitHub OAuth and Supabase Auth",
-  "Built a tool for importing and re-categorizing bookmarks from Raindrop.io",
+    "Created a self-hosted bookmark manager for personal use using TypeScript, React, Next.js, and shadcn/ui components",
+    "Persisted bookmark data in a PostgreSQL database hosted by Supabase and queried with Drizzle ORM",
+    "Restricted sign-in to a predefined user with GitHub OAuth and Supabase Auth",
+    "Built a tool for importing and re-categorizing bookmarks from Raindrop.io",
 ]
 
 [[experiences]]
@@ -176,13 +178,13 @@ name = "Random Audio Player"
 url = "https://github.com/andrewjleung/raudi"
 when = { Year = 2022 }
 tags = [
-  "TypeScript",
-  "Node.js",
-  "Fastify",
-  "React",
-  "TailwindCSS",
-  "NGINX",
-  "Docker",
+    "TypeScript",
+    "Node.js",
+    "Fastify",
+    "React",
+    "TailwindCSS",
+    "NGINX",
+    "Docker",
 ]
 
 [[experiences]]
@@ -192,8 +194,8 @@ url = "https://github.com/andrewjleung/fantano-reviews"
 when = { Year = 2022 }
 tags = ["TypeScript", "Node.js", "Fastify", "YouTube Data API", "PubSubHubBub"]
 highlights = [
-  "Implemented a Node.js script to fetch and parse metadata from the YouTube Data API in order to generate a CSV dataset of a popular music critic's video music reviews for use in data analysis",
-  "Automated real-time updates to a hosted dataset using a PubSubHubBub server deployed to DigitalOcean via GitHub",
+    "Implemented a Node.js script to fetch and parse metadata from the YouTube Data API in order to generate a CSV dataset of a popular music critic's video music reviews for use in data analysis",
+    "Automated real-time updates to a hosted dataset using a PubSubHubBub server deployed to DigitalOcean via GitHub",
 ]
 
 [[experiences]]
@@ -202,23 +204,23 @@ name = "Compiler for Python-like Language"
 when = { Year = 2022 }
 tags = ["OCaml", "C", "x86 Assembly"]
 highlights = [
-  "Wrote an x86 compiler in OCaml and a C runtime for a Python-like expression-oriented language",
-  "Supported dynamic types with integers, booleans, tuples, strings, and first-class functions",
-  "Managed program memory with mark-and-sweep garbage collection and register allocation",
-  "Wrote over 600 unit and E2E tests with OUnit to validate compiliation and language semantics",
+    "Wrote an x86 compiler in OCaml and a C runtime for a dynamically-typed, expression-oriented language",
+    "Supported integer and boolean primitives, heap-allocated tuples and strings, and first-class functions",
+    "Managed program memory with mark-and-sweep garbage collection and register allocation",
+    "Wrote over 600 unit tests and E2E tests with OUnit to validate compiliation and language semantics",
 ]
 
 [[experiences]]
 kind = "project"
-name = "Reze"
+name = "Resume data and rendering manager"
 when = { Year = 2025 }
 url = "https://github.com/andrewjleung/resumes"
-tags = ["Rust", "Clap", "Serde", "Typst"]
+tags = ["Rust", "Clap", "Serde", "Typst", "TOML", "Mise"]
 highlights = [
-  "Created a Rust CLI for rendering the JSON Resume standard into PDF with Typst with Clap",
-  "Supported declarative filtering of CV content by date and title in code or TOML configuration",
-  "Built a file-watcher for edits to resume content, supporting hot-reloading for PDF renders",
-  "Configured a CI/CD pipeline with GitHub Actions to render and deploy resumes to GitHub Pages",
+    "Defined a TOML schema for resume data including profile, education, skills, and experiences",
+    "Designed a TOML config schema for defining resume variants with declarative selectors, filters, and overrides",
+    "Built a Rust CLI with Clap and Serde to render resume variants into PDF using Typst templates",
+    "Created a CI/CD pipeline with GitHub Actions to automatically render and deploy resumes to GitHub Pages",
 ]
 
 [[experiences]]
@@ -229,7 +231,7 @@ when = { Year = 2025 }
 url = "https://github.com/andrewjleung/ply"
 tags = ["Rust", "Clap", "Serde", "Typst"]
 highlights = [
-  "Built a Rust CLI for tracking job application metadata/notes in TOML/Markdown using Clap and Serde",
-  "Designed a framework to scrape/parse job listings over HTTP and generate job tracking documents",
-  "Defined an API for declaring parsers for job boards in 5-6 lines of code with CSS selectors and regex",
+    "Built a Rust CLI for tracking job application metadata/notes in TOML/Markdown using Clap and Serde",
+    "Designed a framework to scrape/parse job listings over HTTP and generate job tracking documents",
+    "Defined an API for declaring parsers for job boards in 5-6 lines of code with CSS selectors and regex",
 ]
