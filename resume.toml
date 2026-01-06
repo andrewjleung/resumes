@@ -151,6 +151,32 @@ highlights = [
 
 [[experiences]]
 kind = "project"
+name = "Resume data and rendering manager"
+when = { Year = 2025 }
+url = "https://github.com/andrewjleung/resumes"
+tags = ["Rust", "Clap", "Serde", "Typst", "TOML", "Mise"]
+highlights = [
+    "Defined a TOML schema for resume data including profile, education, skills, and experiences",
+    "Designed a TOML config schema for defining resume variants with declarative selectors, filters, and overrides",
+    "Built a Rust CLI with Clap and Serde to render resume variants into PDF using Typst templates",
+    "Created a CI/CD pipeline with GitHub Actions to automatically render and deploy resumes to GitHub Pages",
+]
+
+[[experiences]]
+kind = "project"
+name = "Ply"
+summary = "a plaintext job application tracker"
+when = { Year = 2025 }
+url = "https://github.com/andrewjleung/ply"
+tags = ["Rust", "Clap", "Serde", "Typst"]
+highlights = [
+    "Built a Rust CLI for tracking job application metadata/notes in TOML/Markdown using Clap and Serde",
+    "Designed a framework to scrape/parse job listings over HTTP and generate job tracking documents",
+    "Defined an API for declaring parsers for job boards in 5-6 lines of code with CSS selectors and regex",
+]
+
+[[experiences]]
+kind = "project"
 name = "Bookmark Manager"
 url = "https://github.com/andrewjleung/linkr"
 when = { Year = 2023 }
@@ -208,30 +234,4 @@ highlights = [
     "Supported integer and boolean primitives, heap-allocated tuples and strings, and first-class functions",
     "Managed program memory with mark-and-sweep garbage collection and register allocation",
     "Wrote over 600 unit tests and E2E tests with OUnit to validate compiliation and language semantics",
-]
-
-[[experiences]]
-kind = "project"
-name = "Resume data and rendering manager"
-when = { Year = 2025 }
-url = "https://github.com/andrewjleung/resumes"
-tags = ["Rust", "Clap", "Serde", "Typst", "TOML", "Mise"]
-highlights = [
-    "Defined a TOML schema for resume data including profile, education, skills, and experiences",
-    "Designed a TOML config schema for defining resume variants with declarative selectors, filters, and overrides",
-    "Built a Rust CLI with Clap and Serde to render resume variants into PDF using Typst templates",
-    "Created a CI/CD pipeline with GitHub Actions to automatically render and deploy resumes to GitHub Pages",
-]
-
-[[experiences]]
-kind = "project"
-name = "Ply"
-summary = "a plaintext job application tracker"
-when = { Year = 2025 }
-url = "https://github.com/andrewjleung/ply"
-tags = ["Rust", "Clap", "Serde", "Typst"]
-highlights = [
-    "Built a Rust CLI for tracking job application metadata/notes in TOML/Markdown using Clap and Serde",
-    "Designed a framework to scrape/parse job listings over HTTP and generate job tracking documents",
-    "Defined an API for declaring parsers for job boards in 5-6 lines of code with CSS selectors and regex",
 ]
