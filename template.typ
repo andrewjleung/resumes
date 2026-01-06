@@ -2,7 +2,7 @@
   #set line(length: 100%, stroke: 0.5pt + black)
   #set list(indent: 0.5em)
   #set page("us-letter", margin: 0.75in)
-  #set par(linebreaks: "simple", leading: 0.95em, spacing: 1.2em)
+  #set par(linebreaks: "simple", leading: 1em, spacing: 1em)
   #set text(font: "Nimbus Sans L", size: 10pt)
 
   #show heading.where(level: 1): set text(size: 18pt)
