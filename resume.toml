@@ -226,7 +226,7 @@ highlights = [
 
 [[experiences]]
 kind = "project"
-name = "Compiler for Python-like Language"
+name = "Compiler for Python-like language"
 when = { Year = 2022 }
 tags = ["OCaml", "C", "x86 Assembly"]
 highlights = [
