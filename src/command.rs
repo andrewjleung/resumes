@@ -7,9 +7,9 @@ use crate::prelude::*;
 use clap::{Parser, Subcommand};
 use merge::Merge;
 
-pub mod args;
-pub mod render;
-pub mod schema;
+mod args;
+mod render;
+mod schema;
 
 pub trait Run {
     fn run(&self, config: &Config) -> Result<()>;
@@ -24,7 +24,7 @@ pub struct Reze {
 }
 
 #[derive(Subcommand)]
-pub enum RezeCommand {
+enum RezeCommand {
     Config,
     Render(Render),
     Schema(Schema),
@@ -52,15 +52,23 @@ impl Reze {
         Ok(base_config)
     }
 
-    pub fn run(&self) -> Result<()> {
-        let mut config = self.config().context("failed to create config from args")?;
+    pub fn run_cli() -> Result<()> {
+        let reze = Self::parse();
+
+        let mut config = reze.config().context("failed to create config from args")?;
 
         if let Ok(file_config) = load() {
             config.merge(file_config);
         }
 
+        reze.run(&config)
+    }
+}
+
+impl Run for Reze {
+    fn run(&self, config: &Config) -> Result<()> {
         match &self.command {
-            RezeCommand::Render(cmd) => cmd.run(&config),
+            RezeCommand::Render(cmd) => cmd.run(config),
             RezeCommand::Config => {
                 println!(
                     "{}",
@@ -68,7 +76,7 @@ impl Reze {
                 );
                 Ok(())
             }
-            RezeCommand::Schema(cmd) => cmd.run(&config),
+            RezeCommand::Schema(cmd) => cmd.run(config),
         }
     }
 }

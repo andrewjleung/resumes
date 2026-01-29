@@ -1,18 +1,5 @@
-mod command;
-mod config;
-mod prelude;
-mod render;
-mod resume;
-mod typst;
-mod utils;
+use reze::Reze;
 
-use clap::Parser;
-use prelude::*;
-
-use crate::command::Reze;
-
-// TODO: logging?
-
-fn main() -> Result<()> {
-    Reze::parse().run()
+fn main() -> anyhow::Result<()> {
+    Reze::run_cli()
 }
