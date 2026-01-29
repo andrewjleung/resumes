@@ -16,7 +16,7 @@ pub struct Schema {
 }
 
 impl Run for Schema {
-    fn run(&self, _config: &crate::config::Config) -> Result<()> {
+    fn run(self) -> Result<()> {
         let schema = match self.target {
             SchemaTarget::Config => schema_for!(Config),
             SchemaTarget::Resume => schema_for!(Resume),

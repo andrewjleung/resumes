@@ -1,6 +1,6 @@
 use clap::Args;
 
-#[derive(Args, Clone)]
+#[derive(Args, Clone, Default)]
 pub struct RenderArgs {
     /// If set, automatically remove all created intermediate artifacts, keeping the final render.
     #[arg(short, long)]

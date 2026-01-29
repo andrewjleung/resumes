@@ -82,6 +82,16 @@ impl Config {
             None => current_dir()?.join("resume.json"),
         })
     }
+
+    pub fn merge_with_file_config(mut self) -> Result<Self> {
+        if let Ok(file_config) = load() {
+            self.merge(file_config);
+        }
+
+        // TODO: log here when failed to load
+
+        Ok(self)
+    }
 }
 
 #[allow(dead_code)]
