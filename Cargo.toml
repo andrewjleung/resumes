@@ -12,6 +12,7 @@ clap = { version = "4.5", features = ["derive"] }
 colored = "3.0"
 crossterm = "0.29"
 dirs = "6.0.0"
+figment = { version = "0.10.19", features = ["toml"] }
 indexmap = { version = "2.12.1", features = ["serde"] }
 json-resume = "0.2.0"
 merge = { version = "0.2.0", features = ["derive"] }
@@ -23,7 +24,7 @@ schemars = { version = "1.1.0", features = [
     "indexmap2",
     "preserve_order",
 ] }
-serde = { version = "1.0", features = ["derive"] }
+serde = { version = "1.0", features = ["derive", "rc"] }
 serde_json = { version = "1.0", features = ["preserve_order"] }
 shellexpand = "3.1.1"
 toml = { version = "0.9", features = ["preserve_order", "serde"] }

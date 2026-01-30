@@ -1,159 +1,113 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Config",
-  "type": "object",
-  "properties": {
-    "typst": {
-      "anyOf": [
-        {
-          "$ref": "#/$defs/TypstConfig"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "queries": {
-      "type": "object",
-      "additionalProperties": {
-        "type": "array",
-        "items": {
-          "$ref": "#/$defs/Clause"
-        }
-      },
-      "default": {}
-    },
-    "title": {
-      "anyOf": [
-        {
-          "$ref": "#/$defs/Title"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "clean": {
-      "type": "boolean",
-      "default": false
-    },
-    "output_dir": {
-      "type": "string"
-    },
-    "resume_data_path": {
-      "type": "string"
-    }
-  },
-  "required": [
-    "output_dir",
-    "resume_data_path"
-  ],
-  "$defs": {
-    "TypstConfig": {
-      "type": "object",
-      "properties": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Config",
+    "type": "object",
+    "properties": {
         "template": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "template"
-      ]
-    },
-    "Clause": {
-      "oneOf": [
-        {
-          "type": "object",
-          "properties": {
-            "Show": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "Show"
-          ],
-          "additionalProperties": false
+            "type": "string"
         },
-        {
-          "type": "object",
-          "properties": {
-            "Hide": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "Hide"
-          ],
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "properties": {
-            "After": {
-              "type": "string",
-              "format": "date"
-            }
-          },
-          "required": [
-            "After"
-          ],
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "properties": {
-            "Tagged": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "Tagged"
-          ],
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "properties": {
-            "HideDetail": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "HideDetail"
-          ],
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "properties": {
-            "OverrideHighlights": {
-              "type": "object",
-              "properties": {
-                "target": {
-                  "type": "string"
-                },
-                "highlights": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
+        "queries": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/$defs/Clause"
                 }
-              },
-              "required": [
-                "target",
-                "highlights"
-              ]
-            }
-          },
-          "required": [
-            "OverrideHighlights"
-          ],
-          "additionalProperties": false
+            },
+            "default": {}
+        },
+        "title": {
+            "type": "string"
+        },
+        "clean": {
+            "type": "boolean",
+            "default": false
+        },
+        "output_dir": {
+            "type": "string"
+        },
+        "resume_data_path": {
+            "type": "string"
         }
-      ]
     },
-    "Title": {
-      "type": "string"
+    "required": ["template", "title", "output_dir", "resume_data_path"],
+    "$defs": {
+        "Clause": {
+            "oneOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "Show": {
+                            "type": "string"
+                        }
+                    },
+                    "required": ["Show"],
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "Hide": {
+                            "type": "string"
+                        }
+                    },
+                    "required": ["Hide"],
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "After": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    "required": ["After"],
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "Tagged": {
+                            "type": "string"
+                        }
+                    },
+                    "required": ["Tagged"],
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "HideDetail": {
+                            "type": "string"
+                        }
+                    },
+                    "required": ["HideDetail"],
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "OverrideHighlights": {
+                            "type": "object",
+                            "properties": {
+                                "target": {
+                                    "type": "string"
+                                },
+                                "highlights": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "required": ["target", "highlights"]
+                        }
+                    },
+                    "required": ["OverrideHighlights"],
+                    "additionalProperties": false
+                }
+            ]
+        }
     }
-  }
 }

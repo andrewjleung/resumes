@@ -1,96 +1,60 @@
 pub mod resolution;
-pub mod typst;
 
-use bon::Builder;
 use schemars::JsonSchema;
 use std::collections::HashMap;
-use std::fmt::Display;
+use std::env;
 use std::fs;
 use std::fs::File;
 use std::io::Write;
 use std::io::read_to_string;
+use std::rc::Rc;
 
-use merge::Merge;
 use serde::Deserialize;
 use serde::Serialize;
 
 use crate::config::resolution::config_path;
 use crate::config::resolution::default_config_path;
-use crate::config::typst::TypstConfig;
 use crate::prelude::*;
 use crate::resume::query::Clause;
-use crate::utils::path::current_dir;
-use crate::utils::path::path_buf_from_str;
 
 const DEFAULT_TITLE: &str = "resume";
+const DEFAULT_TEMPLATE: &str = "template.typ";
 
 #[derive(Serialize, Deserialize, Clone, Debug, JsonSchema)]
-pub struct Title(pub String);
-
-impl Default for Title {
-    fn default() -> Self {
-        Title(DEFAULT_TITLE.to_string())
-    }
-}
-
-impl Display for Title {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let Title(s) = self;
-        s.fmt(f)
-    }
-}
-
-#[derive(Serialize, Deserialize, Default, Clone, Merge, Builder, Debug, JsonSchema)]
 pub struct Config {
-    #[merge(strategy = merge::option::recurse)]
-    pub typst: Option<TypstConfig>,
+    #[schemars(with = "String")]
+    pub template: Rc<Path>,
 
-    #[merge(strategy = merge::hashmap::overwrite)]
     #[serde(default)]
-    #[builder(default)]
     pub queries: HashMap<String, Vec<Clause>>,
 
-    #[merge(strategy = merge::option::overwrite_none)]
-    pub title: Option<Title>,
+    pub title: Rc<String>,
 
-    #[merge(strategy = merge::bool::overwrite_false)]
     #[serde(default)]
     pub clean: bool,
 
-    #[merge(strategy = merge::option::overwrite_none)]
-    #[builder(with = |dir: &str| -> Result<_> { path_buf_from_str(dir).context("failed to canonicalize output directory path") })]
     #[schemars(with = "String")]
-    output_dir: Option<PathBuf>,
+    pub output_dir: Rc<Path>,
 
-    #[merge(strategy = merge::option::overwrite_none)]
-    #[builder(with = |dir: &str| -> Result<_> { path_buf_from_str(dir).context("failed to canonicalize resume data path") })]
     #[schemars(with = "String")]
-    resume_data_path: Option<PathBuf>,
+    pub resume_data_path: Rc<Path>,
 }
 
-impl Config {
-    pub fn output_dir(&self) -> Result<PathBuf> {
-        match self.output_dir.clone() {
-            Some(dir) => Ok(dir),
-            None => current_dir(),
+impl Default for Config {
+    fn default() -> Self {
+        let current_dir = Rc::new(
+            PathBuf::from_path_buf(env::current_dir().expect("current directory is accessible"))
+                .expect("current directory is UTF-8"),
+        );
+
+        Config {
+            template: Rc::clone(&current_dir).join(DEFAULT_TEMPLATE).into(),
+            queries: HashMap::default(),
+            title: Rc::new(String::from(DEFAULT_TITLE)),
+            clean: false,
+            output_dir: Rc::clone(&current_dir).as_path().into(),
+            resume_data_path: Rc::clone(&current_dir).join("resume.json").into(),
         }
-    }
-
-    pub fn resume_data_path(&self) -> Result<PathBuf> {
-        Ok(match self.resume_data_path.clone() {
-            Some(dir) => dir,
-            None => current_dir()?.join("resume.json"),
-        })
-    }
-
-    pub fn merge_with_file_config(mut self) -> Result<Self> {
-        if let Ok(file_config) = load() {
-            self.merge(file_config);
-        }
-
-        // TODO: log here when failed to load
-
-        Ok(self)
     }
 }
 

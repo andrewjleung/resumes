@@ -1,9 +1,15 @@
+use std::rc::Rc;
+
+use crate::config::resolution::config_path;
+use crate::prelude::*;
+use figment::Figment;
+use figment::providers::Format;
+
 use crate::command::Run;
 use crate::command::args::RenderArgs;
-use crate::config::Title;
 use crate::render::Render as RenderTrait;
 use crate::typst::Typst;
-use crate::{Config, TypstConfig, prelude::*, resume};
+use crate::{Config, resume};
 use clap::Args;
 
 #[derive(Args)]
@@ -19,7 +25,7 @@ impl Run for Render {
             .try_into()
             .context("failed to initialize config for render command")?;
 
-        let mut resume = resume::file::read_toml(&config.resume_data_path()?)?;
+        let mut resume = resume::file::read_toml(Rc::clone(&config.resume_data_path).as_ref())?;
 
         Typst()
             .render(&mut resume, &config)
@@ -33,18 +39,14 @@ impl TryFrom<RenderArgs> for Config {
     type Error = Error;
 
     fn try_from(value: RenderArgs) -> Result<Self> {
-        let typst_config = TypstConfig::builder()
-            .maybe_template(value.template.as_deref())?
-            .build();
+        let mut figment = Figment::new().adjoin(figment::providers::Serialized::defaults(value));
 
-        let config = Config::builder()
-            .maybe_title(value.title.map(Title))
-            .clean(value.clean)
-            .maybe_output_dir(value.output_dir.as_deref())?
-            .maybe_resume_data_path(value.resume.as_deref())?
-            .typst(typst_config)
-            .build();
+        if let Some(path) = config_path() {
+            figment = figment.adjoin(figment::providers::Toml::file(path));
+        }
 
-        config.merge_with_file_config()
+        let figment = figment.adjoin(Figment::from(RenderArgs::default()));
+
+        figment.extract().map_err(anyhow::Error::new)
     }
 }

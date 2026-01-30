@@ -3,6 +3,8 @@
 title = "AndrewLeung_Resume"
 output_dir = "./artifacts"
 resume_data_path = "../../resume.toml"
+template = "../../template.typ"
+clean = true
 
 [queries]
 work = [
@@ -13,6 +15,3 @@ project = [
     { Show = "Compiler" },
     { Show = "Resume data and rendering manager" }
 ]
-
-[typst]
-template = "../../template.typ"

@@ -1,76 +1,64 @@
+use crate::prelude::*;
 use crate::{
-    config::{
-        Config, Title,
-        typst::{Template, TypstConfig},
-    },
-    render::{Artifact, ArtifactKind, Render, Rendering},
+    config::Config,
+    render::{Artifact, Render, Rendering},
     resume::schema::Resume,
     utils::path::ensure_dir,
 };
-use anyhow::{Context, Error, Result};
+use std::rc::Rc;
 use std::{fs::read, process::Command};
 
 #[derive(Default)]
 pub struct Typst();
 
-fn create_resume_content_artifact(resume: &Resume) -> Result<Artifact> {
-    let resume_content = toml::to_string(&resume).context("failed to serialize resume data")?;
-
-    Ok(Artifact {
-        kind: ArtifactKind::Toml,
-        content: resume_content.into_bytes(),
-    })
+fn resume_content(resume: &Resume) -> Result<Vec<u8>> {
+    Ok(toml::to_string(&resume)
+        .context("failed to serialize resume data")?
+        .into_bytes())
 }
 
-fn create_template_file_artifact(config: &Config) -> Result<Artifact> {
-    let Template(template) = match &config.typst {
-        Some(TypstConfig { template: Some(t) }) => t,
-        _ => &Template::default(),
-    };
-
-    Ok(Artifact {
-        kind: ArtifactKind::Typst,
-        content: read(template).context(format!("failed to read typst template: {template}"))?,
-    })
+fn template_content(config: &Config) -> Result<Vec<u8>> {
+    read(Rc::clone(&config.template).as_ref()).context(format!(
+        "failed to read typst template: {}",
+        config.template
+    ))
 }
 
 impl Render for Typst {
     fn render_artifacts(&self, resume: &Resume, config: &Config) -> Result<Rendering> {
-        let output_dir = config.output_dir()?;
-        ensure_dir(&output_dir)?;
+        ensure_dir(&config.output_dir)?;
 
-        let title = match &config.title {
-            Some(title) => title,
-            None => &Title::default(),
-        };
+        let resume_content_filename = format!("{}.{}", config.title, "toml");
+        let resume_content_artifact = Artifact::write(
+            Rc::clone(&config.output_dir)
+                .join(Path::new(&resume_content_filename))
+                .into(),
+            &resume_content(resume)?,
+            config.clean,
+        )
+        .context("failed to write resume content artifact")?;
 
-        let resume_content_artifact = create_resume_content_artifact(resume)?;
-        let template_file_artifact = create_template_file_artifact(config)?;
-
-        resume_content_artifact
-            .write(title, &output_dir)
-            .context("failed to write queried resume content")?;
-
-        template_file_artifact
-            .write(title, &output_dir)
-            .context("failed to write template artifact")?;
+        let template_content_filename = format!("{}.{}", config.title, "typ");
+        let template_content_artifact = Artifact::write(
+            Rc::clone(&config.output_dir)
+                .join(Path::new(&template_content_filename))
+                .into(),
+            &template_content(config)?,
+            config.clean,
+        )
+        .context("failed to write template content artifact")?;
 
         let output = Command::new("typst")
-            .current_dir(&output_dir)
+            .current_dir(config.output_dir.as_ref())
             .args([
                 "compile",
                 "-f",
                 "pdf",
                 "--root",
-                config
-                    .resume_data_path()
-                    .expect("a data path")
-                    .parent()
-                    .expect("a parent dir")
-                    .as_str(),
+                ".",
                 "--input",
-                &format!("data_path={}", resume_content_artifact.file_name(title)),
-                &template_file_artifact.file_name(title),
+                &format!("data_path={}", resume_content_filename),
+                &template_content_filename,
                 "-",
             ])
             .output()
@@ -91,12 +79,19 @@ impl Render for Typst {
             }
         }
 
+        let final_render_filename = format!("{}.{}", config.title, "pdf");
+        let final_render_artifact = Artifact::write(
+            Rc::clone(&config.output_dir)
+                .join(Path::new(&final_render_filename))
+                .into(),
+            &output.stdout,
+            false,
+        )
+        .context("failed to write final rendering artifact")?;
+
         Ok(Rendering {
-            intermediates: vec![resume_content_artifact, template_file_artifact],
-            final_render: Artifact {
-                kind: ArtifactKind::Pdf,
-                content: output.stdout,
-            },
+            intermediates: vec![resume_content_artifact, template_content_artifact],
+            final_render: final_render_artifact,
         })
     }
 }
