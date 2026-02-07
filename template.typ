@@ -2,7 +2,7 @@
   #set line(length: 100%, stroke: 0.5pt + black)
   #set list(indent: 0.5em)
   #set page("us-letter", margin: 0.75in)
-  #set par(linebreaks: "simple", leading: 1em, spacing: 1.05em)
+  #set par(linebreaks: "simple", leading: 0.95em, spacing: 1em)
   #set text(font: "Nimbus Sans L", size: 10pt)
 
   #show heading.where(level: 1): set text(size: 18pt)
@@ -89,18 +89,6 @@
     ),
   )
 
-  == Skills
-
-  #line()
-
-  #(
-    resume
-      .skills
-      .pairs()
-      .map(entry => [*#entry.at(0)*: #entry.at(1).join[, ]])
-      .join[\ ]
-  )
-
   == Work Experience
 
   #line()
@@ -156,6 +144,20 @@
   }
 
   #resume.education.map(e => education(e)).join()
+
+  == Skills
+
+  #line()
+
+  #(
+    resume
+      .skills
+      .pairs()
+      .map(entry => [*#entry.at(0)*: #entry.at(1).join[, ]])
+      .join[\ ]
+  )
+
+
 ]
 
 #template(toml(sys.inputs.data_path))

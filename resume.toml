@@ -37,9 +37,9 @@ url = "https://linkedin.com/in/andrewjleung-"
 Languages = [
     "TypeScript",
     "JavaScript",
-    "Ruby",
-    "Python",
     "Rust",
+    "Python",
+    "Ruby",
     "Java",
     "Go",
     "Bash",
@@ -54,9 +54,10 @@ Tools = [
     # "RSpec",
     "PostgreSQL",
     "Google BigQuery",
-    "Git",
-    "Neovim",
     "Docker",
+    "Terraform",
+    "Git",
+    "Neovim"
 ]
 
 [[experiences]]
@@ -66,12 +67,14 @@ context = "PayPal"
 location = "Remote"
 when = { Started = 2023-06-12 }
 highlights = [
-    "Maintained Braintree's Ruby on Rails app used to payout $1.6B a day across 15K merchants",
-    "Led development, coordinated live testing, and served as the subject matter expert for a feature used to withhold $1.4M a day from high-risk or delinquent merchants",
-    "Automated a $57M migration in held funds to new banking partners and an updated internal ledger",
-    "Coordinated cross-functional effort across engineering, accounting, and product teams to debug and resolve funds reconciliation issues, increasing reconciliation accuracy to 99.7%",
-    "Identified and patched a regression caused by a Rails upgrade, correcting the misallocation of $80M",
-    "Increased monthly revenue by $650K by correcting fee calculations to round instead of truncate",
+    "Built core features for Braintree's Ruby on Rails payout orchestrator processing $1.6B daily",
+    "Led design and implementation of in-house FX solution in Snowflake using Java and Terraform, integrating with exchange rate APIs and writing data contracts for cross-system config and FX reporting",
+    "Served as SME for reserves payouts domain, building support for new banking rails and enabling recovery of $2.3M per month from high-risk or delinquent merchants",
+    "Automated the rolling migration of $57M in held funds to new banking partners and an append-only ledger",
+    "Built a failure-aware async job pipeline simulator for E2E testing, uncovering and fixing timing and ordering issues prior to launch of a new payouts flow processing $180M daily",
+    "Identified and fixed a query regression caused by a Rails upgrade, correcting internal misallocation of $80M",
+    "Shipped a fee-calculation correction from truncation to rounding, increasing monthly revenue by $650K",
+    # "Coordinated cross-functional effort across engineering, accounting, and product teams to debug and resolve funds reconciliation issues, increasing reconciliation accuracy to 99.7%",
     # "Prevented the misallocation of $6M by identifying and fixing an edge case in the timing of internal routing of funds to different bank accounts",
     # "Interviewed intern candidates and onboarded engineers with knowledge sharing and pair programming",
 ]
@@ -83,9 +86,9 @@ context = "Poloniex"
 location = "Remote"
 when = { Range = { start = 2021-01-01, end = 2021-08-01 } }
 highlights = [
-    "Oversaw migration of web content to a content management system, saving hours of engineering effort spent manually updating 10+ instances of web content per week on behalf of marketing teams",
-    "Contributed rule-negation to an open source rules engine powering an internal Node.js permissions service",
     "Developed internal tools for managing users, markets, and support tickets with TypeScript and React",
+    "Migrated web content to a content management system, saving hours of engineering time spent updating 10+ instances of content a week on behalf of marketing teams",
+    "Implemented rule negation in an open source rules engine powering an internal Node.js permissions service",
 ]
 
 [[experiences]]
@@ -151,15 +154,14 @@ highlights = [
 
 [[experiences]]
 kind = "project"
-name = "Resume data and rendering manager"
+name = "Resume content and rendering manager"
 when = { Year = 2025 }
 url = "https://github.com/andrewjleung/resumes"
 tags = ["Rust", "Clap", "Serde", "Typst", "TOML", "Mise"]
 highlights = [
-    "Defined a TOML schema for resume data including profile, education, skills, and experiences",
+    "Built a Rust CLI with Clap and Serde to render resume content from TOML into PDF using Typst",
     "Designed a TOML config schema for defining resume variants with declarative selectors, filters, and overrides",
-    "Built a Rust CLI with Clap and Serde to render resume variants into PDF using Typst templates",
-    "Created a CI/CD pipeline with GitHub Actions to automatically render and deploy resumes to GitHub Pages",
+    "Configured a CI/CD pipeline with GitHub Actions to automatically render and deploy resumes to GitHub Pages",
 ]
 
 [[experiences]]
@@ -233,5 +235,5 @@ highlights = [
     "Wrote an x86 compiler in OCaml and a C runtime for a dynamically-typed, expression-oriented language",
     "Supported integer and boolean primitives, heap-allocated tuples and strings, and first-class functions",
     "Managed program memory with mark-and-sweep garbage collection and register allocation",
-    "Wrote over 600 unit tests and E2E tests with OUnit to validate compiliation and language semantics",
+    "Wrote over 600 unit tests and E2E tests with OUnit to validate compilation and language semantics",
 ]

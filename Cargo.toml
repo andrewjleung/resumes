@@ -12,7 +12,7 @@ clap = { version = "4.5", features = ["derive"] }
 colored = "3.0"
 crossterm = "0.29"
 dirs = "6.0.0"
-figment = { version = "0.10.19", features = ["toml"] }
+figment = { version = "0.10.19", features = ["test", "toml"] }
 indexmap = { version = "2.12.1", features = ["serde"] }
 json-resume = "0.2.0"
 merge = { version = "0.2.0", features = ["derive"] }

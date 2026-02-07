@@ -11,7 +11,4 @@ work = [
     { After = 2020-01-01 },
     { Hide = "Sandbox at Northeastern University" },
 ]
-project = [
-    { Show = "Compiler" },
-    { Show = "Resume data and rendering manager" }
-]
+project = [{ Show = "Compiler" }, { Show = "Resume" }]

@@ -3,6 +3,7 @@
 title = "AndrewLeung_Resume"
 output_dir = "./artifacts"
 resume_data_path = "../../resume.toml"
+template = "../../template.typ"
 
 [queries]
 work = [
@@ -10,6 +11,3 @@ work = [
     { Hide = "Sandbox at Northeastern University" },
 ]
 project = [{ Show = "Compiler" }]
-
-[typst]
-template = "../../template.typ"

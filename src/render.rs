@@ -7,14 +7,6 @@ use std::{fs::File, io::Write};
 use crate::config::Config;
 use crate::resume::schema::Resume;
 
-#[allow(dead_code)]
-pub enum ArtifactKind {
-    Json,
-    Toml,
-    Pdf,
-    Typst,
-}
-
 pub struct Artifact {
     pub path: Rc<Path>,
     pub clean: bool,
@@ -33,24 +25,6 @@ impl Artifact {
             clean,
         })
     }
-
-    // pub fn write(&self, dir: &Path) -> Result<File> {
-    //     let file_name = self.file_name(&self.title);
-    //     let path = dir.join(&file_name);
-    //
-    //     let mut file =
-    //         File::create(&path).context(format!("failed to create file for artifact: {path}"))?;
-    //
-    //     file.write(&self.content)
-    //         .context(format!("failed to write to artifact file {path}"))?;
-    //
-    //     Ok(file)
-    // }
-    //
-    // pub fn file_name(&self, title: &Title) -> String {
-    //     let extension = self.kind.extension();
-    //     format!("{}.{extension}", title)
-    // }
 }
 
 impl Drop for Artifact {
