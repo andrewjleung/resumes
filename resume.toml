@@ -68,10 +68,10 @@ when = { Started = 2023-06-12 }
 highlights = [
     "Built core features for Braintree's Ruby on Rails payout orchestrator processing $1.6B daily",
     "Led design and implementation of in-house FX solution in Snowflake using Java and Terraform, integrating with exchange rate APIs and writing data contracts for cross-system config and FX reporting",
-    "Served as SME for reserves payouts domain, building support for new banking rails and enabling recovery of $2.3M per month from high-risk or delinquent merchants",
+    "Served as SME for payout reserves domain, building support for new banking rails and enabling recovery of $2.3M per month from high-risk or delinquent merchants",
     "Automated the rolling migration of $57M in held funds to new banking partners and an append-only ledger",
-    "Built a failure-aware async job pipeline simulator for E2E testing, uncovering and fixing timing and ordering issues prior to launch of a new payouts flow processing $180M daily",
-    "Identified and fixed a query regression caused by a Rails upgrade, correcting internal misallocation of $80M",
+    "Built a failure-aware async job pipeline simulator for E2E testing, uncovering and fixing async job timing issues prior to launch of a new payouts flow processing $180M daily",
+    "Identified and fixed a querying regression caused by a Rails upgrade, correcting internal misallocation of $80M",
     "Shipped a fee-calculation correction from truncation to rounding, increasing monthly revenue by $650K",
     # "Coordinated cross-functional effort across engineering, accounting, and product teams to debug and resolve funds reconciliation issues, increasing reconciliation accuracy to 99.7%",
     # "Prevented the misallocation of $6M by identifying and fixing an edge case in the timing of internal routing of funds to different bank accounts",
