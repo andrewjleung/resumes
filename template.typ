@@ -89,6 +89,18 @@
     ),
   )
 
+  == Skills
+
+  #line()
+
+  #(
+    resume
+      .skills
+      .pairs()
+      .map(entry => [*#entry.at(0)*: #entry.at(1).join[, ]])
+      .join[\ ]
+  )
+
   == Work Experience
 
   #line()
@@ -144,18 +156,6 @@
   }
 
   #resume.education.map(e => education(e)).join()
-
-  == Skills
-
-  #line()
-
-  #(
-    resume
-      .skills
-      .pairs()
-      .map(entry => [*#entry.at(0)*: #entry.at(1).join[, ]])
-      .join[\ ]
-  )
 
 
 ]

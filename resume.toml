@@ -38,8 +38,8 @@ Languages = [
     "TypeScript",
     "JavaScript",
     "Rust",
-    "Python",
     "Ruby",
+    "Python",
     "Java",
     "Go",
     "Bash",
@@ -55,7 +55,6 @@ Tools = [
     "PostgreSQL",
     "Google BigQuery",
     "Docker",
-    "Terraform",
     "Git",
     "Neovim"
 ]
