@@ -47,11 +47,11 @@ Languages = [
     "HTML/CSS",
 ]
 Tools = [
+    "Claude Code",
     "React",
     "Next.js",
     "Tailwind",
     "Ruby on Rails",
-    # "RSpec",
     "PostgreSQL",
     "Google BigQuery",
     "Docker",
