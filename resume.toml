@@ -47,7 +47,6 @@ Languages = [
     "HTML/CSS",
 ]
 Tools = [
-    "Claude Code",
     "React",
     "Next.js",
     "Tailwind",
@@ -56,15 +55,23 @@ Tools = [
     "Google BigQuery",
     "Docker",
     "Git",
-    "Neovim"
+    "Neovim",
 ]
+
+# [[experiences]]
+# kind = "work"
+# name = "Software Engineer"
+# context = "Stripe"
+# location = "Remote"
+# when = { Started = 2026-03-09 }
+# highlights = []
 
 [[experiences]]
 kind = "work"
 name = "Software Engineer"
 context = "PayPal"
 location = "Remote"
-when = { Started = 2023-06-12 }
+when = { Range = { start = 2023-06-12, end = 2026-03-06 } }
 highlights = [
     "Built core features for Braintree's Ruby on Rails payout orchestrator processing $1.6B daily",
     "Led design and implementation of in-house FX solution in Snowflake using Java and Terraform, integrating with exchange rate APIs and writing data contracts for cross-system config and FX reporting",
